@@ -48,26 +48,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     const postViewer = document.querySelector('.post-viewer');
     const statusCount = document.querySelector('.status-count');
 
-    // Function to get the base URL for index.json (works on GitHub Pages)
-    function getBaseUrl() {
-        return '/posts/';
+    // Function to get URL for index.json (works from local path on GitHub Pages)
+    function getIndexUrl() {
+        return '/posts/index.json';
     }
 
-    // Function to get the base URL for posts
-    function getBaseUrl() {
-        // Check if we're in production (GitHub Pages)
-        if (window.location.hostname === 'suhailstry.ing') {
-            return 'https://raw.githubusercontent.com/suhailxyz/suhailxyz.github.io/main/posts/';
+    // Function to get URL for markdown files (use raw GitHub for production)
+    function getMarkdownUrl(filename) {
+        const hostname = window.location.hostname;
+        // If we're on the live site, use raw GitHub content
+        if (hostname === 'suhailstry.ing' || hostname === 'heysuhail.com' || hostname.includes('github.io')) {
+            return 'https://raw.githubusercontent.com/suhailxyz/trying/main/posts/' + filename;
         }
-        return './posts/'; // Local development
+        // Local development - use relative path
+        return './posts/' + filename;
     }
 
     // Function to get list of posts from directory
     async function getPostFiles() {
         console.log('Attempting to fetch index.json...');
         try {
-            const baseUrl = getBaseUrl();
-            const response = await fetch(baseUrl + 'index.json', {
+            const indexUrl = getIndexUrl();
+            const response = await fetch(indexUrl, {
                 headers: {
                     'Accept': 'application/json'
                 }
@@ -91,10 +93,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             const postFiles = await getPostFiles();
             console.log('Got post files:', postFiles);
-            const baseUrl = getBaseUrl();
-            const posts = await Promise.all(postFiles.map(async postInfo => {
+            // Use Promise.allSettled instead of Promise.all so one failure doesn't break everything
+            const results = await Promise.allSettled(postFiles.map(async postInfo => {
+                try {
                 console.log('Fetching post:', postInfo.file);
-                const response = await fetch(baseUrl + postInfo.file, {
+                const markdownUrl = getMarkdownUrl(postInfo.file);
+                const response = await fetch(markdownUrl, {
                     headers: {
                         'Accept': 'text/plain'
                     }
@@ -111,15 +115,26 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
                 console.log(`Successfully loaded post: ${postInfo.file}`);
                 return {
+                    filename: postInfo.file,
                     title: parsed.metadata.title,
+                    subtitle: parsed.metadata.subtitle || null,
                     date: parsed.metadata.date,
+                    substack: parsed.metadata.substack || null,
                     content: parsed.content
                 };
+                } catch (error) {
+                    console.error(`Error loading post ${postInfo.file}:`, error);
+                    return null;
+                }
             }));
 
-            const filteredPosts = posts.filter(post => post !== null);
-            console.log('Final processed posts:', filteredPosts);
-            return filteredPosts.sort((a, b) => 
+            // Extract successful posts
+            const posts = results
+                .map(result => result.status === 'fulfilled' ? result.value : null)
+                .filter(post => post !== null);
+
+            console.log('Final processed posts:', posts);
+            return posts.sort((a, b) => 
                 new Date(b.date) - new Date(a.date)
             );
         } catch (error) {
@@ -128,9 +143,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    // Store posts globally so they persist
+    let allPosts = [];
+
     // Render posts
     async function renderPosts() {
         const posts = await loadPosts();
+        allPosts = posts; // Store posts globally
         
         // Clear existing posts
         postListContainer.innerHTML = '';
@@ -158,14 +177,32 @@ document.addEventListener('DOMContentLoaded', async () => {
             postElement.appendChild(dateElement);
             postListContainer.appendChild(postElement);
 
+            // Store post data on the element for reference
+            postElement.dataset.postIndex = index;
+
             postElement.addEventListener('click', () => {
                 // Remove active class from all posts
                 document.querySelectorAll('.post').forEach(p => p.classList.remove('active'));
-                // Add active class to clicked post
                 postElement.classList.add('active');
 
-                // Update viewer
-                renderPostContent(post);
+                // Get the post from the stored array using the index
+                const postIndex = parseInt(postElement.dataset.postIndex);
+                const selectedPost = allPosts[postIndex];
+                
+                if (selectedPost) {
+                    // Update viewer
+                    renderPostContent(selectedPost);
+                }
+
+                // Close mobile menu if open
+                const postList = document.querySelector('.post-list');
+                const overlay = document.getElementById('mobile-overlay');
+                if (postList && postList.classList.contains('mobile-open')) {
+                    postList.classList.remove('mobile-open');
+                    if (overlay) {
+                        overlay.classList.remove('active');
+                    }
+                }
             });
         });
         
