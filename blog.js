@@ -48,18 +48,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     const postViewer = document.querySelector('.post-viewer');
     const statusCount = document.querySelector('.status-count');
 
-    // Function to get the base URL for posts
+    // Function to get the base URL for index.json (works on GitHub Pages)
     function getBaseUrl() {
-        // Use absolute path from root - works for both local and GitHub Pages
         return '/posts/';
     }
-    // Function to get the base URL for posts
-    function getBaseUrl() {
-        // Check if we're in production (GitHub Pages)
-        if (window.location.hostname === 'suhailstry.ing') {
-            return 'https://raw.githubusercontent.com/suhailxyz/suhailxyz.github.io/main/posts/';
+
+    // Function to get the URL for markdown files (use raw GitHub for production)
+    function getMarkdownUrl(filename) {
+        const hostname = window.location.hostname;
+        // If we're on the live site, use raw GitHub content
+        if (hostname === 'suhailstry.ing' || hostname === 'heysuhail.com' || hostname.includes('github.io')) {
+            return 'https://raw.githubusercontent.com/suhailxyz/suhailxyz.github.io/main/posts/' + filename;
         }
-        return './posts/'; // Local development
+        // Local development - use relative path
+        return './posts/' + filename;
     }
 
     // Function to get list of posts from directory
