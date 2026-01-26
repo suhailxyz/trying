@@ -50,8 +50,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Function to get the base URL for posts
     function getBaseUrl() {
-        // Use relative path - works for both local and GitHub Pages
-        return './posts/';
+        // Use absolute path from root - works for both local and GitHub Pages
+        return '/posts/';
     }
 
     // Function to get list of posts from directory
