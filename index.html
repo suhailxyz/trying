@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script type="module" src="https://md-block.verou.me/md-block.js"></script>
+  <link href="https://fonts.cdnfonts.com/css/w95fa" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/png" href="img/icons/win98-small.png">
+
+  <title>suhail99</title>
+</head>
+
+<body>
+  
+  <script>
+    let isAnimating = false;
+
+    // Function to change the image
+    function changeImage() {
+      var image = document.getElementById("pfp");
+      
+      // Prevent multiple clicks while animating
+      if (isAnimating) return;
+      
+      if (image.src.match("img/jerry.jpg")) {
+        isAnimating = true;
+        image.src = "img/jerryeats.gif";
+        image.alt = "Jerry eats a big cheese";
+        
+        // Reset the GIF after 2.5 seconds (actual duration of animation)
+        setTimeout(() => {
+          image.src = "img/jerry.jpg";
+          image.alt = "Cheeky Jerry";
+          isAnimating = false;
+        }, 2500);
+      }
+    }
+
+    // Function to handle closing the applet
+    function closeApplet() {
+      document.querySelector('.profile-applet').remove();
+    }
+
+    // Function to fly cheese to Jerry
+    function flyCheese() {
+      const waitButton = document.getElementById('wait-button');
+      const jerryImage = document.getElementById('pfp');
+      
+      if (!waitButton || !jerryImage) return;
+      
+      // Get positions
+      const buttonRect = waitButton.getBoundingClientRect();
+      const jerryRect = jerryImage.getBoundingClientRect();
+      
+      // Create flying cheese element
+      const cheese = document.createElement('img');
+      cheese.src = 'img/32CheeseCursor.png';
+      cheese.style.position = 'fixed';
+      cheese.style.width = '32px';
+      cheese.style.height = '32px';
+      cheese.style.zIndex = '10000';
+      cheese.style.pointerEvents = 'none';
+      cheese.style.left = (buttonRect.left + buttonRect.width / 2 - 16) + 'px';
+      cheese.style.top = (buttonRect.top + buttonRect.height / 2 - 16) + 'px';
+      cheese.style.transition = 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      document.body.appendChild(cheese);
+      
+      // Force reflow
+      cheese.offsetHeight;
+      
+      // Animate to Jerry
+      const targetX = jerryRect.left + jerryRect.width / 2 - 16;
+      const targetY = jerryRect.top + jerryRect.height / 2 - 16;
+      
+      cheese.style.left = targetX + 'px';
+      cheese.style.top = targetY + 'px';
+      cheese.style.transform = 'rotate(360deg)';
+      
+      // Remove cheese and trigger Jerry animation after animation completes
+      setTimeout(() => {
+        cheese.remove();
+        // Trigger Jerry eating animation
+        if (jerryImage.src.match("img/jerry.jpg")) {
+          changeImage();
+        }
+      }, 1000);
+    }
+
+    // Make functions available globally
+    window.changeImage = changeImage;
+    window.closeApplet = closeApplet;
+    window.flyCheese = flyCheese;
+  </script>
+
+  <div class="container">
+    <div class="profile-applet">
+        <div class="title-bar">
+            <div class="title-bar-text">
+                <img src="img/icons/jpg16.png" alt="" class="win98-icon" style="width: 16px; height: 16px;">
+                dontfeed.bmp
+            </div>
+            <button class="close-button" onclick="closeApplet()">×</button>
+        </div>
+        <div class="content">
+            <img src="img/jerry.jpg" alt="Cheeky Jerry" id="pfp" onclick="changeImage()">
+        </div>
+    </div>
+    <md-block>
+      # suhail's trying a website. <img src="img/digging.gif" alt="Digging" style="margin-right: 4px;"><img src="img/digging.gif" alt="Digging" style="margin-right: 4px;"><img src="img/digging.gif" alt="Digging">
+
+omg you've arrived... ok well i hope you enjoy. click around, make yourself at home!
+      
+    </md-block>
+  </div>
+
+  <hr>
+
+  <div class="container">
+    <md-block>
+      ## my links:
+      
+      <div class="links-grid">
+        <a href="/blog.html" rel="noopener noreferrer">
+          <img src="img/icons/blog.png" alt="" class="win98-icon">BLOG
+        </a>
+        <a href="https://ooh.suhailstry.ing" target="_blank" rel="noopener noreferrer">
+          <img src="img/icons/shop-paint.png" alt="" class="win98-icon">SHOP
+        </a>
+        <a href="https://www.instagram.com/suhailstrying" target="_blank" rel="noopener noreferrer">
+          <img src="img/icons/socialppl.png" alt="" class="win98-icon">SOCIAL
+        </a>
+        <a href="" target="_blank" rel="noopener noreferrer">
+          <img src="img/icons/annex.png" alt="" class="win98-icon">ANNEX
+        </a>
+
+      </div>
+    </md-block>
+  </div>
+
+  <hr>
+
+  <div class="container">
+    <md-block>
+      ## more soon!
+      
+      <div class="project-card">
+        <div class="title-bar">
+          <img src="img/icons/waitingsmall.png" alt="" class="win98-icon" style="width: 16px; height: 16px;">
+          manifesting.bat
+          <div class="window-controls">
+            <button class="fake-control">_</button>
+            <button class="fake-control">□</button>
+            <button class="fake-control">×</button>
+          </div>
+        </div>
+        <div class="content">
+          <em><p>ESTIMATED TIME REMAINING: 333 HOURS, 33 MINUTES.</p></em>
+          <a id="wait-button" onclick="flyCheese()">
+            <img src="img/icons/hourmini.png" alt="" class="wait-button-icon">KILL TIME. 
+          </a>
+        </div>
+      </div>
+
+    </md-block>
+  </div>
+
+  <hr>
+
+  <div class="container">
+
+    <div class="centered"><img src="img/smlrworkers.gif" alt="Workers" id="workersgif"></img></div>
+
+    <div class="centered">
+
+      <img src="img/ie.gif" alt="Internet Explorer"></img>
+      <img src="img/css3.gif" alt="CSS3"></img>
+      <img src="img/got_html.gif" alt="Got HTML"></img>
+      <img src="img/geocities.gif" alt="Geocities"></img>
+      <img src="img/netscape.gif" alt="Netscape"></img>
+
+    </div>
+
+  </div>
+
+  <footer>
+
+    <p>killin' it since 1999,  &copy; <a href="https://i.makeagif.com/media/7-30-2016/JBrGej.gif" target="_blank" rel="noopener noreferrer">suhailstry.ing</a> ❤️ all rights reserved.</p>
+
+  </footer>
+
+</body>
+
+</html>
+</html>

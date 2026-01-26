@@ -1,0 +1,349 @@
+/* Reset and basic styling */
+html, body {
+    height: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+body {
+    background-color: #faf0e6;
+}
+
+/* Cheese cursor for home page only */
+body {
+    cursor: url("img/32CheeseCursor.png"), default;
+}
+
+/* Layout */
+.container {
+    width: 50%;
+    max-width: 50rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.container img {
+    width: min-content;
+}
+
+.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.centered img {
+    margin: .2rem;
+}
+
+hr {
+    display: block;
+    margin: 0.5em auto;
+    border-style: inset;
+    border-width: 1px;
+    width: 50%;
+    max-width: 50rem;
+}
+
+/* Profile and Images */
+.profile-applet {
+    width: 120px;
+    min-width: 120px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #fff #808080 #808080 #fff;
+    box-shadow: inset 1px 1px 0px #fff, inset -1px -1px 0px #0a0a0a;
+    margin: 2rem 0 1rem;
+}
+
+.profile-applet .title-bar {
+    background: #000080;
+    color: #fff;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    font-family: 'W95FA', sans-serif;
+    font-size: 13px;
+}
+
+.title-bar-text {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    padding: 0 2px;
+}
+
+.close-button {
+    width: 14px;
+    height: 14px;
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #fff #808080 #808080 #fff;
+    font-family: 'W95FA', sans-serif;
+    font-size: 12px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-button:active {
+    border-color: #808080 #fff #fff #808080;
+    padding: 1px 0 0 1px;
+}
+
+.profile-applet .content {
+    width: 116px;
+    height: 116px;
+    border: 1px solid #808080;
+    margin: 2px;
+    background: #c0c0c0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#pfp {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #fff;
+    display: block;
+    object-fit: contain;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+#workersgif {
+    max-width: 90%;
+    overflow-x: hidden;
+}
+
+/* Links Grid */
+.links-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.links-grid a {
+    text-decoration: none;
+    color: #000;
+    padding: 0.5rem 1.5rem;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #fff #808080 #808080 #fff;
+    text-align: center;
+    font-family: 'W95FA', sans-serif;
+    font-size: 13px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: inset 1px 1px 0px #fff, inset -1px -1px 0px #0a0a0a;
+}
+
+.links-grid a:active {
+    border-color: #808080 #fff #fff #808080;
+    box-shadow: inset 1px 1px 0px #0a0a0a;
+    padding-top: calc(0.5rem + 1px);
+    padding-left: calc(1.5rem + 1px);
+    padding-bottom: calc(0.5rem - 1px);
+    padding-right: calc(1.5rem - 1px);
+}
+
+/* Project Cards */
+.project-card {
+    border: 2px solid;
+    border-color: #fff #808080 #808080 #fff;
+    padding: 0;
+    margin: 1rem 0;
+    background: #c0c0c0;
+    box-shadow: inset 1px 1px 0px #fff, inset -1px -1px 0px #0a0a0a;
+}
+
+.project-card .title-bar {
+    background: #000080;
+    color: #fff;
+    padding: 3px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    font-family: 'W95FA', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.project-card .title-bar .window-controls {
+    display: flex;
+    gap: 1px;
+    margin-left: auto;
+}
+
+.project-card .title-bar .fake-control {
+    width: 14px;
+    height: 12px;
+    background-color: #c0c0c0;
+    border: 1px solid #ffffff;
+    border-bottom-color: #404040;
+    border-right-color: #404040;
+    font-size: 8px;
+    cursor: default;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
+    color: #000;
+    font-family: 'W95FA', sans-serif;
+    pointer-events: none;
+    user-select: none;
+}
+
+.project-card .title-bar .fake-control:hover,
+.project-card .title-bar .fake-control:active,
+.project-card .title-bar .fake-control:focus {
+    background-color: #c0c0c0;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    border-bottom-color: #404040;
+    border-right-color: #404040;
+    outline: none;
+}
+
+.project-card .content {
+    padding: 1rem;
+}
+
+.project-card p {
+    font-family: 'W95FA', sans-serif;
+    font-size: 13px;
+    margin: 0.75rem 0;
+    line-height: 1.4;
+}
+
+.project-card a {
+    text-decoration: none;
+    color: #000;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 0.75rem;
+    padding: 4px 12px 4px 12px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    font-family: 'W95FA', monospace;
+    font-size: 11px;
+    line-height: 1;
+    box-shadow: inset 1px 1px 0px #fff, inset -1px -1px 0px #0a0a0a;
+    cursor: pointer;
+    position: relative;
+}
+
+.project-card a .wait-button-icon {
+    width: 16px;
+    height: 16px;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    flex-shrink: 0;
+}
+
+.project-card a:hover {
+    background: #d4d0c8;
+}
+
+.project-card a:active {
+    border-color: #808080 #fff #fff #808080;
+    box-shadow: inset 1px 1px 0px #0a0a0a;
+    padding-top: calc(4px + 1px);
+    padding-left: calc(12px + 1px);
+    padding-bottom: calc(4px - 1px);
+    padding-right: calc(12px - 1px);
+}
+
+/* Icons */
+.win98-icon {
+    width: 24px;
+    height: 24px;
+    image-rendering: pixelated;
+    display: inline-block;
+    vertical-align: text-bottom;
+}
+
+/* Markdown Content */
+md-block h1 {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 32px;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+md-block h2 {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 24px;
+    margin: 1rem 0;
+    font-weight: bold;
+}
+
+md-block p {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 1rem 0;
+}
+
+md-block em {
+    font-style: normal;
+    color: #000080;
+    font-weight: bold;
+}
+
+md-block strong {
+    color: #000;
+    font-weight: bold;
+}
+
+/* Footer */
+footer {
+    font-size: small;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Mobile Styles */
+@media only screen and (max-width: 600px) {
+    .container {
+        width: 90%;
+    }
+
+    .centered img {
+        width: auto;
+        height: auto;
+    }
+    
+    hr {
+        width: 90%;
+    }
+
+    .profile-applet {
+        width: 120px;
+        min-width: 120px;
+    }
+
+    /* Remove the problematic mobile override for #pfp */
+    #pfp {
+        width: 100%;
+        height: 100%;
+    }
+}
