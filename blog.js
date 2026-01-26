@@ -53,6 +53,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Use absolute path from root - works for both local and GitHub Pages
         return '/posts/';
     }
+    // Function to get the base URL for posts
+    function getBaseUrl() {
+        // Check if we're in production (GitHub Pages)
+        if (window.location.hostname === 'suhailstry.ing') {
+            return 'https://raw.githubusercontent.com/suhailxyz/suhailxyz.github.io/master/posts/';
+        }
+        return './posts/'; // Local development
+    }
 
     // Function to get list of posts from directory
     async function getPostFiles() {
@@ -83,13 +91,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             const postFiles = await getPostFiles();
             console.log('Got post files:', postFiles);
-            const baseUrl = getBaseUrl();
             
             // Use Promise.allSettled instead of Promise.all so one failure doesn't break everything
             const results = await Promise.allSettled(postFiles.map(async postInfo => {
                 try {
                     console.log('Fetching post:', postInfo.file);
-                    const response = await fetch(baseUrl + postInfo.file, {
+                    const markdownUrl = getMarkdownUrl(postInfo.file);
+                    const response = await fetch(markdownUrl, {
                         headers: {
                             'Accept': 'text/plain'
                         }
