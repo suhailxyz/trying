@@ -53,15 +53,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         return '/posts/';
     }
 
-    // Function to get the URL for markdown files (use raw GitHub for production)
-    function getMarkdownUrl(filename) {
-        const hostname = window.location.hostname;
-        // If we're on the live site, use raw GitHub content
-        if (hostname === 'suhailstry.ing' || hostname === 'heysuhail.com' || hostname.includes('github.io')) {
-            return 'https://raw.githubusercontent.com/suhailxyz/suhailxyz.github.io/main/posts/' + filename;
+    // Function to get the base URL for posts
+    function getBaseUrl() {
+        // Check if we're in production (GitHub Pages)
+        if (window.location.hostname === 'suhailstry.ing') {
+            return 'https://raw.githubusercontent.com/suhailxyz/suhailxyz.github.io/main/posts/';
         }
-        // Local development - use relative path
-        return './posts/' + filename;
+        return './posts/'; // Local development
     }
 
     // Function to get list of posts from directory
@@ -93,49 +91,35 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             const postFiles = await getPostFiles();
             console.log('Got post files:', postFiles);
-            
-            // Use Promise.allSettled instead of Promise.all so one failure doesn't break everything
-            const results = await Promise.allSettled(postFiles.map(async postInfo => {
-                try {
-                    console.log('Fetching post:', postInfo.file);
-                    const markdownUrl = getMarkdownUrl(postInfo.file);
-                    const response = await fetch(markdownUrl, {
-                        headers: {
-                            'Accept': 'text/plain'
-                        }
-                    });
-                    console.log(`Response for ${postInfo.file}:`, response.status);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status} for ${postInfo.file}`);
+            const baseUrl = getBaseUrl();
+            const posts = await Promise.all(postFiles.map(async postInfo => {
+                console.log('Fetching post:', postInfo.file);
+                const response = await fetch(baseUrl + postInfo.file, {
+                    headers: {
+                        'Accept': 'text/plain'
                     }
-                    const markdown = await response.text();
-                    const parsed = parseMd(markdown);
-                    if (!parsed) {
-                        console.error(`Failed to parse markdown for ${postInfo.file}`);
-                        return null;
-                    }
-                    console.log(`Successfully loaded post: ${postInfo.file}`);
-                    return {
-                        filename: postInfo.file,
-                        title: parsed.metadata.title,
-                        subtitle: parsed.metadata.subtitle || null,
-                        date: parsed.metadata.date,
-                        substack: parsed.metadata.substack || null,
-                        content: parsed.content
-                    };
-                } catch (error) {
-                    console.error(`Error loading post ${postInfo.file}:`, error);
+                });
+                console.log(`Response for ${postInfo.file}:`, response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status} for ${postInfo.file}`);
+                }
+                const markdown = await response.text();
+                const parsed = parseMd(markdown);
+                if (!parsed) {
+                    console.log(`Failed to parse markdown for ${postInfo.file}`);
                     return null;
                 }
+                console.log(`Successfully loaded post: ${postInfo.file}`);
+                return {
+                    title: parsed.metadata.title,
+                    date: parsed.metadata.date,
+                    content: parsed.content
+                };
             }));
 
-            // Extract successful posts
-            const posts = results
-                .map(result => result.status === 'fulfilled' ? result.value : null)
-                .filter(post => post !== null);
-            
-            console.log('Final processed posts:', posts);
-            return posts.sort((a, b) => 
+            const filteredPosts = posts.filter(post => post !== null);
+            console.log('Final processed posts:', filteredPosts);
+            return filteredPosts.sort((a, b) => 
                 new Date(b.date) - new Date(a.date)
             );
         } catch (error) {
@@ -144,13 +128,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // Store posts globally so they persist
-    let allPosts = [];
-
     // Render posts
     async function renderPosts() {
         const posts = await loadPosts();
-        allPosts = posts; // Store posts globally
         
         // Clear existing posts
         postListContainer.innerHTML = '';
@@ -178,33 +158,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             postElement.appendChild(dateElement);
             postListContainer.appendChild(postElement);
 
-            // Store post data on the element for reference
-            postElement.dataset.postIndex = index;
-
             postElement.addEventListener('click', () => {
                 // Remove active class from all posts
                 document.querySelectorAll('.post').forEach(p => p.classList.remove('active'));
                 // Add active class to clicked post
                 postElement.classList.add('active');
 
-                // Get the post from the stored array using the index
-                const postIndex = parseInt(postElement.dataset.postIndex);
-                const selectedPost = allPosts[postIndex];
-                
-                if (selectedPost) {
-                    // Update viewer
-                    renderPostContent(selectedPost);
-                }
-
-                // Close mobile menu if open
-                const postList = document.querySelector('.post-list');
-                const overlay = document.getElementById('mobile-overlay');
-                if (postList.classList.contains('mobile-open')) {
-                    postList.classList.remove('mobile-open');
-                    if (overlay) {
-                        overlay.classList.remove('active');
-                    }
-                }
+                // Update viewer
+                renderPostContent(post);
             });
         });
         
