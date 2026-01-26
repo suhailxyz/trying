@@ -50,11 +50,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Function to get the base URL for posts
     function getBaseUrl() {
-        // Check if we're in production (GitHub Pages)
-        if (window.location.hostname === 'heysuhail.com') {
-            return 'https://raw.githubusercontent.com/suhailxyz/suhailxyz.github.io/master/posts/';
-        }
-        return './posts/'; // Local development
+        // Use relative path - works for both local and GitHub Pages
+        return './posts/';
     }
 
     // Function to get list of posts from directory
