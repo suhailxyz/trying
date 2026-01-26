@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     function getBaseUrl() {
         // Check if we're in production (GitHub Pages)
         if (window.location.hostname === 'suhailstry.ing') {
-            return 'https://raw.githubusercontent.com/suhailxyz/suhailxyz.github.io/master/posts/';
+            return 'https://raw.githubusercontent.com/suhailxyz/suhailxyz.github.io/main/posts/';
         }
         return './posts/'; // Local development
     }
