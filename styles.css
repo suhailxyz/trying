@@ -79,6 +79,13 @@ hr {
     padding: 0 2px;
 }
 
+.title-bar-text img,
+.title-bar img {
+    flex-shrink: 0;
+    object-fit: none;
+    image-rendering: pixelated;
+}
+
 .close-button {
     width: 14px;
     height: 14px;
@@ -273,11 +280,12 @@ hr {
 
 /* Icons */
 .win98-icon {
-    width: 24px;
-    height: 24px;
+    width: auto;
+    height: auto;
     image-rendering: pixelated;
     display: inline-block;
     vertical-align: text-bottom;
+    flex-shrink: 0;
 }
 
 /* Markdown Content */
@@ -325,6 +333,8 @@ footer {
 @media only screen and (max-width: 600px) {
     .container {
         width: 90%;
+        max-width: 90%;
+        overflow-x: hidden;
     }
 
     .centered img {
@@ -345,5 +355,20 @@ footer {
     #pfp {
         width: 100%;
         height: 100%;
+    }
+    
+    /* Ensure icons maintain original scale on mobile */
+    .win98-icon,
+    .links-grid a img {
+        flex-shrink: 0 !important;
+        width: auto !important;
+        height: auto !important;
+        image-rendering: pixelated !important;
+    }
+    
+    .title-bar-text img,
+    .title-bar img {
+        flex-shrink: 0 !important;
+        image-rendering: pixelated !important;
     }
 }
