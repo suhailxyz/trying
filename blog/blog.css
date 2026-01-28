@@ -41,7 +41,7 @@ body {
     min-height: 100vh;
     padding: 20px;
     font-size: 12px;
-    cursor: url("img/icons/magnify.png"), default;
+    cursor: url("../assets/img/icons/magnify.png"), default;
 }
 
 /* Window styles */
@@ -186,27 +186,27 @@ body {
 }
 
 .tool-button[data-action="new"]::before {
-    background-image: url('../img/icons/substack-click.png');
+    background-image: url('../assets/img/icons/substack-click.png');
 }
 
 .tool-button[data-action="about-page"]::before {
-    background-image: url('../img/icons/help16.png');
+    background-image: url('../assets/img/icons/help16.png');
 }
 
 .tool-button[data-action="font-increase"]::before {
-    background-image: url('../img/icons/font-inc.png');
+    background-image: url('../assets/img/icons/font-inc.png');
 }
 
 .tool-button[data-action="font-decrease"]::before {
-    background-image: url('../img/icons/font-dec.png');
+    background-image: url('../assets/img/icons/font-dec.png');
 }
 
 .tool-button[data-action="home"]::before {
-    background-image: url('../img/icons/home16.png');
+    background-image: url('../assets/img/icons/home16.png');
 }
 
 .tool-button[data-action="toggle-menu"]::before {
-    background-image: url('../img/icons/posts.png');
+    background-image: url('../assets/img/icons/posts.png');
 }
 
 .tool-button:active {
@@ -362,7 +362,7 @@ body {
     transform: translateY(-50%);
     width: 16px;
     height: 16px;
-    background-image: url('../img/icons/text.png');
+    background-image: url('../assets/img/icons/text.png');
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -417,7 +417,7 @@ body {
     transform: translateY(-50%);
     width: 16px;
     height: 16px;
-    background-image: url('../img/icons/goto-arrow.png');
+    background-image: url('../assets/img/icons/goto-arrow.png');
     background-size: 16px 16px;
     background-repeat: no-repeat;
     background-position: 0 0;

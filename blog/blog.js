@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Function to get URL for index.json (works from local path on GitHub Pages)
     function getIndexUrl() {
-        return '/posts/index.json';
+        return '/blog/posts/index.json';
     }
 
     // Function to get URL for markdown files (use raw GitHub for production)
@@ -58,10 +58,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const hostname = window.location.hostname;
         // If we're on the live site, use raw GitHub content
         if (hostname === 'suhailstry.ing' || hostname === 'heysuhail.com' || hostname.includes('github.io')) {
-            return 'https://raw.githubusercontent.com/suhailxyz/trying/main/posts/' + filename;
+            return 'https://raw.githubusercontent.com/suhailxyz/trying/main/blog/posts/' + filename;
         }
-        // Local development - use relative path
-        return './posts/' + filename;
+        // Local development - use relative path from blog directory
+        return 'posts/' + filename;
     }
 
     // Function to get list of posts from directory
@@ -449,7 +449,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function navigateHome() {
-        window.location.href = 'index.html';
+        window.location.href = '/';
     }
 
     // Dialog button handlers

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.cdnfonts.com/css/w95fa" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="icon" type="image/png" href="../assets/img/icons/help16.png">
+  <title>ann.exe –– suhailstrying</title>
+  <style>
+    .annex-window {
+      max-width: 500px;
+      width: 90%;
+      margin: 2rem auto;
+    }
+    
+    .annex-content {
+      text-align: center;
+      padding: 1rem;
+    }
+    
+    .annex-section {
+      margin-bottom: 2rem;
+    }
+    
+    #sections-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .coming-soon-title {
+      font-family: 'W95FA', sans-serif;
+      font-size: 16px;
+      font-weight: bold;
+      margin: 0.75rem 0;
+      color: #000;
+    }
+    
+    .annex-message {
+      font-family: 'W95FA', sans-serif;
+      font-size: 14px;
+      line-height: 1.4;
+      margin: 0.5rem 0;
+      color: #000;
+    }
+    
+    .annex-message p {
+      margin: 0.25rem 0;
+    }
+    
+    .annex-icon {
+      margin: 0.5rem 0;
+    }
+    
+    .annex-icon img {
+      width: 32px !important;
+      height: 32px !important;
+    }
+    
+    @media (min-width: 769px) {
+      .annex-content {
+        padding: 1.5rem;
+      }
+      
+      .annex-icon img {
+        width: 48px !important;
+        height: 48px !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Sections will be loaded here (above the window) -->
+    <div id="sections-container"></div>
+    
+    <div class="annex-window">
+      <div class="project-card">
+        <div class="title-bar">
+          <div class="title-bar-text">
+            <img src="../assets/img/icons/help16.png" alt="" class="win98-icon" style="width: 16px; height: 16px;">
+            ann.exe
+          </div>
+          <div class="window-controls">
+            <button class="fake-control">_</button>
+            <button class="fake-control">□</button>
+            <button class="fake-control">×</button>
+          </div>
+        </div>
+        <div class="content annex-content">
+          <div class="annex-icon">
+            <img src="../assets/img/icons/waitingsmall.png" alt="Annex" class="win98-icon" style="width: 48px; height: 48px;">
+          </div>
+          
+          <h1 class="coming-soon-title">COMING SOON</h1>
+          
+          <div class="annex-message">
+            <p>I'll be adding stuff soon.</p>
+            <div class="win98-loading">
+              <p class="win98-loading-text">Loading...</p>
+              <div class="win98-loading-bar-container">
+                <div class="win98-loading-bar-track">
+                  <div class="win98-loading-bar-segments">
+                    <div class="win98-loading-bar-segment"></div>
+                    <div class="win98-loading-bar-segment"></div>
+                    <div class="win98-loading-bar-segment"></div>
+                    <div class="win98-loading-bar-segment"></div>
+                    <div class="win98-loading-bar-segment"></div>
+                    <div class="win98-loading-bar-segment"></div>
+                    <div class="win98-loading-bar-segment"></div>
+                    <div class="win98-loading-bar-segment"></div>
+                    <div class="win98-loading-bar-segment"></div>
+                    <div class="win98-loading-bar-segment"></div>
+                    <div class="win98-loading-bar-segment"></div>
+                    <div class="win98-loading-bar-segment"></div>
+                    <div class="win98-loading-bar-segment"></div>
+                    <div class="win98-loading-bar-segment"></div>
+                    <div class="win98-loading-bar-segment"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p>Check back!</p>
+          </div>
+          
+          <div style="margin-top: 1rem;">
+            <a href="/" style="text-decoration: none; color: #000; display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: #c0c0c0; border: 2px solid; border-color: #ffffff #808080 #808080 #ffffff; font-family: 'W95FA', monospace; font-size: 11px; line-height: 1; box-shadow: inset 1px 1px 0px #fff, inset -1px -1px 0px #0a0a0a; cursor: pointer;">
+              <img src="../assets/img/icons/home16.png" alt="" class="win98-icon" style="width: 16px; height: 16px;">
+              Back to Home
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>killin' it since 1999, &copy; <a href="https://i.makeagif.com/media/7-30-2016/JBrGej.gif" target="_blank" rel="noopener noreferrer">suhailstry.ing</a> ❤️ all rights reserved.</p>
+  </footer>
+
+  <script>
+  // Section loading system
+  async function loadSection(filename, containerId) {
+    try {
+      const response = await fetch(`sections/${filename}`);
+      if (!response.ok) {
+        throw new Error(`Failed to load ${filename}: ${response.status}`);
+      }
+      const html = await response.text();
+      const container = document.getElementById(containerId);
+      if (container) {
+        container.innerHTML += html;
+        
+        // Initialize loading bars in newly loaded content
+        const newLoadingBars = container.querySelectorAll('.win98-loading');
+        newLoadingBars.forEach(initLoadingBar);
+      }
+    } catch (error) {
+      console.error(`Error loading ${filename}:`, error);
+    }
+  }
+
+  // Loading bar animation
+  function initLoadingBar(container) {
+    const segments = container.querySelectorAll('.win98-loading-bar-segment');
+    let currentIndex = 0;
+    
+    function loadNextSegment() {
+      // Check if we're at the second-to-last block - get stuck here
+      if (currentIndex === segments.length - 2) {
+        const segment = segments[currentIndex];
+        if (segment) {
+          segment.classList.add('visible', 'flashing');
+          // Keep flashing indefinitely - never progress
+          return;
+        }
+      }
+      
+      if (currentIndex >= segments.length) {
+        // Reset and loop
+        segments.forEach(seg => {
+          seg.classList.remove('visible', 'flashing');
+        });
+        currentIndex = 0;
+      }
+      
+      const segment = segments[currentIndex];
+      if (!segment) return;
+      
+      // Show the segment and make it flash
+      segment.classList.add('visible', 'flashing');
+      
+      // Random number of flashes between 2 and 5
+      const flashCount = Math.floor(Math.random() * 4) + 2; // 2-5 flashes
+      const flashDuration = 800; // Duration of one flash cycle
+      const totalFlashTime = flashCount * flashDuration;
+      
+      // Flash for random amount of time, then make it solid
+      setTimeout(() => {
+        segment.classList.remove('flashing');
+        currentIndex++;
+        
+        // Move to next segment
+        setTimeout(loadNextSegment, 100);
+      }, totalFlashTime);
+    }
+    
+    // Start the animation
+    loadNextSegment();
+  }
+  
+  // Initialize all loading bars on the page
+  function initAllLoadingBars() {
+    document.querySelectorAll('.win98-loading').forEach(initLoadingBar);
+  }
+  
+  // Load sections when page is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    // List of sections to load (add more as needed)
+    const sections = ['placeholder.html'];
+    
+    // Load all sections
+    sections.forEach(section => {
+      loadSection(section, 'sections-container');
+    });
+    
+    // Initialize any existing loading bars
+    initAllLoadingBars();
+  });
+  
+  // Also run immediately in case DOM is already loaded
+  if (document.readyState !== 'loading') {
+    initAllLoadingBars();
+  }
+  </script>
+
+</body>
+
+</html>

@@ -7,7 +7,7 @@
   <script type="module" src="https://md-block.verou.me/md-block.js"></script>
   <link href="https://fonts.cdnfonts.com/css/w95fa" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" type="image/png" href="img/icons/win98-small.png">
+  <link rel="icon" type="image/png" href="assets/img/icons/win98-small.png">
 
   <title>suhailstrying.html</title>
 </head>
@@ -24,14 +24,14 @@
       // Prevent multiple clicks while animating
       if (isAnimating) return;
       
-      if (image.src.match("img/jerry.jpg")) {
+      if (image.src.match("assets/img/jerry.jpg")) {
         isAnimating = true;
-        image.src = "img/jerryeats.gif";
+        image.src = "assets/img/jerryeats.gif";
         image.alt = "Jerry eats a big cheese";
         
         // Reset the GIF after 2.5 seconds (actual duration of animation)
         setTimeout(() => {
-          image.src = "img/jerry.jpg";
+          image.src = "assets/img/jerry.jpg";
           image.alt = "Cheeky Jerry";
           isAnimating = false;
         }, 2500);
@@ -56,7 +56,7 @@
       
       // Create flying cheese element
       const cheese = document.createElement('img');
-      cheese.src = 'img/32CheeseCursor.png';
+      cheese.src = 'assets/img/32CheeseCursor.png';
       cheese.style.position = 'fixed';
       cheese.style.width = '32px';
       cheese.style.height = '32px';
@@ -82,7 +82,7 @@
       setTimeout(() => {
         cheese.remove();
         // Trigger Jerry eating animation
-        if (jerryImage.src.match("img/jerry.jpg")) {
+        if (jerryImage.src.match("assets/img/jerry.jpg")) {
           changeImage();
         }
       }, 1000);
@@ -98,17 +98,17 @@
     <div class="profile-applet">
         <div class="title-bar">
             <div class="title-bar-text">
-                <img src="img/icons/jpg16.png" alt="" class="win98-icon" style="width: 16px; height: 16px;">
+                <img src="assets/img/icons/jpg16.png" alt="" class="win98-icon" style="width: 16px; height: 16px;">
                 dontfeed.bmp
             </div>
             <button class="close-button" onclick="closeApplet()">×</button>
         </div>
         <div class="content">
-            <img src="img/jerry.jpg" alt="Cheeky Jerry" id="pfp" onclick="changeImage()">
+            <img src="assets/img/jerry.jpg" alt="Cheeky Jerry" id="pfp" onclick="changeImage()">
         </div>
     </div>
     <md-block>
-      # suhail's trying a website. <img src="img/digging.gif" alt="Digging" style="margin-right: 4px;"><img src="img/digging.gif" alt="Digging" style="margin-right: 4px;"><img src="img/digging.gif" alt="Digging">
+      # suhail's trying a website. <img src="assets/img/digging.gif" alt="Digging" style="margin-right: 4px;">
 
 omg you've arrived... ok well i hope you enjoy. click around, make yourself at home!
       
@@ -122,17 +122,17 @@ omg you've arrived... ok well i hope you enjoy. click around, make yourself at h
       ## my links:
       
       <div class="links-grid">
-        <a href="/blog.html" rel="noopener noreferrer">
-          <img src="img/icons/blog.png" alt="" class="win98-icon">BLOG
+        <a href="/blog/" rel="noopener noreferrer">
+          <img src="assets/img/icons/blog.png" alt="" class="win98-icon">BLOG
         </a>
         <a href="https://ooh.suhailstry.ing" target="_blank" rel="noopener noreferrer">
-          <img src="img/icons/shop-paint.png" alt="" class="win98-icon">SHOP
+          <img src="assets/img/icons/shop-paint.png" alt="" class="win98-icon">SHOP
         </a>
         <a href="https://www.instagram.com/suhailstrying" target="_blank" rel="noopener noreferrer">
-          <img src="img/icons/socialppl.png" alt="" class="win98-icon">SOCIAL
+          <img src="assets/img/icons/socialppl.png" alt="" class="win98-icon">SOCIAL
         </a>
-        <a href="/annex.html" rel="noopener noreferrer">
-          <img src="img/icons/annex.png" alt="" class="win98-icon">ANNEX
+        <a href="/annex/" rel="noopener noreferrer">
+          <img src="assets/img/icons/annex.png" alt="" class="win98-icon">ANNEX
         </a>
 
       </div>
@@ -144,41 +144,66 @@ omg you've arrived... ok well i hope you enjoy. click around, make yourself at h
   <div class="container">
     <md-block>
       ## more soon!
-      
-      <div class="project-card">
-        <div class="title-bar">
-          <img src="img/icons/waitingsmall.png" alt="" class="win98-icon" style="width: 16px; height: 16px;">
-          manifesting.bat
-          <div class="window-controls">
-            <button class="fake-control">_</button>
-            <button class="fake-control">□</button>
-            <button class="fake-control">×</button>
-          </div>
+    </md-block>
+    
+    <div class="project-card" style="margin-top: 1.5rem;">
+      <div class="title-bar">
+        <img src="assets/img/icons/butterfly16.png" alt="" class="win98-icon" style="width: 16px; height: 16px;">
+        manifesting.bat
+        <div class="window-controls">
+          <button class="fake-control">_</button>
+          <button class="fake-control">□</button>
+          <button class="fake-control">×</button>
         </div>
-        <div class="content">
-          <em><p>ESTIMATED TIME REMAINING: 333 HOURS, 33 MINUTES.</p></em>
-          <a id="wait-button" onclick="flyCheese()">
-            <img src="img/icons/hourmini.png" alt="" class="wait-button-icon">KILL TIME. 
+      </div>
+      <div class="content" style="display: flex; align-items: flex-start; justify-content: center; gap: 1rem; padding: 1rem 1.25rem;">
+        <img src="assets/img/icons/manifesting.png" alt="Manifesting" style="flex-shrink: 0; image-rendering: pixelated; width: 48px; height: 48px; margin-top: 0.125rem;">
+        <div style="display: flex; flex-direction: column; gap: 0.75rem; min-width: 0;">
+          <em><p style="margin: 0; padding: 0; line-height: 1.5; font-size: 13px;">ESTIMATED TIME REMAINING: 333 HOURS, 33 MINUTES.</p></em>
+          <div class="win98-loading" style="margin: 0 !important; padding: 0 !important; align-items: flex-start !important;">
+            <div class="win98-loading-bar-container" style="width: 280px !important; max-width: 100% !important;">
+              <div class="win98-loading-bar-track">
+                <div class="win98-loading-bar-segments">
+                  <div class="win98-loading-bar-segment"></div>
+                  <div class="win98-loading-bar-segment"></div>
+                  <div class="win98-loading-bar-segment"></div>
+                  <div class="win98-loading-bar-segment"></div>
+                  <div class="win98-loading-bar-segment"></div>
+                  <div class="win98-loading-bar-segment"></div>
+                  <div class="win98-loading-bar-segment"></div>
+                  <div class="win98-loading-bar-segment"></div>
+                  <div class="win98-loading-bar-segment"></div>
+                  <div class="win98-loading-bar-segment"></div>
+                  <div class="win98-loading-bar-segment"></div>
+                  <div class="win98-loading-bar-segment"></div>
+                  <div class="win98-loading-bar-segment"></div>
+                  <div class="win98-loading-bar-segment"></div>
+                  <div class="win98-loading-bar-segment"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a id="wait-button" onclick="flyCheese()" style="align-self: flex-start; margin-top: 0.5rem;">
+            <img src="assets/img/icons/hourmini.png" alt="" class="wait-button-icon">KILL TIME. 
           </a>
         </div>
       </div>
-
-    </md-block>
+    </div>
   </div>
 
   <hr>
 
   <div class="container">
 
-    <div class="centered"><img src="img/smlrworkers.gif" alt="Workers" id="workersgif"></img></div>
+    <div class="centered"><img src="assets/img/smlrworkers.gif" alt="Workers" id="workersgif"></img></div>
 
     <div class="centered">
 
-      <img src="img/ie.gif" alt="Internet Explorer"></img>
-      <img src="img/css3.gif" alt="CSS3"></img>
-      <img src="img/got_html.gif" alt="Got HTML"></img>
-      <img src="img/geocities.gif" alt="Geocities"></img>
-      <img src="img/netscape.gif" alt="Netscape"></img>
+      <img src="assets/img/ie.gif" alt="Internet Explorer"></img>
+      <img src="assets/img/css3.gif" alt="CSS3"></img>
+      <img src="assets/img/got_html.gif" alt="Got HTML"></img>
+      <img src="assets/img/geocities.gif" alt="Geocities"></img>
+      <img src="assets/img/netscape.gif" alt="Netscape"></img>
 
     </div>
 
@@ -189,6 +214,69 @@ omg you've arrived... ok well i hope you enjoy. click around, make yourself at h
     <p>killin' it since 1999,  &copy; <a href="https://i.makeagif.com/media/7-30-2016/JBrGej.gif" target="_blank" rel="noopener noreferrer">suhailstry.ing</a> ❤️ all rights reserved.</p>
 
   </footer>
+
+  <script>
+  (function() {
+    function initLoadingBar(container) {
+      const segments = container.querySelectorAll('.win98-loading-bar-segment');
+      let currentIndex = 0;
+      
+      function loadNextSegment() {
+        // Check if we're at the second-to-last block - get stuck here
+        if (currentIndex === segments.length - 2) {
+          const segment = segments[currentIndex];
+          if (segment) {
+            segment.classList.add('visible', 'flashing');
+            // Keep flashing indefinitely - never progress
+            return;
+          }
+        }
+        
+        if (currentIndex >= segments.length) {
+          // Reset and loop
+          segments.forEach(seg => {
+            seg.classList.remove('visible', 'flashing');
+          });
+          currentIndex = 0;
+        }
+        
+        const segment = segments[currentIndex];
+        if (!segment) return;
+        
+        // Show the segment and make it flash
+        segment.classList.add('visible', 'flashing');
+        
+        // Random number of flashes between 2 and 5
+        const flashCount = Math.floor(Math.random() * 4) + 2; // 2-5 flashes
+        const flashDuration = 800; // Duration of one flash cycle
+        const totalFlashTime = flashCount * flashDuration;
+        
+        // Flash for random amount of time, then make it solid
+        setTimeout(() => {
+          segment.classList.remove('flashing');
+          currentIndex++;
+          
+          // Move to next segment
+          setTimeout(loadNextSegment, 100);
+        }, totalFlashTime);
+      }
+      
+      // Start the animation
+      loadNextSegment();
+    }
+    
+    // Initialize all loading bars on the page
+    function initAll() {
+      document.querySelectorAll('.win98-loading').forEach(initLoadingBar);
+    }
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAll);
+    } else {
+      initAll();
+    }
+  })();
+  </script>
 
 </body>
 
