@@ -37,6 +37,8 @@
             <div class="toolbar-left">
                 <button class="tool-button mobile-menu-toggle" data-action="toggle-menu" id="mobile-menu-toggle" style="font-style: italic;">Unread</button>
                 <button class="tool-button" data-action="home">Home</button>
+                <button class="tool-button toolbar-mode-btn" data-mode="posts" id="toolbar-posts-btn">Posts</button>
+                <button class="tool-button toolbar-mode-btn" data-mode="notes" id="toolbar-notes-btn">Notes</button>
                 <button class="tool-button" data-action="new">Substack</button>
                 <button class="tool-button" data-action="about-page">About</button>
             </div>
@@ -49,8 +51,12 @@
         <div class="mobile-overlay" id="mobile-overlay"></div>
         <div class="content-area">
             <div class="post-list">
+                <div class="list-mode-toggle" id="list-mode-toggle" aria-hidden="true">
+                    <button type="button" class="list-mode-btn active" data-mode="posts">Posts</button>
+                    <button type="button" class="list-mode-btn" data-mode="notes">Notes</button>
+                </div>
                 <div class="post-header">
-                    <div class="header-title">Subject</div>
+                    <div class="header-title" id="list-header-title">Subject</div>
                     <div class="header-date">Date</div>
                 </div>
                 <div class="post-list-container">

@@ -209,6 +209,20 @@ body {
     background-image: url('../assets/img/icons/posts.png');
 }
 
+.tool-button[data-mode="posts"]::before {
+    background-image: url('../assets/img/icons/posts.png');
+}
+
+.tool-button[data-mode="notes"]::before {
+    background-image: url('../assets/img/icons/text.png');
+}
+
+.tool-button.toolbar-mode-btn.active {
+    background: #d4d0c8;
+    border-color: #808080 #fff #fff #808080;
+    box-shadow: inset 1px 1px 0px #0a0a0a;
+}
+
 .tool-button:active {
     border-color: #404040;
     border-bottom-color: #ffffff;
@@ -227,6 +241,39 @@ body {
     border-top: 1px solid #ffffff;
     min-height: 0;
     position: relative;
+}
+
+/* List mode toggle (mobile: Posts / Notes in slide-out) */
+.list-mode-toggle {
+    display: none;
+    padding: 4px;
+    gap: 4px;
+    background: #c0c0c0;
+    border-bottom: 1px solid #808080;
+}
+
+.list-mode-toggle .list-mode-btn {
+    flex: 1;
+    padding: 4px 8px;
+    background: #c0c0c0;
+    border: 1px solid #ffffff;
+    border-bottom-color: #404040;
+    border-right-color: #404040;
+    font-family: 'W95FA', monospace;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.list-mode-toggle .list-mode-btn.active {
+    background: #000080;
+    color: white;
+    border-color: #000080;
+}
+
+.list-mode-toggle .list-mode-btn:not(.active):active {
+    border-color: #404040;
+    border-bottom-color: #ffffff;
+    border-right-color: #ffffff;
 }
 
 /* Post list */
@@ -621,6 +668,15 @@ body {
     /* Show mobile menu toggle */
     .mobile-menu-toggle {
         display: flex !important;
+    }
+
+    /* Hide Posts/Notes in toolbar; show in-panel Posts/Notes buttons */
+    .toolbar-mode-btn {
+        display: none !important;
+    }
+
+    .list-mode-toggle {
+        display: flex;
     }
 
     /* Mobile overlay */

@@ -64,6 +64,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         return 'posts/' + filename;
     }
 
+    // Notes index and content URLs (same pattern as posts)
+    function getNotesIndexUrl() {
+        return '/blog/notes/index.json';
+    }
+
+    function getNoteContentUrl(filename) {
+        const hostname = window.location.hostname;
+        if (hostname === 'suhailstry.ing' || hostname === 'heysuhail.com' || hostname.includes('github.io')) {
+            return 'https://raw.githubusercontent.com/suhailxyz/trying/main/blog/notes/' + filename;
+        }
+        return 'notes/' + filename;
+    }
+
     // Function to get list of posts from directory
     async function getPostFiles() {
         console.log('Attempting to fetch index.json...');
@@ -146,19 +159,62 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Store posts globally so they persist
     let allPosts = [];
 
-    // Render posts
-    async function renderPosts() {
-        const posts = await loadPosts();
-        allPosts = posts; // Store posts globally
-        
-        // Clear existing posts
+    // Notes: index and loaded notes
+    let allNotes = [];
+
+    async function getNoteFiles() {
+        try {
+            const response = await fetch(getNotesIndexUrl(), { headers: { 'Accept': 'application/json' } });
+            if (!response.ok) return [];
+            return await response.json();
+        } catch (error) {
+            console.error('Error getting note files:', error);
+            return [];
+        }
+    }
+
+    async function loadNotes() {
+        try {
+            const noteFiles = await getNoteFiles();
+            const results = await Promise.allSettled(noteFiles.map(async (noteInfo) => {
+                try {
+                    const url = getNoteContentUrl(noteInfo.file);
+                    const response = await fetch(url, { headers: { 'Accept': 'text/plain' } });
+                    if (!response.ok) return null;
+                    const markdown = await response.text();
+                    const parsed = parseMd(markdown);
+                    const title = parsed ? (parsed.metadata.title || noteInfo.file.replace(/\.(md|txt)$/i, '')) : noteInfo.file.replace(/\.(md|txt)$/i, '');
+                    const date = parsed && parsed.metadata.date ? parsed.metadata.date : null;
+                    const content = parsed ? parsed.content : markdown;
+                    return {
+                        filename: noteInfo.file,
+                        title,
+                        date,
+                        content
+                    };
+                } catch (err) {
+                    console.error('Error loading note ' + noteInfo.file, err);
+                    return null;
+                }
+            }));
+            allNotes = results
+                .map(r => r.status === 'fulfilled' ? r.value : null)
+                .filter(n => n !== null);
+            return allNotes;
+        } catch (error) {
+            console.error('Error loading notes:', error);
+            allNotes = [];
+            return [];
+        }
+    }
+
+    // Populate post list container (used by renderPosts and when switching back from notes)
+    function renderPostListItems() {
         postListContainer.innerHTML = '';
-        
-        // Add posts
-        posts.forEach((post, index) => {
+        allPosts.forEach((post, index) => {
             const postElement = document.createElement('div');
             postElement.className = 'post';
-            if (index === 0) postElement.classList.add('active');
+            if (index === 0 && !notesModeActive) postElement.classList.add('active');
 
             const titleElement = document.createElement('div');
             titleElement.className = 'post-title';
@@ -176,45 +232,133 @@ document.addEventListener('DOMContentLoaded', async () => {
             postElement.appendChild(titleElement);
             postElement.appendChild(dateElement);
             postListContainer.appendChild(postElement);
-
-            // Store post data on the element for reference
             postElement.dataset.postIndex = index;
 
             postElement.addEventListener('click', () => {
-                // Remove active class from all posts
-                document.querySelectorAll('.post').forEach(p => p.classList.remove('active'));
+                document.querySelectorAll('.post-list-container .post').forEach(p => p.classList.remove('active'));
                 postElement.classList.add('active');
-
-                // Get the post from the stored array using the index
                 const postIndex = parseInt(postElement.dataset.postIndex);
                 const selectedPost = allPosts[postIndex];
-                
-                if (selectedPost) {
-                    // Update viewer
-                    renderPostContent(selectedPost);
-                }
-
-                // Close mobile menu if open
-                const postList = document.querySelector('.post-list');
+                if (selectedPost) renderPostContent(selectedPost);
+                const listEl = document.querySelector('.post-list');
                 const overlay = document.getElementById('mobile-overlay');
-                if (postList && postList.classList.contains('mobile-open')) {
-                    postList.classList.remove('mobile-open');
-                    if (overlay) {
-                        overlay.classList.remove('active');
-                    }
+                if (listEl && listEl.classList.contains('mobile-open') && overlay) {
+                    listEl.classList.remove('mobile-open');
+                    overlay.classList.remove('active');
                 }
             });
         });
-        
-        // Update status count
-        statusCount.textContent = `${posts.length} message${posts.length !== 1 ? 's' : ''}`;
+    }
 
-        // Show first post by default
-        if (posts.length > 0) {
-            renderPostContent(posts[0]);
-            // First post already has active class from forEach loop above
+    // Populate note list container
+    function renderNotesListItems() {
+        postListContainer.innerHTML = '';
+        allNotes.forEach((note, index) => {
+            const noteElement = document.createElement('div');
+            noteElement.className = 'post';
+            if (index === 0) noteElement.classList.add('active');
+
+            const titleElement = document.createElement('div');
+            titleElement.className = 'post-title';
+            titleElement.textContent = note.title;
+
+            const dateElement = document.createElement('div');
+            dateElement.className = 'post-date';
+            dateElement.textContent = note.date
+                ? new Date(note.date).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }).replace(', ', ' ')
+                : '—';
+
+            noteElement.appendChild(titleElement);
+            noteElement.appendChild(dateElement);
+            postListContainer.appendChild(noteElement);
+            noteElement.dataset.noteIndex = index;
+
+            noteElement.addEventListener('click', () => {
+                document.querySelectorAll('.post-list-container .post').forEach(p => p.classList.remove('active'));
+                noteElement.classList.add('active');
+                const noteIndex = parseInt(noteElement.dataset.noteIndex);
+                const selectedNote = allNotes[noteIndex];
+                if (selectedNote) renderNoteContent(selectedNote);
+                const listEl = document.querySelector('.post-list');
+                const overlay = document.getElementById('mobile-overlay');
+                if (listEl && listEl.classList.contains('mobile-open') && overlay) {
+                    listEl.classList.remove('mobile-open');
+                    overlay.classList.remove('active');
+                }
+            });
+        });
+    }
+
+    // Render note content in viewer (no Substack, no LATEST_POST)
+    function renderNoteContent(note) {
+        const formattedDate = note.date
+            ? new Date(note.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+            : '';
+        const dateHtml = formattedDate ? `<div class="header-actions"><div class="date">${formattedDate}</div></div>` : '';
+        const content = marked.parse(note.content);
+        postViewer.innerHTML = `
+            <div class="viewer-header">
+                <div class="subject">${note.title}</div>
+                ${dateHtml}
+            </div>
+            <div class="viewer-content markdown-content">${content}</div>
+        `;
+        applySavedFontSize();
+    }
+
+    // Notes mode state (persist in localStorage)
+    let notesModeActive = false;
+
+    function setListMode(isNotes) {
+        const listHeaderTitle = document.getElementById('list-header-title');
+        const toolbarPostsBtn = document.getElementById('toolbar-posts-btn');
+        const toolbarNotesBtn = document.getElementById('toolbar-notes-btn');
+        const listModeToggle = document.getElementById('list-mode-toggle');
+        notesModeActive = isNotes;
+        try { localStorage.setItem('blogNotesMode', isNotes ? '1' : '0'); } catch (_) {}
+
+        if (listHeaderTitle) listHeaderTitle.textContent = isNotes ? 'Note' : 'Subject';
+        if (toolbarPostsBtn) toolbarPostsBtn.classList.toggle('active', !isNotes);
+        if (toolbarNotesBtn) toolbarNotesBtn.classList.toggle('active', isNotes);
+        if (listModeToggle) {
+            listModeToggle.querySelector('[data-mode="posts"]')?.classList.toggle('active', !isNotes);
+            listModeToggle.querySelector('[data-mode="notes"]')?.classList.toggle('active', isNotes);
+        }
+
+        if (isNotes) {
+            if (allNotes.length === 0) {
+                loadNotes().then(() => {
+                    renderNotesListItems();
+                    statusCount.textContent = `${allNotes.length} note${allNotes.length !== 1 ? 's' : ''}`;
+                    if (allNotes.length > 0) renderNoteContent(allNotes[0]);
+                    else postViewer.innerHTML = '<div class="viewer-content">No notes available.</div>';
+                });
+            } else {
+                renderNotesListItems();
+                statusCount.textContent = `${allNotes.length} note${allNotes.length !== 1 ? 's' : ''}`;
+                if (allNotes.length > 0) renderNoteContent(allNotes[0]);
+                else postViewer.innerHTML = '<div class="viewer-content">No notes available.</div>';
+            }
         } else {
-            postViewer.innerHTML = '<div class="viewer-content">No messages available.</div>';
+            renderPostListItems();
+            statusCount.textContent = `${allPosts.length} message${allPosts.length !== 1 ? 's' : ''}`;
+            if (allPosts.length > 0) {
+                renderPostContent(allPosts[0]);
+                document.querySelectorAll('.post-list-container .post').forEach((p, i) => p.classList.toggle('active', i === 0));
+            } else postViewer.innerHTML = '<div class="viewer-content">No messages available.</div>';
+        }
+    }
+
+    // Render posts (initial load and refill list)
+    async function renderPosts() {
+        const posts = await loadPosts();
+        allPosts = posts;
+        const savedNotesMode = localStorage.getItem('blogNotesMode') === '1';
+        if (savedNotesMode) {
+            await loadNotes();
+            setListMode(true);
+        } else {
+            setListMode(false);
         }
     }
 
@@ -374,7 +518,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 adjustFontSize(1);
             } else if (action === 'font-decrease') {
                 adjustFontSize(-1);
+            } else if (e.target.dataset.mode) {
+                setListMode(e.target.dataset.mode === 'notes');
             }
+        }
+        // In-panel Posts/Notes buttons (mobile)
+        if (e.target.matches('.list-mode-btn')) {
+            setListMode(e.target.dataset.mode === 'notes');
         }
     });
 
