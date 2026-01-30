@@ -206,7 +206,7 @@ body {
 }
 
 .tool-button[data-action="toggle-menu"]::before {
-    background-image: url('../assets/img/icons/posts.png');
+    background-image: url('../assets/img/icons/explorer.png');
 }
 
 .tool-button[data-mode="posts"]::before {
@@ -214,7 +214,7 @@ body {
 }
 
 .tool-button[data-mode="notes"]::before {
-    background-image: url('../assets/img/icons/text.png');
+    background-image: url('../assets/img/icons/notes16.png');
 }
 
 .tool-button.toolbar-mode-btn.active {
@@ -229,16 +229,30 @@ body {
     border-right-color: #ffffff;
 }
 
-/* Hide mobile menu toggle on desktop */
-.mobile-menu-toggle {
+/* Content wrapper (holds side tab + content area on mobile) */
+.content-wrapper {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    position: relative;
+    border-top: 1px solid #ffffff;
+}
+
+/* Mobile inbox tab – retro vertical tab on left (hidden on desktop) */
+.mobile-inbox-tab {
     display: none;
+    width: 0;
+    border: none;
+    padding: 0;
+    background: transparent;
+    cursor: default;
+    pointer-events: none;
 }
 
 /* Content area */
 .content-area {
     display: flex;
     flex: 1;
-    border-top: 1px solid #ffffff;
     min-height: 0;
     position: relative;
 }
@@ -389,16 +403,31 @@ body {
 
 .viewer-header {
     background: #e6e6e6;
-    padding: 1em;
+    padding: 1.25em 1em;
     border-bottom: 2px groove #ffffff;
     font-family: 'W95FA', monospace;
 }
 
+.viewer-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1em;
+    margin-bottom: 0.35em;
+}
+
+.viewer-header-top .subject {
+    flex: 1;
+    min-width: 0;
+    margin-bottom: 0;
+}
+
 .viewer-header .subject {
-    font-size: 1em;
-    margin-bottom: 8px;
+    font-size: 1.35em;
+    font-weight: bold;
     padding-left: 24px;
     position: relative;
+    line-height: 1.25;
 }
 
 .viewer-header .subject::before {
@@ -415,28 +444,40 @@ body {
 }
 
 .viewer-header .subtitle {
-    font-size: 0.9em;
-    color: #666666;
-    margin-bottom: 12px;
+    font-size: 1.05em;
+    color: #444444;
+    margin-bottom: 1em;
     padding-left: 24px;
     font-style: italic;
+    line-height: 1.3;
 }
 
 .viewer-header .header-actions {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 12px;
     flex-wrap: wrap;
+    padding-top: 8px;
+    margin-top: 4px;
+    border-top: 1px solid #c0c0c0;
 }
 
-.viewer-header .date {
+.viewer-header .header-actions:empty {
+    display: none;
+}
+
+.viewer-header .header-actions .date {
+    flex-shrink: 0;
+    margin-left: auto;
     color: #666666;
-    font-size: 1em;
+    font-size: 0.8em;
     padding: 4px 8px;
-    background: #f0f0f0;
-    display: inline-block;
+    background: #e8e8e8;
     border: 1px solid #c0c0c0;
-    box-shadow: inset 1px 1px #ffffff, inset -1px -1px #808080;
+    border-left: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+    box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 .substack-button {
@@ -665,9 +706,56 @@ body {
         border-radius: 0;
     }
 
-    /* Show mobile menu toggle */
-    .mobile-menu-toggle {
-        display: flex !important;
+    /* Mobile inbox – vertical tab strip on left (File Explorer style, limited to this strip) */
+    .mobile-inbox-tab {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        width: 40px;
+        min-width: 40px;
+        flex-shrink: 0;
+        padding: 8px 4px;
+        background: #000080;
+        color: #fff;
+        cursor: pointer;
+        pointer-events: auto;
+        font-family: 'W95FA', monospace;
+        font-size: 10px;
+        font-weight: bold;
+        z-index: 100;
+        border: none;
+        border-right: 2px solid #000080;
+        box-shadow:
+            inset 1px 1px 0 rgba(255, 255, 255, 0.2),
+            1px 0 0 #0a0a0a;
+    }
+
+    .mobile-inbox-tab:active {
+        background: #000070;
+        box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.4);
+    }
+
+    .mobile-inbox-tab-icon {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        background-image: url('../assets/img/icons/explorer16.png');
+        background-size: 16px 16px;
+        background-repeat: no-repeat;
+        background-position: center;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: -webkit-crisp-edges;
+        image-rendering: pixelated;
+        image-rendering: crisp-edges;
+    }
+
+    .mobile-inbox-tab-label {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        transform: rotate(-180deg);
+        letter-spacing: 0.5px;
     }
 
     /* Hide Posts/Notes in toolbar; show in-panel Posts/Notes buttons */

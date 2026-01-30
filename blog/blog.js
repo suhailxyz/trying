@@ -294,12 +294,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         const formattedDate = note.date
             ? new Date(note.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
             : '';
-        const dateHtml = formattedDate ? `<div class="header-actions"><div class="date">${formattedDate}</div></div>` : '';
+        const noteDateHtml = formattedDate
+            ? `<div class="header-actions"><div class="date">${formattedDate}</div></div>`
+            : '';
         const content = marked.parse(note.content);
         postViewer.innerHTML = `
             <div class="viewer-header">
-                <div class="subject">${note.title}</div>
-                ${dateHtml}
+                <div class="viewer-header-top">
+                    <div class="subject">${note.title}</div>
+                </div>
+                ${noteDateHtml}
             </div>
             <div class="viewer-content markdown-content">${content}</div>
         `;
@@ -430,11 +434,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         postViewer.innerHTML = `
             <div class="viewer-header">
-                <div class="subject">${post.title}</div>
+                <div class="viewer-header-top">
+                    <div class="subject">${post.title}</div>
+                </div>
                 ${subtitleHtml}
                 <div class="header-actions">
-                    <div class="date">${formattedDate}</div>
                     ${substackButtonHtml}
+                    <div class="date">${formattedDate}</div>
                 </div>
             </div>
             <div class="viewer-content markdown-content">${content}</div>
@@ -483,18 +489,21 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
         
+        // Handle mobile inbox tab (side tab) – same as toggle-menu
+        if (e.target.closest('[data-action="toggle-menu"]')) {
+            const postList = document.querySelector('.post-list');
+            const overlay = document.getElementById('mobile-overlay');
+            if (postList && window.innerWidth <= 768) {
+                postList.classList.toggle('mobile-open');
+                if (overlay) overlay.classList.toggle('active');
+            }
+        }
+
         // Handle toolbar buttons
         if (e.target.matches('.tool-button')) {
             const action = e.target.dataset.action;
             if (action === 'home') {
                 showConfirmDialog();
-            } else if (action === 'toggle-menu') {
-                const postList = document.querySelector('.post-list');
-                const overlay = document.getElementById('mobile-overlay');
-                postList.classList.toggle('mobile-open');
-                if (overlay) {
-                    overlay.classList.toggle('active');
-                }
             } else if (action === 'about-page') {
                 // Find the about post by filename
                 const aboutPost = allPosts.find(post => 
