@@ -1,0 +1,635 @@
+/* Annex – My Computer / Control Panel style */
+
+.annex-window {
+  max-width: 1400px;
+  width: 95%;
+  margin: 2rem auto;
+}
+
+.annex-window .project-card {
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Title bar: skinny like blog (18px) */
+.annex-window .project-card .title-bar {
+  height: 18px;
+  min-height: 18px;
+  padding: 2px 3px;
+  font-size: 11px;
+}
+
+.annex-window .project-card .title-bar .title-bar-text {
+  padding: 0 2px;
+}
+
+/* Menu bar (annex-scoped, skinny) */
+.annex-window .annex-menu-bar {
+  display: flex;
+  background-color: #c0c0c0;
+  border-bottom: 1px solid #808080;
+  padding: 1px 2px;
+  font-size: 11px;
+  font-family: 'W95FA', sans-serif;
+  min-height: 0;
+}
+
+.annex-window .annex-menu-item {
+  padding: 1px 6px;
+  cursor: pointer;
+  line-height: 1.2;
+}
+
+.annex-window .annex-menu-item:hover {
+  background-color: #000080;
+  color: white;
+}
+
+/* Toolbar (skinny like blog) */
+.annex-window .annex-toolbar {
+  background-color: #c0c0c0;
+  padding: 2px;
+  border-bottom: 1px solid #808080;
+  display: flex;
+  gap: 1px;
+  align-items: center;
+  font-family: 'W95FA', sans-serif;
+  min-height: 28px;
+  box-sizing: border-box;
+}
+
+.annex-window .annex-tool-button {
+  padding: 1px 8px 1px 24px;
+  background-color: #c0c0c0;
+  border: 1px solid #ffffff;
+  border-bottom-color: #404040;
+  border-right-color: #404040;
+  cursor: pointer;
+  font-size: 11px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  font-family: 'W95FA', sans-serif;
+  position: relative;
+  min-width: 0;
+}
+
+.annex-window .annex-tool-button:hover {
+  background-color: #d4d0c8;
+}
+
+.annex-window .annex-tool-button:active {
+  border-color: #808080 #fff #fff #808080;
+  padding: 2px 7px 0 25px;
+}
+
+.annex-window .annex-tool-button .annex-tool-icon {
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+}
+
+/* Address bar (skinny) */
+.annex-window .annex-address-bar {
+  background-color: #c0c0c0;
+  padding: 2px 4px;
+  border-bottom: 1px solid #808080;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'W95FA', sans-serif;
+  font-size: 11px;
+  min-height: 0;
+  line-height: 1.2;
+}
+
+.annex-window .annex-address-bar .annex-address-label {
+  margin-right: 2px;
+}
+
+.annex-window .annex-address-bar .annex-address-icon {
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+}
+
+.annex-window .annex-address-bar .annex-address-value {
+  flex: 1;
+  padding: 1px 2px;
+  background: #fff;
+  border: 1px solid #808080;
+  box-shadow: inset 1px 1px 0 #808080;
+}
+
+/* Main content: two panes */
+.annex-window .annex-content-area {
+  display: flex;
+  min-height: 200px;
+  background: #fff;
+  border: 1px solid #808080;
+  margin: 0 2px 2px 2px;
+}
+
+/* Left static info panel */
+.annex-window .annex-left-panel {
+  width: 33%;
+  min-width: 140px;
+  max-width: 200px;
+  padding: 1rem;
+  background: #fff;
+  border-right: 1px solid #808080;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-family: 'W95FA', sans-serif;
+  overflow-wrap: break-word;
+}
+
+.annex-window .annex-left-panel .annex-left-icon {
+  width: 48px;
+  height: 48px;
+  image-rendering: pixelated;
+  margin-bottom: 0.5rem;
+}
+
+.annex-window .annex-left-panel .annex-left-title {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0 0 0.5rem 0;
+  color: #000;
+}
+
+.annex-window .annex-left-panel .annex-left-separator {
+  width: 100%;
+  height: 0;
+  border: none;
+  border-top: 1px solid #ffa500;
+  margin: 0 0 0.5rem 0;
+}
+
+.annex-window .annex-left-panel .annex-left-desc {
+  font-size: 11px;
+  line-height: 1.3;
+  color: #000;
+  margin: 0;
+  min-width: 0;
+  width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  box-sizing: border-box;
+}
+
+/* Right pane: grid or detail */
+.annex-window .annex-right-pane {
+  flex: 1;
+  padding: 1rem;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.annex-window .annex-right-pane .annex-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 96px);
+  gap: 1rem;
+  align-content: start;
+  justify-content: start;
+}
+
+.annex-window .annex-right-pane .annex-grid-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 96px;
+  height: 96px;
+  box-sizing: border-box;
+  padding: 10px 8px;
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #fff #808080 #808080 #fff;
+  box-shadow:
+    1px 1px 0 #dfdfdf,
+    inset 1px 1px 0 rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  text-decoration: none;
+  color: #000;
+  font-family: 'W95FA', sans-serif;
+  font-size: 11px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.annex-window .annex-right-pane .annex-grid-cell:hover {
+  background: #d4d0c8;
+  box-shadow:
+    1px 1px 0 #dfdfdf,
+    inset 1px 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.annex-window .annex-right-pane .annex-grid-cell:active {
+  border-color: #808080 #fff #fff #808080;
+  box-shadow: inset 2px 2px 2px rgba(0, 0, 0, 0.2);
+  padding: 11px 7px 7px 9px;
+}
+
+.annex-window .annex-right-pane .annex-grid-cell .annex-grid-icon {
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+  margin-bottom: 4px;
+  flex-shrink: 0;
+}
+
+.annex-window .annex-right-pane .annex-grid-cell .annex-grid-label {
+  line-height: 1.2;
+  word-break: break-word;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* Detail view (loaded section) */
+.annex-window .annex-detail {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.annex-window .annex-detail.annex-detail-visible {
+  display: flex;
+}
+
+/* Hide outer Back link when a section is open; Back lives in section header (top-right of program window) */
+.annex-window .annex-detail.annex-detail-visible > .annex-back-link {
+  display: none;
+}
+
+.annex-window .annex-right-pane.annex-showing-detail .annex-grid {
+  display: none;
+}
+
+.annex-window .annex-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 0.5rem;
+  padding: 2px 8px;
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #fff #808080 #808080 #fff;
+  font-family: 'W95FA', sans-serif;
+  font-size: 11px;
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.annex-window .annex-back-link:hover {
+  background: #d4d0c8;
+}
+
+.annex-window .annex-back-link:active {
+  border-color: #808080 #fff #fff #808080;
+  padding: 3px 7px 1px 9px;
+}
+
+/* Back button inside section header: same compact height as Borrow button */
+.annex-window .annex-detail-content .annex-section-header .annex-back-link {
+  height: 24px;
+  min-height: 24px;
+  padding: 4px 10px;
+  line-height: 1;
+  box-sizing: border-box;
+  margin-bottom: 0;
+}
+
+.annex-window .annex-detail-content .annex-section-header .annex-back-link:active {
+  padding: 5px 9px 3px 11px;
+}
+
+.annex-window .annex-back-link-icon {
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+
+.annex-window .annex-detail-content {
+  flex: 1;
+}
+
+.annex-window .annex-detail-content .annex-section {
+  margin: 0;
+}
+
+/* Section header: icon+title left, desc right, Back far right (inside program window) */
+.annex-window .annex-detail-content .annex-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.annex-window .annex-detail-content .annex-section-header h3 {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.annex-window .annex-detail-content .annex-section-header .annex-program-desc {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  text-align: right;
+  font-family: 'W95FA', sans-serif;
+  font-size: 11px;
+  color: #000;
+}
+
+/* Loaded section window: Win98 styled border like everything else */
+.annex-window .annex-detail-content .project-card {
+  margin: 0;
+  border: 2px solid;
+  border-color: #fff #808080 #808080 #fff;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #0a0a0a;
+  background: #c0c0c0;
+}
+
+/* Library section: entry styling (book info + download button) */
+.annex-window .library-entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #808080;
+  font-family: 'W95FA', sans-serif;
+}
+
+.annex-window .library-entry:last-of-type {
+  border-bottom: none;
+}
+
+.annex-window .library-entry-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.annex-window .library-entry-title {
+  font-size: 13px;
+  font-weight: bold;
+  color: #000;
+}
+
+.annex-window .library-entry-meta {
+  font-size: 11px;
+  color: #404040;
+}
+
+.annex-window .library-entry-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #fff #808080 #808080 #fff;
+  box-shadow: 1px 1px 0 #dfdfdf;
+  font-family: 'W95FA', sans-serif;
+  font-size: 11px;
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.annex-window .library-entry-download:hover {
+  background: #d4d0c8;
+}
+
+.annex-window .library-entry-download:active {
+  border-color: #808080 #fff #fff #808080;
+  box-shadow: inset 1px 1px 0 #808080;
+  padding: 5px 9px 3px 11px;
+}
+
+.annex-window .library-entry-download .win98-icon {
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+}
+
+/* Keep title bar icons in loaded sections small (e.g. library.exe) */
+.annex-window .annex-detail-content .project-card .title-bar-text img {
+  width: 16px !important;
+  height: 16px !important;
+  max-width: 16px !important;
+  max-height: 16px !important;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Status bar */
+.annex-window .annex-status-bar {
+  background-color: #c0c0c0;
+  padding: 2px 4px;
+  border-top: 1px solid #fff;
+  border-left: 2px solid #fff;
+  border-right: 2px solid #808080;
+  border-bottom: 2px solid #808080;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'W95FA', sans-serif;
+  font-size: 11px;
+}
+
+.annex-window .annex-status-bar .annex-status-left {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.annex-window .annex-status-bar .annex-status-icon {
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+}
+
+/* Loading / error in right pane */
+.annex-window .annex-loading,
+.annex-window .annex-error {
+  font-family: 'W95FA', sans-serif;
+  font-size: 12px;
+  padding: 1rem;
+  color: #000;
+}
+
+/* Mobile: fullscreen (same breakpoint as blog) */
+@media (max-width: 768px) {
+  body.annex-page {
+    padding: 0;
+    min-height: 100vh;
+  }
+
+  body.annex-page .container {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .annex-window {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .annex-window .project-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .annex-window .annex-content-area {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    flex-direction: column;
+  }
+
+  /* Left panel: floating row above main body on mobile */
+  .annex-window .annex-left-panel {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    padding: 0.5rem 0.75rem;
+    border-right: none;
+    border-bottom: 1px solid #808080;
+    text-align: left;
+  }
+
+  .annex-window .annex-left-panel .annex-left-icon {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .annex-window .annex-left-panel .annex-left-title {
+    margin: 0;
+    font-size: 13px;
+  }
+
+  .annex-window .annex-left-panel .annex-left-separator {
+    width: 0;
+    border: none;
+    border-left: 1px solid #ffa500;
+    align-self: stretch;
+    margin: 0.25rem 0;
+  }
+
+  .annex-window .annex-left-panel .annex-left-desc {
+    margin: 0;
+    font-size: 11px;
+    min-width: 0;
+    width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .annex-window .annex-right-pane {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+  }
+
+  /* Slightly larger touch targets for toolbar, still skinny */
+  .annex-window .annex-toolbar {
+    min-height: 30px;
+  }
+
+  .annex-window .annex-tool-button {
+    padding: 2px 8px 2px 24px;
+    height: 26px;
+    min-height: 26px;
+    font-size: 10px;
+  }
+
+  .annex-window .annex-menu-item {
+    padding: 2px 6px;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    line-height: 1.2;
+  }
+
+  /* Grid: square cells, slightly larger for touch */
+  .annex-window .annex-right-pane .annex-grid {
+    grid-template-columns: repeat(auto-fill, 88px);
+    gap: 0.75rem;
+  }
+
+  .annex-window .annex-right-pane .annex-grid-cell {
+    width: 88px;
+    height: 88px;
+    padding: 8px 6px;
+  }
+
+  .annex-window .annex-back-link {
+    padding: 6px 10px;
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Footer / Back to Home below window */
+  .annex-window + div {
+    padding: 0.75rem;
+  }
+}
+
+/* Very small screens: square cells, tighter */
+@media (max-width: 480px) {
+  .annex-window .annex-right-pane .annex-grid {
+    grid-template-columns: repeat(auto-fill, 80px);
+    gap: 0.5rem;
+  }
+
+  .annex-window .annex-right-pane .annex-grid-cell {
+    width: 80px;
+    height: 80px;
+    padding: 6px 4px;
+  }
+
+  .annex-window .annex-right-pane .annex-grid-cell .annex-grid-icon {
+    width: 28px;
+    height: 28px;
+    margin-bottom: 2px;
+  }
+}

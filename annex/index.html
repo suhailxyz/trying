@@ -6,84 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.cdnfonts.com/css/w95fa" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="annex.css" />
   <link rel="icon" type="image/png" href="../assets/img/icons/help16.png">
-  <title>ann.exe –– suhailstrying</title>
-  <style>
-    .annex-window {
-      max-width: 500px;
-      width: 90%;
-      margin: 2rem auto;
-    }
-    
-    .annex-content {
-      text-align: center;
-      padding: 1rem;
-    }
-    
-    .annex-section {
-      margin-bottom: 2rem;
-    }
-    
-    #sections-container {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-    
-    .coming-soon-title {
-      font-family: 'W95FA', sans-serif;
-      font-size: 16px;
-      font-weight: bold;
-      margin: 0.75rem 0;
-      color: #000;
-    }
-    
-    .annex-message {
-      font-family: 'W95FA', sans-serif;
-      font-size: 14px;
-      line-height: 1.4;
-      margin: 0.5rem 0;
-      color: #000;
-    }
-    
-    .annex-message p {
-      margin: 0.25rem 0;
-    }
-    
-    .annex-icon {
-      margin: 0.5rem 0;
-    }
-    
-    .annex-icon img {
-      width: 32px !important;
-      height: 32px !important;
-    }
-    
-    @media (min-width: 769px) {
-      .annex-content {
-        padding: 1.5rem;
-      }
-      
-      .annex-icon img {
-        width: 48px !important;
-        height: 48px !important;
-      }
-    }
-  </style>
+  <title>Annex – suhailstrying</title>
 </head>
 
-<body>
+<body class="annex-page">
   <div class="container">
-    <!-- Sections will be loaded here (above the window) -->
-    <div id="sections-container"></div>
-    
     <div class="annex-window">
       <div class="project-card">
+        <!-- Title bar -->
         <div class="title-bar">
           <div class="title-bar-text">
             <img src="../assets/img/icons/help16.png" alt="" class="win98-icon" style="width: 16px; height: 16px;">
-            ann.exe
+            Annex
           </div>
           <div class="window-controls">
             <button class="fake-control">_</button>
@@ -91,49 +27,88 @@
             <button class="fake-control">×</button>
           </div>
         </div>
-        <div class="content annex-content">
-          <div class="annex-icon">
-            <img src="../assets/img/icons/waitingsmall.png" alt="Annex" class="win98-icon" style="width: 48px; height: 48px;">
+
+        <!-- Menu bar -->
+        <div class="annex-menu-bar">
+          <div class="annex-menu-item">File</div>
+          <div class="annex-menu-item">Edit</div>
+          <div class="annex-menu-item">View</div>
+          <div class="annex-menu-item">Go</div>
+          <div class="annex-menu-item">Favorites</div>
+          <div class="annex-menu-item">Help</div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="annex-toolbar">
+          <button type="button" class="annex-tool-button" id="annex-home-btn" title="Home">
+            <img src="../assets/img/icons/home16.png" alt="" class="annex-tool-icon">
+            Home
+          </button>
+          <button type="button" class="annex-tool-button" id="annex-back-btn" title="Back">
+            <img src="../assets/img/icons/goto-arrow.png" alt="" class="annex-tool-icon" style="transform: translateY(-50%) rotate(180deg);">
+            Back
+          </button>
+          <button type="button" class="annex-tool-button" id="annex-forward-btn" title="Forward">
+            <img src="../assets/img/icons/goto-arrow.png" alt="" class="annex-tool-icon">
+            Forward
+          </button>
+        </div>
+
+        <!-- Address bar -->
+        <div class="annex-address-bar">
+          <span class="annex-address-label">Address:</span>
+          <img src="../assets/img/icons/help16.png" alt="" class="annex-address-icon">
+          <span class="annex-address-value" id="annex-address-value">Annex</span>
+        </div>
+
+        <!-- Main content: left panel + right pane -->
+        <div class="annex-content-area">
+          <!-- Left: info panel (updates when a section is open) -->
+          <div class="annex-left-panel">
+            <img src="../assets/img/icons/annex.png" alt="" class="annex-left-icon" id="annex-left-icon">
+            <h2 class="annex-left-title" id="annex-left-title">Annex</h2>
+            <hr class="annex-left-separator">
+            <p class="annex-left-desc" id="annex-left-desc">Select an item to view its description.</p>
           </div>
-          
-          <h1 class="coming-soon-title">COMING SOON</h1>
-          
-          <div class="annex-message">
-            <p>I'll be adding stuff soon.</p>
-            <div class="win98-loading">
-              <p class="win98-loading-text">Loading...</p>
-              <div class="win98-loading-bar-container">
-                <div class="win98-loading-bar-track">
-                  <div class="win98-loading-bar-segments">
-                    <div class="win98-loading-bar-segment"></div>
-                    <div class="win98-loading-bar-segment"></div>
-                    <div class="win98-loading-bar-segment"></div>
-                    <div class="win98-loading-bar-segment"></div>
-                    <div class="win98-loading-bar-segment"></div>
-                    <div class="win98-loading-bar-segment"></div>
-                    <div class="win98-loading-bar-segment"></div>
-                    <div class="win98-loading-bar-segment"></div>
-                    <div class="win98-loading-bar-segment"></div>
-                    <div class="win98-loading-bar-segment"></div>
-                    <div class="win98-loading-bar-segment"></div>
-                    <div class="win98-loading-bar-segment"></div>
-                    <div class="win98-loading-bar-segment"></div>
-                    <div class="win98-loading-bar-segment"></div>
-                    <div class="win98-loading-bar-segment"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <p>Check back!</p>
-          </div>
-          
-          <div style="margin-top: 1rem;">
-            <a href="/" style="text-decoration: none; color: #000; display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: #c0c0c0; border: 2px solid; border-color: #ffffff #808080 #808080 #ffffff; font-family: 'W95FA', monospace; font-size: 11px; line-height: 1; box-shadow: inset 1px 1px 0px #fff, inset -1px -1px 0px #0a0a0a; cursor: pointer;">
-              <img src="../assets/img/icons/home16.png" alt="" class="win98-icon" style="width: 16px; height: 16px;">
-              Back to Home
+
+          <!-- Right: grid or loaded section -->
+          <div class="annex-right-pane" id="annex-right-pane">
+            <!-- Icon grid (built by JS) -->
+            <div class="annex-grid" id="annex-grid"></div>
+
+            <!-- Detail view (loaded section) -->
+            <div class="annex-detail" id="annex-detail">
+              <a href="#" class="annex-back-link" id="annex-back-link">
+              <img src="../assets/img/icons/goto-arrow.png" alt="" class="annex-back-link-icon" style="transform: rotate(180deg);">
+              Back
             </a>
+              <div class="annex-detail-content" id="annex-detail-content"></div>
+            </div>
+
+            <!-- Loading state -->
+            <div class="annex-loading" id="annex-loading" style="display: none;">Loading...</div>
+            <div class="annex-error" id="annex-error" style="display: none;"></div>
           </div>
         </div>
+
+        <!-- Status bar -->
+        <div class="annex-status-bar">
+          <span class="annex-status-left">
+            <span id="annex-status-count">0 object(s)</span>
+          </span>
+          <span class="annex-status-right">
+            <img src="../assets/img/icons/help16.png" alt="" class="annex-status-icon">
+            <span id="annex-status-location">Annex</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Home link below window -->
+      <div style="margin-top: 1rem; text-align: center;">
+        <a href="../index.html" style="text-decoration: none; color: #000; display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: #c0c0c0; border: 2px solid; border-color: #ffffff #808080 #808080 #ffffff; font-family: 'W95FA', monospace; font-size: 11px; line-height: 1; box-shadow: inset 1px 1px 0px #fff, inset -1px -1px 0px #0a0a0a; cursor: pointer;">
+          <img src="../assets/img/icons/home16.png" alt="" class="win98-icon" style="width: 16px; height: 16px;">
+          Back to Home
+        </a>
       </div>
     </div>
   </div>
@@ -143,99 +118,226 @@
   </footer>
 
   <script>
-  // Section loading system
-  async function loadSection(filename, containerId) {
-    try {
-      const response = await fetch(`sections/${filename}`);
-      if (!response.ok) {
-        throw new Error(`Failed to load ${filename}: ${response.status}`);
-      }
-      const html = await response.text();
-      const container = document.getElementById(containerId);
-      if (container) {
-        container.innerHTML += html;
-        
-        // Initialize loading bars in newly loaded content
-        const newLoadingBars = container.querySelectorAll('.win98-loading');
-        newLoadingBars.forEach(initLoadingBar);
-      }
-    } catch (error) {
-      console.error(`Error loading ${filename}:`, error);
-    }
-  }
+  (function() {
+    const gridEl = document.getElementById('annex-grid');
+    const detailEl = document.getElementById('annex-detail');
+    const detailContentEl = document.getElementById('annex-detail-content');
+    const rightPaneEl = document.getElementById('annex-right-pane');
+    const loadingEl = document.getElementById('annex-loading');
+    const errorEl = document.getElementById('annex-error');
+    const addressValueEl = document.getElementById('annex-address-value');
+    const statusCountEl = document.getElementById('annex-status-count');
+    const statusLocationEl = document.getElementById('annex-status-location');
+    const leftIconEl = document.getElementById('annex-left-icon');
+    const leftTitleEl = document.getElementById('annex-left-title');
+    const leftDescEl = document.getElementById('annex-left-desc');
+    const homeBtn = document.getElementById('annex-home-btn');
+    const backBtn = document.getElementById('annex-back-btn');
+    const forwardBtn = document.getElementById('annex-forward-btn');
+    const backLink = document.getElementById('annex-back-link');
 
-  // Loading bar animation
-  function initLoadingBar(container) {
-    const segments = container.querySelectorAll('.win98-loading-bar-segment');
-    let currentIndex = 0;
-    
-    function loadNextSegment() {
-      // Check if we're at the second-to-last block - get stuck here
-      if (currentIndex === segments.length - 2) {
-        const segment = segments[currentIndex];
-        if (segment) {
-          segment.classList.add('visible', 'flashing');
-          // Keep flashing indefinitely - never progress
-          return;
-        }
-      }
-      
-      if (currentIndex >= segments.length) {
-        // Reset and loop
-        segments.forEach(seg => {
-          seg.classList.remove('visible', 'flashing');
-        });
-        currentIndex = 0;
-      }
-      
-      const segment = segments[currentIndex];
-      if (!segment) return;
-      
-      // Show the segment and make it flash
-      segment.classList.add('visible', 'flashing');
-      
-      // Random number of flashes between 2 and 5
-      const flashCount = Math.floor(Math.random() * 4) + 2; // 2-5 flashes
-      const flashDuration = 800; // Duration of one flash cycle
-      const totalFlashTime = flashCount * flashDuration;
-      
-      // Flash for random amount of time, then make it solid
-      setTimeout(() => {
-        segment.classList.remove('flashing');
-        currentIndex++;
-        
-        // Move to next segment
-        setTimeout(loadNextSegment, 100);
-      }, totalFlashTime);
+    const ICONS_BASE = '../assets/img/icons/';
+
+    let applets = [];
+    let currentSectionLabel = null;
+    let historyStack = [];
+
+    function getSlug(applet) {
+      return applet.file.replace(/\.html?$/i, '');
     }
-    
-    // Start the animation
-    loadNextSegment();
-  }
-  
-  // Initialize all loading bars on the page
-  function initAllLoadingBars() {
-    document.querySelectorAll('.win98-loading').forEach(initLoadingBar);
-  }
-  
-  // Load sections when page is ready
-  document.addEventListener('DOMContentLoaded', () => {
-    // List of sections to load (add more as needed)
-    const sections = ['placeholder.html'];
-    
-    // Load all sections
-    sections.forEach(section => {
-      loadSection(section, 'sections-container');
+
+    function getAppletBySlug(slug) {
+      if (!slug) return null;
+      return applets.find(function(a) { return getSlug(a) === slug; }) || null;
+    }
+
+    function setLeftPanel(title, desc, icon) {
+      if (leftTitleEl) leftTitleEl.textContent = title || 'Annex';
+      if (leftDescEl) leftDescEl.textContent = desc || 'Select an item to view its description.';
+      if (leftIconEl) leftIconEl.src = icon ? (ICONS_BASE + icon) : '../assets/img/icons/annex.png';
+    }
+
+    function showGrid() {
+      gridEl.style.display = 'grid';
+      detailEl.classList.remove('annex-detail-visible');
+      rightPaneEl.classList.remove('annex-showing-detail');
+      loadingEl.style.display = 'none';
+      errorEl.style.display = 'none';
+      addressValueEl.textContent = 'Annex';
+      statusLocationEl.textContent = 'Annex';
+      currentSectionLabel = null;
+      setLeftPanel('Annex', 'Select an item to view its description.', null);
+      if (history.replaceState) {
+        history.replaceState(null, '', location.pathname + location.search);
+      } else {
+        location.hash = '';
+      }
+    }
+
+    function showDetail(html, applet) {
+      var label = applet ? applet.label : null;
+      gridEl.style.display = 'none';
+      detailContentEl.innerHTML = html;
+      detailEl.classList.add('annex-detail-visible');
+      rightPaneEl.classList.add('annex-showing-detail');
+      loadingEl.style.display = 'none';
+      errorEl.style.display = 'none';
+      addressValueEl.textContent = label ? 'Annex - ' + label : 'Annex';
+      statusLocationEl.textContent = label || 'Annex';
+      currentSectionLabel = label;
+      if (applet && (applet.panelTitle || applet.panelDesc || applet.panelIcon)) {
+        setLeftPanel(applet.panelTitle || label, applet.panelDesc, applet.panelIcon);
+      } else {
+        setLeftPanel(label, 'Select an item to view its description.', applet ? applet.icon : null);
+      }
+
+      // Inject program description (for the program window) from config
+      if (applet && applet.programDesc) {
+        var programDescEl = detailContentEl.querySelector('.annex-program-desc');
+        if (programDescEl) programDescEl.textContent = applet.programDesc;
+      }
+
+      // Fix relative image paths in loaded content (sections use ../../assets)
+      detailContentEl.querySelectorAll('img[src^="../../"]').forEach(function(img) {
+        img.src = img.src.replace('../../', '../');
+      });
+    }
+
+    function showLoading() {
+      gridEl.style.display = 'none';
+      detailEl.classList.remove('annex-detail-visible');
+      rightPaneEl.classList.remove('annex-showing-detail');
+      loadingEl.style.display = 'block';
+      loadingEl.textContent = 'Loading...';
+      errorEl.style.display = 'none';
+    }
+
+    function showError(msg) {
+      gridEl.style.display = 'none';
+      detailEl.classList.remove('annex-detail-visible');
+      rightPaneEl.classList.remove('annex-showing-detail');
+      loadingEl.style.display = 'none';
+      errorEl.style.display = 'block';
+      errorEl.textContent = msg || 'Something went wrong. Try again?';
+    }
+
+    function goBack() {
+      if (currentSectionLabel) {
+        historyStack.push(currentSectionLabel);
+        showGrid();
+      }
+    }
+
+    homeBtn.addEventListener('click', function() {
+      window.location.href = '../index.html';
     });
-    
-    // Initialize any existing loading bars
-    initAllLoadingBars();
-  });
-  
-  // Also run immediately in case DOM is already loaded
-  if (document.readyState !== 'loading') {
-    initAllLoadingBars();
-  }
+    backBtn.addEventListener('click', goBack);
+    backLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      goBack();
+    });
+
+    detailContentEl.addEventListener('click', function(e) {
+      if (e.target.closest('.annex-back-link')) {
+        e.preventDefault();
+        goBack();
+      }
+    });
+
+    forwardBtn.addEventListener('click', function() {
+      if (historyStack.length > 0) {
+        var label = historyStack.pop();
+        var applet = applets.find(function(a) { return a.label === label; });
+        if (applet) openSection(applet);
+      }
+    });
+
+    function openSection(applet) {
+      showLoading();
+      fetch('sections/' + applet.file)
+        .then(function(res) {
+          if (!res.ok) throw new Error('Failed to load ' + applet.file);
+          return res.text();
+        })
+        .then(function(html) {
+          showDetail(html, applet);
+          var slug = getSlug(applet);
+          if (history.replaceState) {
+            history.replaceState(null, '', location.pathname + location.search + (slug ? '#' + slug : ''));
+          } else {
+            location.hash = slug || '';
+          }
+        })
+        .catch(function(err) {
+          console.error('Error loading section:', err);
+          showError('Couldn\'t load "' + applet.label + '". Try again?');
+        });
+    }
+
+    function buildGrid() {
+      gridEl.innerHTML = '';
+      applets.forEach(function(applet) {
+        var cell = document.createElement('a');
+        cell.href = '#';
+        cell.className = 'annex-grid-cell';
+        cell.addEventListener('click', function(e) {
+          e.preventDefault();
+          openSection(applet);
+        });
+        var icon = document.createElement('img');
+        icon.src = ICONS_BASE + applet.icon;
+        icon.alt = '';
+        icon.className = 'annex-grid-icon';
+        var label = document.createElement('span');
+        label.className = 'annex-grid-label';
+        label.textContent = applet.label;
+        cell.appendChild(icon);
+        cell.appendChild(label);
+        gridEl.appendChild(cell);
+      });
+      statusCountEl.textContent = applets.length + ' object(s)';
+    }
+
+    function openSectionFromHash() {
+      var hash = location.hash ? location.hash.slice(1) : '';
+      var applet = getAppletBySlug(hash);
+      if (applet) openSection(applet);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      fetch('index.json')
+        .then(function(res) {
+          if (!res.ok) throw new Error('Failed to load index.json');
+          return res.json();
+        })
+        .then(function(data) {
+          applets = Array.isArray(data) ? data : [];
+          buildGrid();
+          if (applets.length === 0) {
+            showError('No applets yet. Check back soon!');
+          } else {
+            openSectionFromHash();
+          }
+        })
+        .catch(function(err) {
+          console.error('Error loading annex index:', err);
+          showError('Couldn\'t load annex. Try again?');
+        });
+    });
+
+    window.addEventListener('hashchange', function() {
+      var hash = location.hash ? location.hash.slice(1) : '';
+      if (!hash) {
+        showGrid();
+        return;
+      }
+      var applet = getAppletBySlug(hash);
+      if (!applet) return;
+      var currentApplet = currentSectionLabel ? applets.find(function(a) { return a.label === currentSectionLabel; }) : null;
+      if (currentApplet && getSlug(currentApplet) === hash) return;
+      openSection(applet);
+    });
+  })();
   </script>
 
 </body>
