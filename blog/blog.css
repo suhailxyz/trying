@@ -36,7 +36,7 @@ body {
     font-family: 'W95FA', 'MS Sans Serif', 'Microsoft Sans Serif', sans-serif;
     background-color: #008080;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     min-height: 100vh;
     padding: 20px;
@@ -44,15 +44,19 @@ body {
     cursor: url("../assets/img/icons/magnify.png"), default;
 }
 
-/* Window styles */
+/* Window styles – base text black so theme is consistent (title bars override to white) */
+/* Desktop: starting width 1400px, shrinks with viewport until mobile (768px) */
 .blog-window {
     background-color: #c0c0c0;
     border: 1px solid #000000;
-    width: 1400px;
-    height: 900px;
+    width: 100%;
+    max-width: 1400px;
+    max-height: 900px;
+    height: min(900px, calc(100vh - 40px));
     display: flex;
     flex-direction: column;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    color: #000;
 }
 
 /* Title bar */
@@ -104,9 +108,14 @@ body {
     line-height: 1;
 }
 
+/* Non-functional (disabled) window control: greyed out */
 .window-controls button:disabled {
     cursor: default;
     pointer-events: none;
+    opacity: 0.7;
+    color: #808080;
+    background-color: #c0c0c0;
+    border-color: #a0a0a0;
 }
 
 /* Menu bar */
@@ -545,11 +554,33 @@ body {
     align-items: center;
 }
 
-/* Markdown content styling */
+/* Footer on teal background: at bottom, theme font, white text for readability */
+body footer {
+    margin-top: auto;
+    padding: 0 0 0.5rem 0;
+    font-size: small;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-family: 'W95FA', 'MS Sans Serif', sans-serif;
+}
+
+body footer a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+body footer a:hover {
+    color: #e0e0e0;
+}
+
+/* Markdown content styling – explicit black so no browser default blue on mobile */
 .markdown-content {
     font-family: 'W95FA', monospace;
     line-height: 1.5;
     font-size: 12px;
+    color: #000;
 }
 
 .markdown-content h1,
@@ -602,14 +633,14 @@ body {
     font-style: italic;
 }
 
-/* Link styling */
+/* Link styling – blue for readability */
 .markdown-content a {
-    color: #000080;
+    color: #0000ee;
     text-decoration: underline;
 }
 
 .markdown-content a:hover {
-    color: #0000ff;
+    color: #0000ee;
 }
 
 .markdown-content a:visited {

@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Freedom Is a Constant Struggle",
+    "author": "Angela Y. Davis, Frank Barat (editor)",
+    "supportAuthor": "https://www.haymarketbooks.org/books/780-freedom-is-a-constant-struggle",
+    "formats": [
+      { "format": "EPUB", "file": "../assets/files/books/Freedom-Davis.epub" }
+    ]
+  },
+  {
+    "title": "The Will to Change: Men, Masculinity, and Love",
+    "author": "bell hooks",
+    "note": "If you are a man, know a man, or have at some point in your life thought about men, you should read this book.",
+    "supportAuthor": "https://rep.club/products/will-to-change-2025",
+    "formats": [
+      { "format": "EPUB", "file": "../assets/files/books/Will-to-Change-hooks.epub" },
+      { "format": "PDF", "file": "https://dn721601.ca.archive.org/0/items/the-will-to-change-men-masculinity-and-love-by-bell-hooks-z-lib.org.epub/The%20Will%20to%20Change%20Men%2C%20Masculinity%2C%20and%20Love%20by%20bell%20hooks%20%28z-lib.org%29.epub.pdf" }
+    ]
+  }
+]

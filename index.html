@@ -13,86 +13,6 @@
 </head>
 
 <body>
-  
-  <script>
-    let isAnimating = false;
-
-    // Function to change the image
-    function changeImage() {
-      var image = document.getElementById("pfp");
-      
-      // Prevent multiple clicks while animating
-      if (isAnimating) return;
-      
-      if (image.src.match("assets/img/jerry.jpg")) {
-        isAnimating = true;
-        image.src = "assets/img/jerryeats.gif";
-        image.alt = "Jerry eats a big cheese";
-        
-        // Reset the GIF after 2.5 seconds (actual duration of animation)
-        setTimeout(() => {
-          image.src = "assets/img/jerry.jpg";
-          image.alt = "Cheeky Jerry";
-          isAnimating = false;
-        }, 2500);
-      }
-    }
-
-    // Function to handle closing the applet
-    function closeApplet() {
-      document.querySelector('.profile-applet').remove();
-    }
-
-    // Function to fly cheese to Jerry
-    function flyCheese() {
-      const waitButton = document.getElementById('wait-button');
-      const jerryImage = document.getElementById('pfp');
-      
-      if (!waitButton || !jerryImage) return;
-      
-      // Get positions
-      const buttonRect = waitButton.getBoundingClientRect();
-      const jerryRect = jerryImage.getBoundingClientRect();
-      
-      // Create flying cheese element
-      const cheese = document.createElement('img');
-      cheese.src = 'assets/img/32CheeseCursor.png';
-      cheese.style.position = 'fixed';
-      cheese.style.width = '32px';
-      cheese.style.height = '32px';
-      cheese.style.zIndex = '10000';
-      cheese.style.pointerEvents = 'none';
-      cheese.style.left = (buttonRect.left + buttonRect.width / 2 - 16) + 'px';
-      cheese.style.top = (buttonRect.top + buttonRect.height / 2 - 16) + 'px';
-      cheese.style.transition = 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-      document.body.appendChild(cheese);
-      
-      // Force reflow
-      cheese.offsetHeight;
-      
-      // Animate to Jerry
-      const targetX = jerryRect.left + jerryRect.width / 2 - 16;
-      const targetY = jerryRect.top + jerryRect.height / 2 - 16;
-      
-      cheese.style.left = targetX + 'px';
-      cheese.style.top = targetY + 'px';
-      cheese.style.transform = 'rotate(360deg)';
-      
-      // Remove cheese and trigger Jerry animation after animation completes
-      setTimeout(() => {
-        cheese.remove();
-        // Trigger Jerry eating animation
-        if (jerryImage.src.match("assets/img/jerry.jpg")) {
-          changeImage();
-        }
-      }, 1000);
-    }
-
-    // Make functions available globally
-    window.changeImage = changeImage;
-    window.closeApplet = closeApplet;
-    window.flyCheese = flyCheese;
-  </script>
 
   <div class="container">
     <div class="profile-applet">
@@ -122,7 +42,7 @@ omg you've arrived... ok well i hope you enjoy. click around, make yourself at h
       ## my links:
       
       <div class="links-grid">
-        <a href="/blog/" rel="noopener noreferrer">
+        <a href="blog/blog.html" rel="noopener noreferrer">
           <img src="assets/img/icons/blog.png" alt="" class="win98-icon">BLOG
         </a>
         <a href="https://ooh.suhailstry.ing" target="_blank" rel="noopener noreferrer">
@@ -131,7 +51,7 @@ omg you've arrived... ok well i hope you enjoy. click around, make yourself at h
         <a href="https://www.instagram.com/suhailstrying" target="_blank" rel="noopener noreferrer">
           <img src="assets/img/icons/socialppl.png" alt="" class="win98-icon">SOCIAL
         </a>
-        <a href="/annex/" rel="noopener noreferrer">
+        <a href="annex/annex.html" rel="noopener noreferrer">
           <img src="assets/img/icons/annex.png" alt="" class="win98-icon">ANNEX
         </a>
 
@@ -160,7 +80,7 @@ omg you've arrived... ok well i hope you enjoy. click around, make yourself at h
         <img src="assets/img/icons/manifesting.png" alt="Manifesting" style="flex-shrink: 0; image-rendering: pixelated; width: 48px; height: 48px; margin-top: 0.125rem;">
         <div style="display: flex; flex-direction: column; gap: 0.75rem; min-width: 0;">
           <em><p style="margin: 0; padding: 0; line-height: 1.5; font-size: 13px;">ESTIMATED TIME REMAINING: 333 HOURS, 33 MINUTES.</p></em>
-          <div class="win98-loading" style="margin: 0 !important; padding: 0 !important; align-items: flex-start !important;">
+          <div class="win98-loading" data-loading-preset="slow" style="margin: 0 !important; padding: 0 !important; align-items: flex-start !important;">
             <div class="win98-loading-bar-container" style="width: 280px !important; max-width: 100% !important;">
               <div class="win98-loading-bar-track">
                 <div class="win98-loading-bar-segments">
@@ -210,75 +130,11 @@ omg you've arrived... ok well i hope you enjoy. click around, make yourself at h
   </div>
 
   <footer>
-
-    <p>killin' it since 1999,  &copy; <a href="https://i.makeagif.com/media/7-30-2016/JBrGej.gif" target="_blank" rel="noopener noreferrer">suhailstry.ing</a> ❤️ all rights reserved.</p>
-
+    <p>killin' it since 1999, &copy; <a href="https://i.makeagif.com/media/7-30-2016/JBrGej.gif" target="_blank" rel="noopener noreferrer">suhailstry.ing</a> ❤️ all rights reserved.</p>
   </footer>
 
-  <script>
-  (function() {
-    function initLoadingBar(container) {
-      const segments = container.querySelectorAll('.win98-loading-bar-segment');
-      let currentIndex = 0;
-      
-      function loadNextSegment() {
-        // Check if we're at the second-to-last block - get stuck here
-        if (currentIndex === segments.length - 2) {
-          const segment = segments[currentIndex];
-          if (segment) {
-            segment.classList.add('visible', 'flashing');
-            // Keep flashing indefinitely - never progress
-            return;
-          }
-        }
-        
-        if (currentIndex >= segments.length) {
-          // Reset and loop
-          segments.forEach(seg => {
-            seg.classList.remove('visible', 'flashing');
-          });
-          currentIndex = 0;
-        }
-        
-        const segment = segments[currentIndex];
-        if (!segment) return;
-        
-        // Show the segment and make it flash
-        segment.classList.add('visible', 'flashing');
-        
-        // Random number of flashes between 2 and 5
-        const flashCount = Math.floor(Math.random() * 4) + 2; // 2-5 flashes
-        const flashDuration = 800; // Duration of one flash cycle
-        const totalFlashTime = flashCount * flashDuration;
-        
-        // Flash for random amount of time, then make it solid
-        setTimeout(() => {
-          segment.classList.remove('flashing');
-          currentIndex++;
-          
-          // Move to next segment
-          setTimeout(loadNextSegment, 100);
-        }, totalFlashTime);
-      }
-      
-      // Start the animation
-      loadNextSegment();
-    }
-    
-    // Initialize all loading bars on the page
-    function initAll() {
-      document.querySelectorAll('.win98-loading').forEach(initLoadingBar);
-    }
-    
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initAll);
-    } else {
-      initAll();
-    }
-  })();
-  </script>
+  <script src="main.js"></script>
 
 </body>
 
-</html>
 </html>

@@ -1,15 +1,62 @@
-/* Annex – My Computer / Control Panel style */
+/* Annex – My Computer / Control Panel style – base text black (title bars override to white) */
 
-.annex-window {
+/* Desktop: starting width 1400px, shrinks with viewport until mobile (768px); mobile: fullscreen */
+body.annex-page {
+  margin: 0;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #008080;
+  cursor: url("../assets/img/icons/magnify.png"), default;
+}
+
+body.annex-page .annex-window {
+  width: 100%;
   max-width: 1400px;
-  width: 95%;
-  margin: 2rem auto;
+  max-height: 900px;
+  height: min(900px, calc(100vh - 40px));
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  min-height: 0;
+  color: #000;
+  background-color: #c0c0c0;
+  border: 1px solid #000;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Footer on teal background: at bottom, theme font, white text for readability */
+body.annex-page footer {
+  margin-top: auto;
+  padding: 0 0 0.5rem 0;
+  color: #fff;
+  font-family: 'W95FA', 'MS Sans Serif', sans-serif;
+  font-size: small;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body.annex-page footer a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+body.annex-page footer a:hover {
+  color: #e0e0e0;
 }
 
 .annex-window .project-card {
   max-width: 100%;
-  margin-left: 0;
-  margin-right: 0;
+  margin: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 /* Title bar: skinny like blog (18px) */
@@ -22,6 +69,64 @@
 
 .annex-window .project-card .title-bar .title-bar-text {
   padding: 0 2px;
+}
+
+/* Functional close (×) in section windows: returns to annex homepage */
+.annex-window .project-card .title-bar .annex-section-close {
+  width: 14px;
+  height: 12px;
+  background-color: #c0c0c0;
+  border: 1px solid #fff;
+  border-bottom-color: #404040;
+  border-right-color: #404040;
+  font-size: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  color: #000;
+  font-family: 'W95FA', sans-serif;
+}
+
+.annex-window .project-card .title-bar .annex-section-close:hover {
+  background-color: #d4d0c8;
+}
+
+.annex-window .project-card .title-bar .annex-section-close:active {
+  border-color: #404040;
+  border-bottom-color: #fff;
+  border-right-color: #fff;
+}
+
+/* Main annex window × (exit to site index – shows confirmation) */
+.annex-window > .project-card > .title-bar .annex-main-close {
+  width: 14px;
+  height: 12px;
+  background-color: #c0c0c0;
+  border: 1px solid #fff;
+  border-bottom-color: #404040;
+  border-right-color: #404040;
+  font-size: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  color: #000;
+  font-family: 'W95FA', sans-serif;
+}
+
+.annex-window > .project-card > .title-bar .annex-main-close:hover {
+  background-color: #d4d0c8;
+}
+
+.annex-window > .project-card > .title-bar .annex-main-close:active {
+  border-color: #404040;
+  border-bottom-color: #fff;
+  border-right-color: #fff;
 }
 
 /* Menu bar (annex-scoped, skinny) */
@@ -126,10 +231,11 @@
   box-shadow: inset 1px 1px 0 #808080;
 }
 
-/* Main content: two panes */
+/* Main content: two panes – flex to fill window when fullscreen */
 .annex-window .annex-content-area {
   display: flex;
-  min-height: 200px;
+  flex: 1;
+  min-height: 0;
   background: #fff;
   border: 1px solid #808080;
   margin: 0 2px 2px 2px;
@@ -303,20 +409,6 @@
   padding: 3px 7px 1px 9px;
 }
 
-/* Back button inside section header: same compact height as Borrow button */
-.annex-window .annex-detail-content .annex-section-header .annex-back-link {
-  height: 24px;
-  min-height: 24px;
-  padding: 4px 10px;
-  line-height: 1;
-  box-sizing: border-box;
-  margin-bottom: 0;
-}
-
-.annex-window .annex-detail-content .annex-section-header .annex-back-link:active {
-  padding: 5px 9px 3px 11px;
-}
-
 .annex-window .annex-back-link-icon {
   width: 16px;
   height: 16px;
@@ -332,28 +424,79 @@
   margin: 0;
 }
 
-/* Section header: icon+title left, desc right, Back far right (inside program window) */
+/* Section header: clean bar, title + subtitle left, Back right – no icon */
 .annex-window .annex-detail-content .annex-section-header {
+  background: #d4d0c8;
+  padding: 12px 16px;
+  border-bottom: 2px solid #808080;
+  border-top: 1px solid #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  font-family: 'W95FA', sans-serif;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 0.5rem;
 }
 
-.annex-window .annex-detail-content .annex-section-header h3 {
+.annex-window .annex-detail-content .annex-viewer-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+}
+
+.annex-window .annex-detail-content .annex-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+}
+
+.annex-window .annex-detail-content .annex-viewer-header-top .annex-subject {
   margin: 0;
-  flex-shrink: 0;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 1.25;
+  color: #000;
+  letter-spacing: 0.02em;
 }
 
 .annex-window .annex-detail-content .annex-section-header .annex-program-desc {
-  margin: 0;
-  flex: 1;
-  min-width: 0;
-  text-align: right;
-  font-family: 'W95FA', sans-serif;
   font-size: 11px;
-  color: #000;
+  color: #505050;
+  margin: 0;
+  font-style: italic;
+  line-height: 1.35;
+  max-width: 52em;
+}
+
+/* Back button in top-right of header */
+.annex-window .annex-detail-content .annex-viewer-header-top .annex-back-link {
+  flex-shrink: 0;
+  height: 26px;
+  min-height: 26px;
+  padding: 5px 12px;
+  line-height: 1;
+  box-sizing: border-box;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.annex-window .annex-detail-content .annex-viewer-header-top .annex-back-link:active {
+  padding: 6px 11px 4px 13px;
+}
+
+/* Content links (not Back/Borrow/format-dialog buttons) stay blue */
+.annex-window .annex-detail-content a:not(.annex-back-link):not(.library-entry-download):not(.library-entry-support):not(.dialog-button) {
+  color: #0000ee;
+  text-decoration: underline;
+}
+
+.annex-window .annex-detail-content a:not(.annex-back-link):not(.library-entry-download):not(.library-entry-support):not(.dialog-button):visited {
+  color: #551a8b;
 }
 
 /* Loaded section window: Win98 styled border like everything else */
@@ -363,6 +506,11 @@
   border-color: #fff #808080 #808080 #fff;
   box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #0a0a0a;
   background: #c0c0c0;
+}
+
+.annex-window .annex-detail-content .project-card .content {
+  background: #c0c0c0;
+  padding: 1rem;
 }
 
 /* Library section: entry styling (book info + download button) */
@@ -387,32 +535,93 @@
   min-width: 0;
 }
 
+.annex-window .library-entry-icon {
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+
+.annex-window .library-entry-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .annex-window .library-entry-title {
   font-size: 13px;
   font-weight: bold;
   color: #000;
 }
 
-.annex-window .library-entry-meta {
+.annex-window .library-entry-author-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0.25rem 0 0 0;
+  padding: 0.4rem 0.5rem;
   font-size: 11px;
   color: #404040;
+  font-style: italic;
+  line-height: 1.35;
+  background: rgba(0, 0, 0, 0.04);
+  border-left: 3px solid #808080;
+  box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.3);
+}
+
+.annex-window .library-entry-author {
+  margin: 0;
+}
+
+.annex-window .library-entry-format {
+  margin-left: 0.5rem;
+  font-size: 10px;
+  color: #808080;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.annex-window .library-entry-blurb {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 0.35rem 0 0 0;
+  padding: 0.35rem 0.5rem;
+  font-size: 11px;
+  color: #505050;
+  line-height: 1.4;
+  font-style: italic;
+  border-left: 2px dashed #a0a0a0;
+  background: rgba(0, 0, 0, 0.03);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.annex-window .library-entry-blurb .library-entry-icon,
+.annex-window .library-entry-author-row .library-entry-icon {
+  filter: grayscale(100%);
 }
 
 .annex-window .library-entry-download {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
+  min-height: 28px;
   padding: 4px 10px;
+  margin: 0;
+  box-sizing: border-box;
   background: #c0c0c0;
   border: 2px solid;
   border-color: #fff #808080 #808080 #fff;
   box-shadow: 1px 1px 0 #dfdfdf;
   font-family: 'W95FA', sans-serif;
   font-size: 11px;
+  line-height: 1.2;
   color: #000;
   text-decoration: none;
   cursor: pointer;
   flex-shrink: 0;
+  vertical-align: middle;
 }
 
 .annex-window .library-entry-download:hover {
@@ -422,7 +631,6 @@
 .annex-window .library-entry-download:active {
   border-color: #808080 #fff #fff #808080;
   box-shadow: inset 1px 1px 0 #808080;
-  padding: 5px 9px 3px 11px;
 }
 
 .annex-window .library-entry-download .win98-icon {
@@ -430,6 +638,96 @@
   height: 16px;
   image-rendering: pixelated;
 }
+
+.annex-window .library-entry-actions {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.annex-window .library-entry-support {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 28px;
+  padding: 4px 10px;
+  margin: 0;
+  box-sizing: border-box;
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #fff #808080 #808080 #fff;
+  box-shadow: 1px 1px 0 #dfdfdf;
+  font-family: 'W95FA', sans-serif;
+  font-size: 11px;
+  line-height: 1.2;
+  color: #000;
+  text-decoration: none;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.annex-window .library-entry-support:hover {
+  background: #d4d0c8;
+}
+
+.annex-window .library-entry-support:active {
+  border-color: #808080 #fff #fff #808080;
+  box-shadow: inset 1px 1px 0 #808080;
+}
+
+.annex-window .library-entry-support .win98-icon {
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+}
+
+/* Library: Borrow dropdown when multiple formats */
+.annex-window .library-entry-borrow {
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  min-height: 28px;
+  flex-shrink: 0;
+}
+
+.annex-window .library-entry-borrow-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 28px;
+  padding: 4px 10px;
+  margin: 0;
+  box-sizing: border-box;
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #fff #808080 #808080 #fff;
+  box-shadow: 1px 1px 0 #dfdfdf;
+  font-family: 'W95FA', sans-serif;
+  font-size: 11px;
+  line-height: 1.2;
+  color: #000;
+  cursor: pointer;
+  appearance: none;
+}
+
+.annex-window .library-entry-borrow-btn:hover {
+  background: #d4d0c8;
+}
+
+.annex-window .library-entry-borrow-btn:active {
+  border-color: #808080 #fff #fff #808080;
+  box-shadow: inset 1px 1px 0 #808080;
+}
+
+.annex-window .library-entry-borrow-btn .win98-icon {
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+}
+
 
 /* Keep title bar icons in loaded sections small (e.g. library.exe) */
 .annex-window .annex-detail-content .project-card .title-bar-text img {
@@ -482,13 +780,6 @@
   body.annex-page {
     padding: 0;
     min-height: 100vh;
-  }
-
-  body.annex-page .container {
-    width: 100%;
-    max-width: none;
-    margin: 0;
-    padding: 0;
   }
 
   .annex-window {
@@ -608,10 +899,7 @@
     align-items: center;
   }
 
-  /* Footer / Back to Home below window */
-  .annex-window + div {
-    padding: 0.75rem;
-  }
+  /* Footer below window */
 }
 
 /* Very small screens: square cells, tighter */
@@ -632,4 +920,342 @@
     height: 28px;
     margin-bottom: 2px;
   }
+}
+
+/* Library format choice popup – same style as blog confirm dialog */
+.library-format-dialog {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+}
+
+.library-format-dialog .dialog-window {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  min-width: 300px;
+  max-width: 400px;
+}
+
+.library-format-dialog .dialog-title-bar {
+  background: #000080;
+  color: white;
+  padding: 2px 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 18px;
+  font-size: 11px;
+  font-family: 'W95FA', monospace;
+}
+
+.library-format-dialog .dialog-title {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.library-format-dialog .dialog-title-icon {
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+
+.library-format-dialog .dialog-close {
+  width: 14px;
+  height: 12px;
+  background-color: #c0c0c0;
+  border: 1px solid #ffffff;
+  border-bottom-color: #404040;
+  border-right-color: #404040;
+  font-size: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  color: #000;
+}
+
+.library-format-dialog .dialog-close:active {
+  border-color: #404040;
+  border-bottom-color: #ffffff;
+  border-right-color: #ffffff;
+}
+
+.library-format-dialog .dialog-content {
+  padding: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-family: 'W95FA', monospace;
+}
+
+.library-format-dialog .dialog-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 0 16px 12px;
+  font-family: 'W95FA', monospace;
+}
+
+.library-format-dialog .dialog-loading .win98-loading-text {
+  font-size: 11px;
+  margin: 0;
+}
+
+.library-format-dialog .library-format-loading-bar {
+  width: 100%;
+  min-width: 200px;
+  max-width: 280px;
+}
+
+
+.library-format-dialog .dialog-icon {
+  font-size: 32px;
+  line-height: 1;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.library-format-dialog .dialog-icon img {
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+.library-format-dialog .dialog-message {
+  flex: 1;
+  font-size: 11px;
+  line-height: 1.4;
+  padding-top: 4px;
+}
+
+.library-format-dialog .dialog-buttons {
+  padding: 8px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.library-format-dialog .dialog-format-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.library-format-dialog .dialog-cancel-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.library-format-dialog .dialog-button {
+  min-width: 75px;
+  height: 23px;
+  padding: 0 12px;
+  background-color: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  font-family: 'W95FA', monospace;
+  font-size: 11px;
+  cursor: pointer;
+  box-shadow: inset 1px 1px 0px #fff, inset -1px -1px 0px #0a0a0a;
+  text-decoration: none;
+  color: #000;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-sizing: border-box;
+}
+
+/* Format buttons are <a> tags but should look like plain button text, not links */
+.library-format-dialog .dialog-format-buttons .dialog-button,
+.library-format-dialog .dialog-format-buttons .dialog-button:visited,
+.library-format-dialog .dialog-format-buttons .dialog-button:focus {
+  color: #000;
+  text-decoration: none;
+}
+.library-format-dialog .dialog-format-buttons .dialog-button:hover {
+  color: #000;
+  text-decoration: none;
+}
+.library-format-dialog .dialog-format-buttons .dialog-button:active {
+  color: #000;
+  text-decoration: none;
+}
+
+.library-format-dialog .dialog-button-icon {
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+
+.library-format-dialog .dialog-button:hover {
+  background: #d4d0c8;
+}
+
+.library-format-dialog .dialog-button:active {
+  border-color: #808080 #fff #fff #808080;
+  box-shadow: inset 1px 1px 0px #0a0a0a;
+  padding-top: 1px;
+  padding-left: calc(12px + 1px);
+  padding-bottom: calc(0px - 1px);
+  padding-right: calc(12px - 1px);
+}
+
+/* Exit confirmation dialog (same style as blog) */
+.annex-exit-dialog {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+}
+
+.annex-exit-dialog .dialog-window {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  min-width: 300px;
+  max-width: 400px;
+}
+
+.annex-exit-dialog .dialog-title-bar {
+  background: #000080;
+  color: white;
+  padding: 2px 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 18px;
+  font-size: 11px;
+  font-family: 'W95FA', monospace;
+}
+
+.annex-exit-dialog .dialog-title {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.annex-exit-dialog .dialog-title-icon {
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+
+.annex-exit-dialog .dialog-close {
+  width: 14px;
+  height: 12px;
+  background-color: #c0c0c0;
+  border: 1px solid #ffffff;
+  border-bottom-color: #404040;
+  border-right-color: #404040;
+  font-size: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  color: #000;
+}
+
+.annex-exit-dialog .dialog-close:active {
+  border-color: #404040;
+  border-bottom-color: #ffffff;
+  border-right-color: #ffffff;
+}
+
+.annex-exit-dialog .dialog-content {
+  padding: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-family: 'W95FA', monospace;
+}
+
+.annex-exit-dialog .dialog-icon {
+  font-size: 32px;
+  line-height: 1;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.annex-exit-dialog .dialog-icon img {
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+.annex-exit-dialog .dialog-message {
+  flex: 1;
+  font-size: 11px;
+  line-height: 1.4;
+  padding-top: 4px;
+}
+
+.annex-exit-dialog .dialog-buttons {
+  padding: 8px 16px 16px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.annex-exit-dialog .dialog-button {
+  min-width: 75px;
+  height: 23px;
+  padding: 0 12px;
+  background-color: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  font-family: 'W95FA', monospace;
+  font-size: 11px;
+  cursor: pointer;
+  box-shadow: inset 1px 1px 0px #fff, inset -1px -1px 0px #0a0a0a;
+}
+
+.annex-exit-dialog .dialog-button:hover {
+  background: #d4d0c8;
+}
+
+.annex-exit-dialog .dialog-button:active {
+  border-color: #808080 #fff #fff #808080;
+  box-shadow: inset 1px 1px 0px #0a0a0a;
+  padding-top: 1px;
+  padding-left: calc(12px + 1px);
+  padding-bottom: calc(0px - 1px);
+  padding-right: calc(12px - 1px);
+}
+
+.annex-exit-dialog .dialog-button-primary {
+  font-weight: bold;
 }

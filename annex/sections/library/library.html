@@ -1,0 +1,82 @@
+<div class="annex-section">
+  <div class="project-card">
+    <div class="title-bar">
+      <div class="title-bar-text">
+        <img src="../../assets/img/icons/library.png" alt="" class="win98-icon" style="width: 16px; height: 16px; max-width: 16px; max-height: 16px; object-fit: contain;">
+        library.exe
+      </div>
+      <div class="window-controls">
+        <button class="fake-control">_</button>
+        <button class="fake-control">□</button>
+        <button type="button" class="annex-section-close" title="Close">×</button>
+      </div>
+    </div>
+    <div class="content">
+      <div class="annex-section-header">
+        <div class="annex-viewer-header-top">
+          <div class="annex-header-left">
+            <h3 class="annex-subject">Library</h3>
+            <p class="annex-program-desc">Some of the books I've read, or am reading. Please support the authors if you can!</p>
+          </div>
+          <a href="#" class="annex-back-link annex-back-link-in-section">
+            <img src="../../assets/img/icons/goto-arrow.png" alt="" class="annex-back-link-icon" style="transform: rotate(180deg);">
+            Back
+          </a>
+        </div>
+      </div>
+      <div id="library-entries" class="library-entries"></div>
+    </div>
+  </div>
+
+  <!-- Format choice popup (same style as blog confirm dialog) -->
+  <div class="library-format-dialog" id="library-format-dialog">
+    <div class="dialog-window">
+      <div class="dialog-title-bar">
+        <div class="dialog-title">
+          <img src="../../assets/img/icons/format16.png" alt="" class="dialog-title-icon">
+          <span id="library-format-dialog-title">choice.exe</span>
+        </div>
+        <button type="button" class="dialog-close" id="library-format-dialog-close">×</button>
+      </div>
+      <div class="dialog-content">
+        <div class="dialog-icon">
+          <img src="../../assets/img/icons/format.png" alt="">
+        </div>
+        <div class="dialog-message" id="library-format-dialog-message">Select a format to borrow:</div>
+      </div>
+      <div class="dialog-loading" id="library-format-dialog-loading">
+        <div class="win98-loading-bar-container library-format-loading-bar">
+          <div class="win98-loading-bar-track">
+            <div class="win98-loading-bar-segments">
+              <div class="win98-loading-bar-segment"></div>
+              <div class="win98-loading-bar-segment"></div>
+              <div class="win98-loading-bar-segment"></div>
+              <div class="win98-loading-bar-segment"></div>
+              <div class="win98-loading-bar-segment"></div>
+              <div class="win98-loading-bar-segment"></div>
+              <div class="win98-loading-bar-segment"></div>
+              <div class="win98-loading-bar-segment"></div>
+              <div class="win98-loading-bar-segment"></div>
+              <div class="win98-loading-bar-segment"></div>
+              <div class="win98-loading-bar-segment"></div>
+              <div class="win98-loading-bar-segment"></div>
+              <div class="win98-loading-bar-segment"></div>
+              <div class="win98-loading-bar-segment"></div>
+              <div class="win98-loading-bar-segment"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dialog-buttons" id="library-format-dialog-buttons-wrap">
+        <div class="dialog-format-buttons" id="library-format-dialog-buttons">
+          <!-- format buttons filled by JS -->
+        </div>
+        <div class="dialog-cancel-row">
+          <button type="button" class="dialog-button" id="library-format-dialog-cancel">
+            <img src="../../assets/img/icons/cancel16.png" alt="" class="dialog-button-icon">Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

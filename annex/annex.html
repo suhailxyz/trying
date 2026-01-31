@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.cdnfonts.com/css/w95fa" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="annex.css" />
+  <link rel="icon" type="image/png" href="../assets/img/icons/help16.png">
+  <title>annex.exe – suhailstrying</title>
+</head>
+
+<body class="annex-page">
+  <div class="annex-window">
+      <div class="project-card">
+        <!-- Title bar -->
+        <div class="title-bar">
+          <div class="title-bar-text">
+            <img src="../assets/img/icons/help16.png" alt="" class="win98-icon" style="width: 16px; height: 16px;">
+            annex.exe
+          </div>
+          <div class="window-controls">
+            <button class="fake-control">_</button>
+            <button class="fake-control">□</button>
+            <button type="button" class="annex-main-close" id="annex-main-close" title="Close">×</button>
+          </div>
+        </div>
+
+        <!-- Menu bar -->
+        <div class="annex-menu-bar">
+          <div class="annex-menu-item">File</div>
+          <div class="annex-menu-item">Edit</div>
+          <div class="annex-menu-item">View</div>
+          <div class="annex-menu-item">Go</div>
+          <div class="annex-menu-item">Favorites</div>
+          <div class="annex-menu-item">Help</div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="annex-toolbar">
+          <button type="button" class="annex-tool-button" id="annex-home-btn" title="Home">
+            <img src="../assets/img/icons/home16.png" alt="" class="annex-tool-icon">
+            Home
+          </button>
+          <button type="button" class="annex-tool-button" id="annex-back-btn" title="Back">
+            <img src="../assets/img/icons/goto-arrow.png" alt="" class="annex-tool-icon" style="transform: translateY(-50%) rotate(180deg);">
+            Back
+          </button>
+          <button type="button" class="annex-tool-button" id="annex-forward-btn" title="Forward">
+            <img src="../assets/img/icons/goto-arrow.png" alt="" class="annex-tool-icon">
+            Forward
+          </button>
+          <button type="button" class="annex-tool-button" id="annex-about-btn" title="About">
+            <img src="../assets/img/icons/help16.png" alt="" class="annex-tool-icon">
+            About
+          </button>
+        </div>
+
+        <!-- Address bar -->
+        <div class="annex-address-bar">
+          <span class="annex-address-label">Address:</span>
+          <img src="../assets/img/icons/help16.png" alt="" class="annex-address-icon">
+          <span class="annex-address-value" id="annex-address-value">Annex</span>
+        </div>
+
+        <!-- Main content: left panel + right pane -->
+        <div class="annex-content-area">
+          <!-- Left: info panel (updates when a section is open) -->
+          <div class="annex-left-panel">
+            <img src="../assets/img/icons/annex.png" alt="" class="annex-left-icon" id="annex-left-icon">
+            <h2 class="annex-left-title" id="annex-left-title">Annex</h2>
+            <hr class="annex-left-separator">
+            <p class="annex-left-desc" id="annex-left-desc">Select an item to view its description.</p>
+          </div>
+
+          <!-- Right: grid or loaded section -->
+          <div class="annex-right-pane" id="annex-right-pane">
+            <!-- Icon grid (built by JS) -->
+            <div class="annex-grid" id="annex-grid"></div>
+
+            <!-- Detail view (loaded section) -->
+            <div class="annex-detail" id="annex-detail">
+              <a href="#" class="annex-back-link" id="annex-back-link">
+              <img src="../assets/img/icons/goto-arrow.png" alt="" class="annex-back-link-icon" style="transform: rotate(180deg);">
+              Back
+            </a>
+              <div class="annex-detail-content" id="annex-detail-content"></div>
+            </div>
+
+            <!-- Loading state -->
+            <div class="annex-loading" id="annex-loading" style="display: none;">Loading...</div>
+            <div class="annex-error" id="annex-error" style="display: none;"></div>
+          </div>
+        </div>
+
+        <!-- Status bar -->
+        <div class="annex-status-bar">
+          <span class="annex-status-left">
+            <span id="annex-status-count">0 object(s)</span>
+          </span>
+          <span class="annex-status-right">
+            <img src="../assets/img/icons/help16.png" alt="" class="annex-status-icon">
+            <span id="annex-status-location">Annex</span>
+          </span>
+        </div>
+      </div>
+  </div>
+
+  <!-- Exit confirmation (same as blog) -->
+  <div class="annex-exit-dialog" id="annex-exit-dialog">
+    <div class="dialog-window">
+      <div class="dialog-title-bar">
+        <div class="dialog-title">
+          <img src="../assets/img/icons/warn.png" alt="" class="dialog-title-icon">
+          Exit annex.exe?
+        </div>
+        <button type="button" class="dialog-close" id="annex-exit-dialog-close">×</button>
+      </div>
+      <div class="dialog-content">
+        <div class="dialog-icon">
+          <img src="../assets/img/icons/wait.png" alt="">
+        </div>
+        <div class="dialog-message">Are you sure you want to return to the homepage?</div>
+      </div>
+      <div class="dialog-buttons">
+        <button type="button" class="dialog-button dialog-button-primary" id="annex-exit-dialog-yes">Yes</button>
+        <button type="button" class="dialog-button" id="annex-exit-dialog-no">No</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>killin' it since 1999, &copy; <a href="https://i.makeagif.com/media/7-30-2016/JBrGej.gif" target="_blank" rel="noopener noreferrer">suhailstry.ing</a> ❤️ all rights reserved.</p>
+  </footer>
+
+  <script src="annex.js"></script>
+
+</body>
+
+</html>
