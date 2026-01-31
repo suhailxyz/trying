@@ -22,10 +22,12 @@
   let applets = [];
   let currentSectionLabel = null;
   let historyStack = [];
+  let sectionWindowHtmlCache = null;
+  var libraryScriptLoaded = false;
 
   function getSlug(applet) {
-    var f = applet.file;
-    return f.indexOf('/') >= 0 ? f.split('/')[0] : f.replace(/\.html?$/i, '');
+    var f = applet.contentFile;
+    return f && f.indexOf('/') >= 0 ? f.split('/')[0] : (f ? f.replace(/\.html?$/i, '') : '');
   }
 
   function getAppletBySlug(slug) {
@@ -57,25 +59,37 @@
   }
 
   function showDetail(html, applet) {
-    var label = applet ? applet.label : null;
+    var programWindowTitle = applet ? applet.programWindowTitle : null;
     gridEl.style.display = 'none';
     detailContentEl.innerHTML = html;
     detailEl.classList.add('annex-detail-visible');
     rightPaneEl.classList.add('annex-showing-detail');
     loadingEl.style.display = 'none';
     errorEl.style.display = 'none';
-    addressValueEl.textContent = label ? 'Annex - ' + label : 'Annex';
-    statusLocationEl.textContent = label || 'Annex';
-    currentSectionLabel = label;
-    if (applet && (applet.panelTitle || applet.panelDesc || applet.panelIcon)) {
-      setLeftPanel(applet.panelTitle || label, applet.panelDesc, applet.panelIcon);
+    addressValueEl.textContent = programWindowTitle ? 'Annex - ' + programWindowTitle : 'Annex';
+    statusLocationEl.textContent = programWindowTitle || 'Annex';
+    currentSectionLabel = programWindowTitle;
+    var gridIcon = applet && applet.gridIcon;
+    var programWindowIcon = applet && (applet.programWindowIcon || applet.gridIcon);
+    var infoPanelTitle = applet && applet.infoPanelTitle;
+    var infoPanelDesc = applet && applet.infoPanelDesc;
+    if (applet && (infoPanelTitle || infoPanelDesc)) {
+      setLeftPanel(infoPanelTitle || programWindowTitle, infoPanelDesc, gridIcon || null);
     } else {
-      setLeftPanel(label, 'Select an item to view its description.', applet ? applet.icon : null);
+      setLeftPanel(programWindowTitle, 'Select an item to view its description.', applet ? gridIcon : null);
     }
 
-    if (applet && applet.programDesc) {
+    /* Fill shared section window chrome from applet */
+    var titleIcon = detailContentEl.querySelector('#annex-section-title-icon');
+    if (titleIcon && applet) titleIcon.src = ICONS_BASE + (programWindowIcon || 'annex.png');
+    var titleText = detailContentEl.querySelector('#annex-section-title-text');
+    if (titleText && applet) titleText.textContent = programWindowTitle || '';
+    var subjectEl = detailContentEl.querySelector('.annex-subject');
+    if (subjectEl && applet) subjectEl.textContent = infoPanelTitle || programWindowTitle || '';
+    var sectionHeaderDesc = applet && applet.sectionHeaderDesc;
+    if (sectionHeaderDesc) {
       var programDescEl = detailContentEl.querySelector('.annex-program-desc');
-      if (programDescEl) programDescEl.textContent = applet.programDesc;
+      if (programDescEl) programDescEl.textContent = sectionHeaderDesc;
     }
 
     detailContentEl.querySelectorAll('img[src^="../../"]').forEach(function(img) {
@@ -83,67 +97,19 @@
     });
 
     if (applet && getSlug(applet) === 'library') {
-      var container = detailContentEl.querySelector('#library-entries');
-      if (container) {
-        fetch('sections/library/library.json')
-          .then(function(res) { return res.ok ? res.json() : Promise.reject(new Error('Failed to load library')); })
-          .then(function(entries) {
-            var base = '../assets/img/icons/';
-            (Array.isArray(entries) ? entries : []).forEach(function(entry) {
-              var formats = normalizeFormats(entry);
-              var formatLabel = formats.map(function(f) { return f.format; }).join(', ');
-              var blurbHtml = entry.note
-                ? '<p class="library-entry-blurb"><img src="' + base + 'notes16.png" alt="" class="library-entry-icon">' + escapeHtml(entry.note) + '</p>'
-                : '';
-              var div = document.createElement('div');
-              div.className = 'library-entry';
-              var borrowHtml;
-              if (formats.length === 1) {
-                var oneFilename = downloadFilename(entry.title, formats[0].format);
-                borrowHtml = '<a href="' + escapeHtml(formats[0].file) + '" download="' + escapeHtml(oneFilename) + '" class="library-entry-download" title="Borrow ' + escapeHtml(formats[0].format) + '">' +
-                  '<img src="' + base + 'download16.png" alt="" class="win98-icon">Borrow</a>';
-              } else {
-                borrowHtml = '<div class="library-entry-borrow">' +
-                  '<button type="button" class="library-entry-borrow-btn">' +
-                  '<img src="' + base + 'download16.png" alt="" class="win98-icon">Borrow</button></div>';
-              }
-              var supportHtml = entry.supportAuthor
-                ? '<a href="' + escapeHtml(entry.supportAuthor) + '" class="library-entry-support" title="Support the author" target="_blank" rel="noopener noreferrer">' +
-                  '<img src="' + base + 'support16.png" alt="" class="win98-icon">Support</a>'
-                : '';
-              var actionsHtml = '<div class="library-entry-actions">' + borrowHtml + supportHtml + '</div>';
-              div.innerHTML =
-                '<div class="library-entry-info">' +
-                  '<div class="library-entry-title-row">' +
-                    '<img src="' + base + 'book16.png" alt="" class="library-entry-icon">' +
-                    '<span class="library-entry-title">' + escapeHtml(entry.title) + '</span>' +
-                    '<span class="library-entry-format">' + escapeHtml(formatLabel) + '</span>' +
-                  '</div>' +
-                  '<div class="library-entry-author-row">' +
-                    '<img src="' + base + 'user16.png" alt="" class="library-entry-icon">' +
-                    '<span class="library-entry-author">' + escapeHtml(entry.author || '') + '</span>' +
-                  '</div>' +
-                  blurbHtml +
-                '</div>' +
-                actionsHtml;
-              container.appendChild(div);
-              if (formats.length === 1) {
-                var singleLink = div.querySelector('.library-entry-download');
-                if (singleLink && isExternalUrl(formats[0].file)) {
-                  singleLink.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    triggerDownload(formats[0].file, downloadFilename(entry.title, formats[0].format));
-                  });
-                }
-              } else {
-                var btn = div.querySelector('.library-entry-borrow-btn');
-                btn.addEventListener('click', function() {
-                  showLibraryFormatDialog(formats, entry.title);
-                });
-              }
-            });
-          })
-          .catch(function() {});
+      function runLibraryInit() {
+        if (window.AnnexLibraryInit) window.AnnexLibraryInit(detailContentEl);
+      }
+      if (libraryScriptLoaded) {
+        runLibraryInit();
+      } else {
+        var script = document.createElement('script');
+        script.src = 'sections/library/library.js';
+        script.onload = function() {
+          libraryScriptLoaded = true;
+          runLibraryInit();
+        };
+        document.head.appendChild(script);
       }
     }
   }
@@ -367,13 +333,29 @@
 
   function openSection(applet) {
     showLoading();
-    fetch('sections/' + applet.file)
-      .then(function(res) {
-        if (!res.ok) throw new Error('Failed to load ' + applet.file);
-        return res.text();
-      })
-      .then(function(html) {
-        showDetail(html, applet);
+    var wrapperPromise = sectionWindowHtmlCache
+      ? Promise.resolve(sectionWindowHtmlCache)
+      : fetch('sections/section-window.html').then(function(res) {
+          if (!res.ok) throw new Error('Failed to load section window');
+          return res.text();
+        }).then(function(html) {
+          sectionWindowHtmlCache = html;
+          return html;
+        });
+    var contentFile = applet.contentFile;
+    var contentPromise = fetch('sections/' + contentFile).then(function(res) {
+      if (!res.ok) throw new Error('Failed to load ' + contentFile);
+      return res.text();
+    });
+    Promise.all([wrapperPromise, contentPromise])
+      .then(function(results) {
+        var wrapperHtml = results[0];
+        var contentHtml = results[1];
+        var wrapDiv = document.createElement('div');
+        wrapDiv.innerHTML = wrapperHtml;
+        var slot = wrapDiv.querySelector('#annex-section-body');
+        if (slot) slot.innerHTML = contentHtml;
+        showDetail(wrapDiv.innerHTML, applet);
         var slug = getSlug(applet);
         if (history.replaceState) {
           history.replaceState(null, '', location.pathname + location.search + (slug ? '#' + slug : ''));
@@ -383,7 +365,7 @@
       })
       .catch(function(err) {
         console.error('Error loading section:', err);
-        showError('Couldn\'t load "' + applet.label + '". Try again?');
+        showError('Couldn\'t load "' + applet.programWindowTitle + '". Try again?');
       });
   }
 
@@ -397,15 +379,16 @@
         e.preventDefault();
         openSection(applet);
       });
+      var iconPath = applet.gridIcon ? (ICONS_BASE + applet.gridIcon) : (ICONS_BASE + 'annex.png');
       var icon = document.createElement('img');
-      icon.src = ICONS_BASE + applet.icon;
+      icon.src = iconPath;
       icon.alt = '';
       icon.className = 'annex-grid-icon';
-      var label = document.createElement('span');
-      label.className = 'annex-grid-label';
-      label.textContent = applet.label;
+      var labelEl = document.createElement('span');
+      labelEl.className = 'annex-grid-label';
+      labelEl.textContent = applet.gridLabel || applet.infoPanelTitle || applet.programWindowTitle;
       cell.appendChild(icon);
-      cell.appendChild(label);
+      cell.appendChild(labelEl);
       gridEl.appendChild(cell);
     });
     statusCountEl.textContent = applets.length + ' object(s)';
@@ -441,8 +424,8 @@
 
   forwardBtn.addEventListener('click', function() {
     if (historyStack.length > 0) {
-      var label = historyStack.pop();
-      var applet = applets.find(function(a) { return a.label === label; });
+      var programWindowTitle = historyStack.pop();
+      var applet = applets.find(function(a) { return a.programWindowTitle === programWindowTitle; });
       if (applet) openSection(applet);
     }
   });
@@ -498,8 +481,12 @@
     }
     var applet = getAppletBySlug(hash);
     if (!applet) return;
-    var currentApplet = currentSectionLabel ? applets.find(function(a) { return a.label === currentSectionLabel; }) : null;
+    var currentApplet = currentSectionLabel ? applets.find(function(a) { return a.programWindowTitle === currentSectionLabel; }) : null;
     if (currentApplet && getSlug(currentApplet) === hash) return;
     openSection(applet);
   });
+
+  window.AnnexUtils = { escapeHtml: escapeHtml, downloadFilename: downloadFilename, normalizeFormats: normalizeFormats, triggerDownload: triggerDownload, isExternalUrl: isExternalUrl };
+  window.showLibraryFormatDialog = showLibraryFormatDialog;
+  window.hideLibraryFormatDialog = hideLibraryFormatDialog;
 })();

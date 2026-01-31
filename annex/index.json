@@ -1,20 +1,22 @@
 [
   {
-    "file": "library/library.html",
-    "label": "Library",
-    "icon": "library.png",
-    "programDesc": "Some of the books I've read, or am reading. Please support the authors if you can!",
-    "panelTitle": "Library",
-    "panelDesc": "Borrow some books from my library!",
-    "panelIcon": "library.png"
+    "contentFile": "library/content.html",
+    "programWindowTitle": "read.exe",
+    "programWindowIcon": "library.png",
+    "gridLabel": "Library",
+    "gridIcon": "librarygrid.png",
+    "infoPanelTitle": "Library",
+    "infoPanelDesc": "Borrow some books from my library!",
+    "sectionHeaderDesc": "Some of the books I've read, or am reading. Please support the authors if you can!"
   },
   {
-    "file": "about/about.html",
-    "label": "About",
-    "icon": "help16.png",
-    "programDesc": "This is a living page for stuff that doesn't have a permanent home yet. It might stay here, or it might not!",
-    "panelTitle": "About",
-    "panelDesc": "This is a living page for stuff that doesn't have a permanent home yet. It might stay here, or it might not!",
-    "panelIcon": "help16.png"
+    "contentFile": "about/content.html",
+    "programWindowTitle": "answers.exe",
+    "programWindowIcon": "help16.png",
+    "gridLabel": "What's this?",
+    "gridIcon": "infobubble.png",
+    "infoPanelTitle": "About the annex...",
+    "infoPanelDesc": "This is a living page for stuff that doesn't have a permanent home yet. It might stay here, or it might not!",
+    "sectionHeaderDesc": "This is a living page for stuff that doesn't have a permanent home yet. It might stay here, or it might not!"
   }
 ]
