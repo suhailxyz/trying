@@ -48,6 +48,37 @@ document.addEventListener('DOMContentLoaded', async () => {
     const postViewer = document.querySelector('.post-viewer');
     const statusCount = document.querySelector('.status-count');
 
+    // Deep linking: slug from filename, parse hash
+    function slugFromFilename(filename) {
+        if (!filename || typeof filename !== 'string') return '';
+        return filename.replace(/\.(md|txt)$/i, '');
+    }
+
+    function parseBlogHash() {
+        const raw = location.hash ? location.hash.slice(1) : '';
+        if (!raw) return null;
+        const parts = raw.split('/');
+        const mode = parts[0] === 'notes' ? 'notes' : 'posts';
+        const slug = parts[1] || null;
+        return { mode, slug };
+    }
+
+    function setHashForPost(post) {
+        if (!post) return;
+        const slug = slugFromFilename(post.filename);
+        const hash = 'posts' + (slug ? '/' + slug : '');
+        if (history.replaceState) history.replaceState(null, '', location.pathname + location.search + '#' + hash);
+        else location.hash = hash;
+    }
+
+    function setHashForNote(note) {
+        if (!note) return;
+        const slug = slugFromFilename(note.filename);
+        const hash = 'notes' + (slug ? '/' + slug : '');
+        if (history.replaceState) history.replaceState(null, '', location.pathname + location.search + '#' + hash);
+        else location.hash = hash;
+    }
+
     // Function to get URL for index.json (works from local path on GitHub Pages)
     function getIndexUrl() {
         return '/blog/posts/index.json';
@@ -239,7 +270,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 postElement.classList.add('active');
                 const postIndex = parseInt(postElement.dataset.postIndex);
                 const selectedPost = allPosts[postIndex];
-                if (selectedPost) renderPostContent(selectedPost);
+                if (selectedPost) {
+                    renderPostContent(selectedPost);
+                    setHashForPost(selectedPost);
+                }
                 const listEl = document.querySelector('.post-list');
                 const overlay = document.getElementById('mobile-overlay');
                 if (listEl && listEl.classList.contains('mobile-open') && overlay) {
@@ -278,7 +312,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 noteElement.classList.add('active');
                 const noteIndex = parseInt(noteElement.dataset.noteIndex);
                 const selectedNote = allNotes[noteIndex];
-                if (selectedNote) renderNoteContent(selectedNote);
+                if (selectedNote) {
+                    renderNoteContent(selectedNote);
+                    setHashForNote(selectedNote);
+                }
                 const listEl = document.querySelector('.post-list');
                 const overlay = document.getElementById('mobile-overlay');
                 if (listEl && listEl.classList.contains('mobile-open') && overlay) {
@@ -350,6 +387,49 @@ document.addEventListener('DOMContentLoaded', async () => {
                 renderPostContent(allPosts[0]);
                 document.querySelectorAll('.post-list-container .post').forEach((p, i) => p.classList.toggle('active', i === 0));
             } else postViewer.innerHTML = '<div class="viewer-content">No messages available.</div>';
+        }
+
+        const hash = isNotes ? 'notes' : 'posts';
+        if (history.replaceState) {
+            history.replaceState(null, '', location.pathname + location.search + '#' + hash);
+        } else {
+            location.hash = hash;
+        }
+    }
+
+    // Apply hash to UI (deep linking); run after data is loaded
+    async function applyHash() {
+        const parsed = parseBlogHash();
+        if (!parsed) return;
+        const { mode, slug } = parsed;
+        if (mode === 'notes' && allNotes.length === 0) {
+            await loadNotes();
+        }
+        setListMode(mode === 'notes');
+        if (mode === 'posts') {
+            if (slug) {
+                const idx = allPosts.findIndex(p => slugFromFilename(p.filename) === slug);
+                if (idx >= 0) {
+                    renderPostContent(allPosts[idx]);
+                    document.querySelectorAll('.post-list-container .post').forEach((p, i) => p.classList.toggle('active', i === idx));
+                }
+            }
+            // No slug but first post is shown: sync URL to match (e.g. #posts -> #posts/love-hope-disappoint)
+            if (!slug && allPosts.length > 0) {
+                setHashForPost(allPosts[0]);
+            }
+        } else {
+            if (slug) {
+                const idx = allNotes.findIndex(n => slugFromFilename(n.filename) === slug);
+                if (idx >= 0) {
+                    renderNoteContent(allNotes[idx]);
+                    document.querySelectorAll('.post-list-container .post').forEach((p, i) => p.classList.toggle('active', i === idx));
+                }
+            }
+            // No slug but first note is shown: sync URL to match
+            if (!slug && allNotes.length > 0) {
+                setHashForNote(allNotes[0]);
+            }
         }
     }
 
@@ -455,6 +535,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const selectedPost = allPosts[postIndex];
                 if (selectedPost) {
                     renderPostContent(selectedPost);
+                    setHashForPost(selectedPost);
                     // Update active post in the list
                     document.querySelectorAll('.post').forEach(p => p.classList.remove('active'));
                     const postElements = document.querySelectorAll('.post');
@@ -511,6 +592,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 );
                 if (aboutPost) {
                     renderPostContent(aboutPost);
+                    setHashForPost(aboutPost);
                     // Update active post in the list
                     document.querySelectorAll('.post').forEach(p => p.classList.remove('active'));
                     const postElements = document.querySelectorAll('.post');
@@ -633,8 +715,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // Initial render
-    renderPosts().then(() => {
-        // Apply saved font size after posts are rendered
+    window.addEventListener('hashchange', () => { applyHash(); });
+
+    renderPosts().then(async () => {
+        await applyHash();
         applySavedFontSize();
     });
 }); 
