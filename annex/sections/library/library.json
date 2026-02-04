@@ -16,5 +16,14 @@
       { "format": "EPUB", "file": "../assets/files/books/Will-to-Change-hooks.epub" },
       { "format": "PDF", "file": "https://dn721601.ca.archive.org/0/items/the-will-to-change-men-masculinity-and-love-by-bell-hooks-z-lib.org.epub/The%20Will%20to%20Change%20Men%2C%20Masculinity%2C%20and%20Love%20by%20bell%20hooks%20%28z-lib.org%29.epub.pdf" }
     ]
+  },
+  {
+    "title": "Manifesto of the Communist Party",
+    "author": "Karl Marx & Frederick Engels",
+    "note": "Read if you are part of the 99% that doesn't live off of capital. (You are probably part of the 99%)",
+    "formats": [
+      { "format": "EPUB", "file": "https://www.marxists.org/archive/marx/works/download/epub/manifesto.epub" },
+      { "format": "PDF", "file": "https://www.marxists.org/archive/marx/works/download/pdf/Manifesto.pdf" }
+    ]
   }
 ]
