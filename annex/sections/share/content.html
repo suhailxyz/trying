@@ -1,0 +1,116 @@
+<div id="share-explorer" class="share-explorer">
+  <div class="share-menu-bar">
+    <span class="share-menu-item">File</span>
+    <span class="share-menu-item">Edit</span>
+    <span class="share-menu-item">View</span>
+    <span class="share-menu-item">Go</span>
+    <span class="share-menu-item">Tools</span>
+    <span class="share-menu-item">Help</span>
+    <button type="button" class="share-menu-return win98-button" id="share-menu-return" title="Return to Annex">
+      <img src="../../assets/img/icons/help16.png" alt="" class="share-menu-return-icon"> Return
+    </button>
+  </div>
+  <div class="share-toolbar"></div>
+  <div class="share-address-bar">
+    <span class="share-address-path-wrap">
+      <span class="share-address-path" id="share-address-path">Share://</span>
+    </span>
+    <button type="button" class="share-address-nav share-address-back" id="share-address-back" title="Back" disabled>
+      <span class="share-toolbar-arrow share-toolbar-arrow-back" aria-hidden="true"></span>
+    </button>
+    <button type="button" class="share-address-nav share-address-forward" id="share-address-forward" title="Forward" disabled>
+      <span class="share-toolbar-arrow share-toolbar-arrow-forward" aria-hidden="true"></span>
+    </button>
+  </div>
+  <div class="share-panes">
+    <div class="share-tree-pane">
+      <div class="share-tree-header">
+        <span class="share-tree-title">All Folders</span>
+        <button type="button" class="share-tree-close" title="Close" aria-label="Close">×</button>
+      </div>
+      <div class="share-tree" id="share-tree"></div>
+    </div>
+    <div class="share-right-pane">
+      <div class="share-content-panel" id="share-content-panel">
+        <div id="share-list" class="share-list"></div>
+      </div>
+      <div class="share-gallery-view" id="share-gallery-view" style="display: none;">
+        <div class="share-gallery-bar">
+          <img src="../../assets/img/icons/art16.png" alt="" class="share-gallery-bar-icon">
+          <span class="share-gallery-bar-title" id="share-viewer-title">image.jpg</span>
+          <button type="button" class="share-viewer-download win98-button" id="share-viewer-download">
+            <img src="../../assets/img/icons/download16.png" alt="" class="win98-icon"> Save Pic
+          </button>
+        </div>
+        <div class="share-viewer-content">
+          <div class="share-viewer-main-row">
+            <div class="share-viewer-image-wrap">
+              <img id="share-viewer-image" src="" alt="" class="share-viewer-image">
+            </div>
+            <div class="share-viewer-details-row">
+              <div class="share-viewer-details">
+                <div class="share-viewer-details-title">
+                  <img src="../../assets/img/icons/picinfo16.png" alt="Information" class="share-viewer-details-title-icon" title="Information">
+                </div>
+                <div class="share-viewer-detail-row">
+                  <span class="share-viewer-detail-label">File type:</span>
+                  <span class="share-viewer-detail-value" id="share-detail-type">—</span>
+                </div>
+                <div class="share-viewer-detail-row">
+                  <span class="share-viewer-detail-label">Dimensions:</span>
+                  <span class="share-viewer-detail-value" id="share-detail-dimensions">—</span>
+                </div>
+                <div class="share-viewer-detail-row">
+                  <span class="share-viewer-detail-label">File size:</span>
+                  <span class="share-viewer-detail-value" id="share-detail-size">—</span>
+                </div>
+                <div class="share-viewer-detail-row">
+                  <span class="share-viewer-detail-label">Modified:</span>
+                  <span class="share-viewer-detail-value" id="share-detail-date">—</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="share-viewer-thumbs">
+            <div class="share-viewer-thumbs-nav">
+              <button type="button" class="share-viewer-prev win98-button" id="share-viewer-prev" title="Previous">‹</button>
+              <div class="share-viewer-thumbs-strip" id="share-viewer-thumbs-strip"></div>
+              <button type="button" class="share-viewer-next win98-button" id="share-viewer-next" title="Next">›</button>
+            </div>
+            <div class="share-viewer-thumbs-status" id="share-thumbs-status">Image 1 of 1</div>
+          </div>
+          <div class="share-viewer-download-all-row">
+            <button type="button" class="share-gallery-back win98-button" id="share-viewer-download-all" title="Download all files in this folder"><img src="../../assets/img/icons/savedir16.png" alt="" class="win98-icon"> <span class="share-viewer-download-all-text">Download all</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="share-status-bar">
+    <span class="share-status-left" id="share-status-left">0 object(s)</span>
+    <span class="share-status-right" id="share-status-right">Share://</span>
+  </div>
+
+  <!-- Download all confirmation (Win98 style, same as exit dialog) -->
+  <div class="share-download-all-dialog annex-dialog" id="share-download-all-dialog">
+    <div class="dialog-window">
+      <div class="dialog-title-bar">
+        <div class="dialog-title">
+          <img src="../../assets/img/icons/warn.png" alt="" class="dialog-title-icon">
+          Download all?
+        </div>
+        <button type="button" class="dialog-close" id="share-download-all-dialog-close">×</button>
+      </div>
+      <div class="dialog-content">
+        <div class="dialog-icon">
+          <img src="../../assets/img/icons/wait.png" alt="">
+        </div>
+        <div class="dialog-message" id="share-download-all-dialog-message">Download all files from this folder as a ZIP?</div>
+      </div>
+      <div class="dialog-buttons">
+        <button type="button" class="dialog-button dialog-button-primary" id="share-download-all-dialog-yes">Yes</button>
+        <button type="button" class="dialog-button" id="share-download-all-dialog-no">No</button>
+      </div>
+    </div>
+  </div>
+</div>

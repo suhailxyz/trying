@@ -47,7 +47,7 @@
             <img src="../assets/img/icons/goto-arrow.png" alt="" class="annex-tool-icon" style="transform: translateY(-50%) rotate(180deg);">
             Back
           </button>
-          <button type="button" class="annex-tool-button" id="annex-forward-btn" title="Forward">
+          <button type="button" class="annex-tool-button annex-forward-btn" id="annex-forward-btn" title="Forward">
             <img src="../assets/img/icons/goto-arrow.png" alt="" class="annex-tool-icon">
             Forward
           </button>
@@ -67,11 +67,16 @@
         <!-- Main content: left panel + right pane -->
         <div class="annex-content-area">
           <!-- Left: info panel (updates when a section is open) -->
-          <div class="annex-left-panel">
+          <div class="annex-left-panel" id="annex-left-panel">
             <img src="../assets/img/icons/annex.png" alt="" class="annex-left-icon" id="annex-left-icon">
             <h2 class="annex-left-title" id="annex-left-title">Annex</h2>
             <hr class="annex-left-separator">
             <p class="annex-left-desc" id="annex-left-desc">Select an item to view its description.</p>
+            <div id="annex-left-panel-extra" class="annex-left-panel-extra"></div>
+          </div>
+          <div class="annex-info-trigger-wrap" id="annex-info-trigger-wrap">
+            <button type="button" class="annex-left-panel-toggle" id="annex-left-panel-toggle" aria-label="Toggle info panel" aria-expanded="false" title="Info"><span class="annex-left-panel-toggle-label">Info</span><span class="annex-left-panel-toggle-arrow" aria-hidden="true"></span></button>
+            <div class="annex-left-panel-dropdown" id="annex-left-panel-dropdown" aria-hidden="true"></div>
           </div>
 
           <!-- Right: grid or loaded section -->
