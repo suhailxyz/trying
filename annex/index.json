@@ -1,1 +1,32 @@
-[{"contentFile":"library/content.html","programWindowTitle":"read.exe","programWindowIcon":"library.png","gridLabel":"Library","gridIcon":"librarygrid.png","infoPanelTitle":"Library","infoPanelDesc":"Borrow some books from my library!","sectionHeaderDesc":"Some of the books I've read, or am reading. Please support the authors if you can!"},{"contentFile":"share/content.html","programWindowTitle":"share.exe","programWindowIcon":"explorer16.png","gridLabel":"Share","gridIcon":"explorer16.png","infoPanelTitle":"Share","infoPanelDesc":"Shared folders and images.","sectionHeaderDesc":"Shared folders and images."},{"contentFile":"about/content.html","programWindowTitle":"answers.exe","programWindowIcon":"help16.png","gridLabel":"What's this?","gridIcon":"infobubble.png","infoPanelTitle":"About the annex...","infoPanelDesc":"This is a living page for stuff that doesn't have a permanent home yet. It might stay here, or it might not!","sectionHeaderDesc":"This is a living page for stuff that doesn't have a permanent home yet. It might stay here, or it might not!"}]
+[
+  {
+    "contentFile": "library/content.html",
+    "programWindowTitle": "read.exe",
+    "programWindowIcon": "library.png",
+    "gridLabel": "Library",
+    "gridIcon": "librarygrid.png",
+    "infoPanelTitle": "Library",
+    "infoPanelDesc": "Borrow some books from my library!",
+    "sectionHeaderDesc": "Some of the books I've read, or am reading. Please support the authors if you can!"
+  },
+  {
+    "contentFile": "share/content.html",
+    "programWindowTitle": "ShareNet",
+    "programWindowIcon": "sharenet16.png",
+    "gridLabel": "ShareNet",
+    "gridIcon": "sharenet.png",
+    "infoPanelTitle": "ShareNet",
+    "infoPanelDesc": "A place for me to share stuff with you!",
+    "sectionHeaderDesc": "A place for me to share stuff with you!"
+  },
+  {
+    "contentFile": "about/content.html",
+    "programWindowTitle": "answers.exe",
+    "programWindowIcon": "help16.png",
+    "gridLabel": "What's this?",
+    "gridIcon": "infobubble.png",
+    "infoPanelTitle": "About the annex...",
+    "infoPanelDesc": "This is a living page for stuff that doesn't have a permanent home yet. It might stay here, or it might not!",
+    "sectionHeaderDesc": "This is a living page for stuff that doesn't have a permanent home yet. It might stay here, or it might not!"
+  }
+]

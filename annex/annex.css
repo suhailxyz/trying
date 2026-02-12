@@ -450,7 +450,7 @@ body.annex-page footer a:hover {
   margin: 0;
 }
 
-/* 1px dark border around share.exe (section window) – on section so it's never clipped */
+/* 1px dark border around share.net (section window) – on section so it's never clipped */
 .annex-window .annex-detail-content .annex-section.annex-share-open {
   border: 1px solid #000;
   box-sizing: border-box;
@@ -517,7 +517,7 @@ body.annex-page footer a:hover {
   gap: 6px;
 }
 
-/* When Share is open: hide the outer header so share.exe is the only chrome (no duplicate Back) */
+/* When Share is open: hide the outer header so share.net is the only chrome (no duplicate Back) */
 .annex-window .annex-detail-content .content:has(#annex-section-body .share-explorer) .annex-section-header,
 .annex-window .annex-share-open .annex-section-header {
   display: none !important;
@@ -1442,11 +1442,11 @@ body.annex-page footer a:hover {
     max-width: 100%;
   }
 
-  /* Share viewer: image full width, info moved below; no horizontal scroll except thumbs */
+  /* Share viewer: image full width, info moved below; allow horizontal scroll if content overflows */
   .annex-window .share-gallery-view .share-viewer-content {
     padding-left: 0;
     padding-right: 0;
-    overflow-x: hidden;
+    overflow-x: auto;
     max-width: 100%;
   }
 
@@ -1538,6 +1538,7 @@ body.annex-page footer a:hover {
     min-height: 44px;
     width: 44px;
     height: 44px;
+    font-size: 28px;
   }
 
   .annex-window .share-gallery-view .share-viewer-download {
@@ -1912,7 +1913,7 @@ body.annex-page footer a:hover {
   border: 2px solid;
   border-color: #fff #808080 #808080 #fff;
   font-family: 'W95FA', sans-serif;
-  font-size: 16px;
+  font-size: 22px;
   line-height: 1;
   color: #000;
   cursor: pointer;
@@ -2197,6 +2198,7 @@ body.annex-page footer a:hover {
     flex: 1;
     min-height: 0;
     overflow: auto;
+    padding: 0.25rem 0.25rem;
   }
 
   /* Slightly larger touch targets for toolbar, still skinny */

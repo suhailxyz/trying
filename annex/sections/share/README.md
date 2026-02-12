@@ -10,9 +10,9 @@ After you add, remove, or move files or folders under `assets/files/share/`, upd
 
 No per-folder `images.json` files. The index is the only generated file and must mirror the filesystem.
 
-## Optional: password-protect a folder
+## Optional: folder config (e.g. password protection)
 
-In any folder under `assets/files/share/`, add a file named **`.share-folder.json`** with:
+Per-folder settings are read from **`.share-folder.json`** inside any folder under `assets/files/share/`. See **`_site-tools/update-share-index.md`** (section "Per-folder config") for the full list. To password-protect a folder, add **`.share-folder.json`** with:
 
 ```json
 {"protected": true, "password": "your-secret"}
