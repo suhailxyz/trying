@@ -717,7 +717,10 @@
         if (item.type === 'folder') {
           var children = item.children || [];
           var numItems = children.length;
-          var countText = numItems === 1 ? '1 item' : numItems + ' items';
+          var allFolders = numItems > 0 && children.every(function(x) { return x.type === 'folder'; });
+          var countText = allFolders
+            ? (numItems === 1 ? '1 folder' : numItems + ' folders')
+            : (numItems === 1 ? '1 item' : numItems + ' items');
           row.innerHTML =
             '<img src="' + getFolderIcon(item) + '" alt="" class="share-row-icon">' +
             '<span class="share-row-name">' + Utils.escapeHtml(item.name) + '</span>' +

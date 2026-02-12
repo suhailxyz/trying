@@ -541,6 +541,15 @@
       }, MOBILE_LEFT_PANEL_AUTOHIDE_MS);
     }
 
+    function setMobileLeftPanelLabel(collapsed) {
+      if (!leftPanelToggleEl) return;
+      var labelEl = leftPanelToggleEl.querySelector('.annex-left-panel-toggle-label');
+      var text = collapsed ? 'Show Info' : 'Hide Info';
+      if (labelEl) labelEl.textContent = text;
+      leftPanelToggleEl.setAttribute('aria-label', text);
+      leftPanelToggleEl.setAttribute('title', text);
+    }
+
     function setMobileLeftPanelCollapsed(collapsed) {
       if (!leftPanelEl) return;
       if (collapsed) {
@@ -548,11 +557,11 @@
         leftPanelEl.classList.add('annex-left-panel-collapsed');
       } else {
         leftPanelEl.classList.remove('annex-left-panel-collapsed');
-        startMobileLeftPanelAutohide();
       }
       if (leftPanelToggleEl) {
         leftPanelToggleEl.classList.toggle('annex-left-panel-toggle-open', !collapsed);
         leftPanelToggleEl.setAttribute('aria-expanded', !collapsed);
+        setMobileLeftPanelLabel(collapsed);
       }
     }
 
@@ -570,12 +579,16 @@
           if (leftPanelToggleEl) {
             leftPanelToggleEl.classList.remove('annex-left-panel-toggle-open');
             leftPanelToggleEl.setAttribute('aria-expanded', 'false');
+            setMobileLeftPanelLabel(true);
           }
         }
       });
 
-      if (window.matchMedia('(max-width: 768px)').matches) {
-        startMobileLeftPanelAutohide();
+      /* On mobile the info panel stays visible (no auto-hide). Sync initial toggle state. */
+      if (window.matchMedia('(max-width: 768px)').matches && leftPanelEl && !leftPanelEl.classList.contains('annex-left-panel-collapsed')) {
+        leftPanelToggleEl.classList.add('annex-left-panel-toggle-open');
+        leftPanelToggleEl.setAttribute('aria-expanded', 'true');
+        setMobileLeftPanelLabel(false);
       }
     }
 
