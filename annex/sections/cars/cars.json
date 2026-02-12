@@ -1,0 +1,18 @@
+[
+  {
+    "make": "Scion",
+    "model": "iM",
+    "year": 2016,
+    "yearOwnedFrom": 2016,
+    "yearOwnedTo": null,
+    "image": "https://blog.consumerguide.com/wp-content/uploads/sites/2/2015/12/1.23.png",
+    "description": "The 2016 Scion iM was a compact hatchback built on the same platform as the international Toyota Auris. Scion’s last model year before the brand was folded back into Toyota, the iM offered a practical five-door layout, a straightforward interior, and Toyota reliability with a bit of Scion’s youth-oriented styling. Nothing flashy—just a solid daily driver.",
+    "stats": {
+      "topSpeed": "118 mph",
+      "handling": "B",
+      "reliability": "A",
+      "coolFactor": "3/5"
+    },
+    "thoughts": "Add your thoughts here."
+  }
+]

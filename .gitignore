@@ -1,5 +1,6 @@
 # Site-specific tools and prompts (local only)
 _site-tools/
+INIT
 
 # macOS
 .DS_Store

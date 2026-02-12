@@ -15,8 +15,7 @@ body.annex-page {
 body.annex-page .annex-window {
   width: 100%;
   max-width: 1400px;
-  max-height: 900px;
-  height: min(900px, calc(100vh - 40px));
+  height: fit-content;
   margin: 0;
   padding: 0;
   display: flex;
@@ -26,7 +25,7 @@ body.annex-page .annex-window {
   color: #000;
   background-color: #c0c0c0;
   border: 1px solid #000;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: -1px 0 0 rgba(0, 0, 0, 0.2), 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 /* Footer on teal background: at bottom, theme font, white text for readability */
@@ -53,7 +52,7 @@ body.annex-page footer a:hover {
 .annex-window .project-card {
   max-width: 100%;
   margin: 0;
-  flex: 1;
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -292,6 +291,25 @@ body.annex-page footer a:hover {
   text-align: center;
 }
 
+.annex-window .annex-left-panel-extra {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 0.75rem;
+  width: 100%;
+}
+
+/* Left panel toggle: hidden on desktop, shown on mobile only (see media query) */
+.annex-left-panel-toggle {
+  display: none;
+}
+
+/* Info trigger wrapper: hidden on desktop (see media query for mobile) */
+.annex-info-trigger-wrap {
+  display: none;
+}
+
 /* Right pane: grid or detail */
 .annex-window .annex-right-pane {
   flex: 1;
@@ -432,6 +450,12 @@ body.annex-page footer a:hover {
   margin: 0;
 }
 
+/* 1px dark border around share.exe (section window) – on section so it's never clipped */
+.annex-window .annex-detail-content .annex-section.annex-share-open {
+  border: 1px solid #000;
+  box-sizing: border-box;
+}
+
 /* Section header: clean bar, title + subtitle left, Back right – no icon */
 .annex-window .annex-detail-content .annex-section-header {
   background: #d4d0c8;
@@ -493,17 +517,23 @@ body.annex-page footer a:hover {
   gap: 6px;
 }
 
+/* When Share is open: hide the outer header so share.exe is the only chrome (no duplicate Back) */
+.annex-window .annex-detail-content .content:has(#annex-section-body .share-explorer) .annex-section-header,
+.annex-window .annex-share-open .annex-section-header {
+  display: none !important;
+}
+
 .annex-window .annex-detail-content .annex-viewer-header-top .annex-back-link:active {
   padding: 6px 11px 4px 13px;
 }
 
 /* Content links (not Back/Borrow/format-dialog buttons) stay blue */
-.annex-window .annex-detail-content a:not(.annex-back-link):not(.library-entry-download):not(.library-entry-support):not(.dialog-button) {
+.annex-window .annex-detail-content a:not(.annex-back-link):not(.library-entry-download):not(.library-entry-support):not(.dialog-button):not(.cars-thoughts-link) {
   color: #0000ee;
   text-decoration: underline;
 }
 
-.annex-window .annex-detail-content a:not(.annex-back-link):not(.library-entry-download):not(.library-entry-support):not(.dialog-button):visited {
+.annex-window .annex-detail-content a:not(.annex-back-link):not(.library-entry-download):not(.library-entry-support):not(.dialog-button):not(.cars-thoughts-link):visited {
   color: #551a8b;
 }
 
@@ -519,6 +549,22 @@ body.annex-page footer a:hover {
 .annex-window .annex-detail-content .project-card .content {
   background: #c0c0c0;
   padding: 1rem;
+}
+
+.annex-window .annex-detail-content .project-card .content:has(#annex-section-body .share-explorer) {
+  padding: 0;
+}
+
+.annex-window #annex-section-body:has(.share-explorer) {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+  padding: 0;
+}
+
+.annex-window #annex-section-body:has(.share-explorer) .share-explorer {
+  min-height: 420px;
 }
 
 /* Library section: entry styling (book info + download button) */
@@ -736,6 +782,1177 @@ body.annex-page footer a:hover {
   image-rendering: pixelated;
 }
 
+/* Share section: Win98 Explorer chrome + image viewer */
+.annex-window .share-explorer {
+  font-family: 'W95FA', sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 420px;
+  flex: 1;
+  background: #c0c0c0;
+  position: relative;
+}
+
+/* Menu bar (Win98) */
+.annex-window .share-menu-bar {
+  display: flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 4px;
+  background: #c0c0c0;
+  border-bottom: 1px solid #808080;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.annex-window .share-menu-item {
+  padding: 2px 8px;
+  cursor: default;
+}
+
+.annex-window .share-menu-item:hover {
+  background: #000080;
+  color: #fff;
+}
+
+.annex-window .share-menu-return {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  height: 18px;
+  font-size: 11px;
+  font-family: 'W95FA', sans-serif;
+  background: #c0c0c0;
+  border: 1px solid;
+  border-color: #fff #808080 #808080 #fff;
+  cursor: pointer;
+  color: #000;
+  flex-shrink: 0;
+}
+
+.annex-window .share-menu-return:hover {
+  background: #d4d0c8;
+}
+
+.annex-window .share-menu-return:active {
+  border-color: #808080 #fff #fff #808080;
+}
+
+.annex-window .share-menu-return-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+/* Toolbar (Win98 large icon buttons) */
+.annex-window .share-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 6px;
+  background: #c0c0c0;
+  border-bottom: 1px solid #808080;
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.annex-window .share-toolbar-btn {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #c0c0c0;
+  border: 1px solid;
+  border-color: #fff #808080 #808080 #fff;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: none;
+  color: #000;
+}
+
+/* Share toolbar Back must match other buttons (no 2px border / extra padding from .annex-back-link) */
+.annex-window .share-toolbar .share-toolbar-btn.annex-back-link {
+  border-width: 1px;
+  border-color: #fff #808080 #808080 #fff;
+  padding: 0;
+  margin: 0;
+  align-self: stretch;
+  min-height: 28px;
+}
+
+.annex-window .share-toolbar .share-toolbar-btn.annex-back-link:focus {
+  outline: none;
+  border-color: #fff #808080 #808080 #fff;
+}
+
+.annex-window .share-toolbar .share-toolbar-btn.annex-back-link:active {
+  border-color: #808080 #fff #fff #808080;
+  padding: 0;
+}
+
+.annex-window .share-toolbar-btn:hover:not(:disabled) {
+  background: #d4d0c8;
+  border-color: #404040 #fff #fff #404040;
+}
+
+.annex-window .share-toolbar-btn:active:not(:disabled) {
+  border-color: #808080 #fff #fff #808080;
+  background: #c0c0c0;
+}
+
+.annex-window .share-toolbar-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.annex-window .share-toolbar-btn-icon {
+  width: 20px;
+  height: 20px;
+  image-rendering: pixelated;
+}
+
+/* Back/Forward: clear arrow icons (no sphere graphic) */
+.annex-window .share-toolbar-arrow {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  vertical-align: middle;
+}
+.annex-window .share-toolbar-arrow-back {
+  border-width: 6px 8px 6px 0;
+  border-color: transparent #000 transparent transparent;
+  margin-left: 2px;
+}
+.annex-window .share-toolbar-arrow-forward {
+  border-width: 6px 0 6px 8px;
+  border-color: transparent transparent transparent #000;
+  margin-right: 2px;
+}
+.annex-window .share-toolbar-btn:disabled .share-toolbar-arrow-back {
+  border-right-color: #808080;
+}
+.annex-window .share-toolbar-btn:disabled .share-toolbar-arrow-forward {
+  border-left-color: #808080;
+}
+
+.annex-window .share-toolbar-download {
+  width: auto;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0 10px;
+  gap: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'W95FA', sans-serif;
+  font-size: 11px;
+  color: #000;
+  overflow: hidden;
+}
+
+.annex-window .share-toolbar-download-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.annex-window .share-toolbar-download-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.annex-window .share-toolbar-download-icon svg {
+  display: block;
+}
+
+.annex-window .share-toolbar-download:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.annex-window .share-toolbar-sep {
+  width: 2px;
+  height: 22px;
+  margin: 0 4px;
+  background: #808080;
+  border-left: 1px solid #fff;
+}
+
+/* Address bar (Win98) */
+.annex-window .share-address-bar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 26px;
+  min-height: 26px;
+  padding: 0 6px 0 8px;
+  background: #c0c0c0;
+  border-bottom: 1px solid #808080;
+  font-size: 11px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+/* Share folder nav buttons in the address bar: same size and alignment */
+.annex-window .share-address-bar .share-address-nav {
+  width: 20px;
+  height: 18px;
+  min-height: 18px;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  align-self: center;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.annex-window .share-address-bar .share-address-nav:hover:not(:disabled) {
+  background: #d4d0c8;
+}
+
+.annex-window .share-address-bar .share-address-nav:active:not(:disabled) {
+  background: #b0b0b0;
+}
+
+.annex-window .share-address-bar .share-address-nav:disabled .share-toolbar-arrow-back,
+.annex-window .share-address-bar .share-address-nav:disabled .share-toolbar-arrow-forward {
+  border-right-color: #808080;
+  border-left-color: #808080;
+}
+
+.annex-window .share-address-bar .share-address-nav .share-toolbar-arrow-back {
+  margin-left: 0;
+}
+
+.annex-window .share-address-bar .share-address-nav .share-toolbar-arrow-forward {
+  margin-right: 0;
+}
+
+.annex-window .share-address-path-wrap {
+  flex: 1;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  background: transparent;
+  padding: 0 4px;
+}
+
+.annex-window .share-address-path {
+  flex: 1;
+  min-width: 0;
+  min-height: 22px;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  line-height: 22px;
+}
+
+.annex-window .share-address-segment {
+  cursor: pointer;
+  color: #000080;
+  padding: 2px 6px 2px 4px;
+  margin: 0 2px;
+  background: transparent;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.annex-window .share-address-segment:hover {
+  background: #d4d0c8;
+  text-decoration: underline;
+}
+
+.annex-window .share-address-segment:active {
+  background: #b0b0b0;
+}
+
+.annex-window .share-address-sep {
+  color: #808080;
+  cursor: default;
+  margin: 0 2px;
+}
+
+.annex-window .share-address-chevron {
+  color: #808080;
+  cursor: default;
+  margin: 0 2px;
+  font-size: 12px;
+  line-height: 1;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.annex-window .share-address-segment .share-address-folder-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.annex-window .share-address-segment-current {
+  cursor: default;
+  color: #000;
+}
+
+.annex-window .share-address-segment-current:hover {
+  background: transparent;
+  text-decoration: none;
+}
+
+.annex-window .share-address-segment-current:active {
+  background: transparent;
+}
+
+.annex-window .share-address-segment-current .share-address-folder-icon {
+  filter: grayscale(1);
+}
+
+/* Two-pane layout (Exploring style) */
+.annex-window .share-panes {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  border-top: 1px solid #fff;
+  box-shadow: inset 0 -1px 0 #808080;
+}
+
+.annex-window .share-tree-pane {
+  width: 200px;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #808080;
+  background: #fff;
+  flex-shrink: 0;
+}
+
+.annex-window .share-tree-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 6px;
+  background: #c0c0c0;
+  border-bottom: 1px solid #808080;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.annex-window .share-tree-title {
+  color: #000;
+}
+
+.annex-window .share-tree-close {
+  width: 16px;
+  height: 14px;
+  padding: 0;
+  border: 1px solid #808080;
+  background: #c0c0c0;
+  font-size: 10px;
+  line-height: 1;
+  cursor: pointer;
+  color: #000;
+}
+
+.annex-window .share-tree {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 4px 0;
+  font-size: 11px;
+}
+
+.annex-window .share-tree-node {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.annex-window .share-tree-node:hover {
+  background: #000080;
+  color: #fff;
+}
+
+.annex-window .share-tree-node.share-tree-node-selected {
+  background: #000080;
+  color: #fff;
+}
+
+.annex-window .share-tree-expand,
+.annex-window .share-tree-indent {
+  width: 12px;
+  display: inline-block;
+  text-align: center;
+  font-size: 10px;
+  flex-shrink: 0;
+}
+
+.annex-window .share-tree-icon {
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+
+.annex-window .share-tree-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.annex-window .share-tree-children .share-tree-node {
+  padding-left: 20px;
+}
+
+.annex-window .share-tree-children .share-tree-children .share-tree-node {
+  padding-left: 40px;
+}
+
+.annex-window .share-tree-children .share-tree-children .share-tree-children .share-tree-node {
+  padding-left: 60px;
+}
+
+.annex-window .share-tree-children .share-tree-children .share-tree-children .share-tree-children .share-tree-node {
+  padding-left: 80px;
+}
+
+.annex-window .share-tree-node.share-tree-collapsed .share-tree-children {
+  display: none;
+}
+
+.annex-window .share-tree-node.share-tree-collapsed .share-tree-expand-open {
+  display: none;
+}
+
+.annex-window .share-tree-node.share-tree-collapsed .share-tree-expand-closed {
+  display: inline-block;
+}
+
+.annex-window .share-tree-expand-closed {
+  display: none;
+}
+
+.annex-window .share-tree-leaf {
+  opacity: 0.6;
+  font-size: 8px;
+  line-height: 1;
+}
+
+.annex-window .share-tree-node:hover .share-tree-leaf,
+.annex-window .share-tree-node.share-tree-node-selected .share-tree-leaf {
+  opacity: 0.9;
+}
+
+.annex-window .share-right-pane {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: #c0c0c0;
+  padding: 4px;
+}
+
+/* Content panel (3D inset like Explorer) */
+.annex-window .share-content-panel {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow: auto;
+  padding: 2px;
+  background: #fff;
+  border: 2px solid;
+  border-color: #808080 #fff #fff #808080;
+  box-shadow: inset 2px 2px 0 #404040;
+}
+
+.annex-window .share-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+}
+
+/* Status bar (Win98) */
+.annex-window .share-status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 22px;
+  padding: 0 6px;
+  min-width: 0;
+  background: #c0c0c0;
+  border-top: 1px solid #fff;
+  box-shadow: inset 0 1px 0 #808080;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.annex-window .share-status-left {
+  color: #000;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.annex-window .share-status-right {
+  color: #000;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Password dialog (Win98 style) for protected folders */
+.annex-window .share-password-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.annex-window .share-password-dialog {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #fff #808080 #808080 #fff;
+  box-shadow: 2px 2px 0 #0a0a0a;
+  min-width: 280px;
+}
+
+.annex-window .share-password-title {
+  background: #000080;
+  color: #fff;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-family: 'W95FA', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.annex-window .share-password-title-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.annex-window .share-password-body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.annex-window .share-password-label {
+  font-size: 11px;
+  font-family: 'W95FA', sans-serif;
+  color: #000;
+}
+
+.annex-window .share-password-input {
+  width: 100%;
+  padding: 4px 6px;
+  font-family: 'W95FA', sans-serif;
+  font-size: 11px;
+  border: 2px solid;
+  border-color: #808080 #fff #fff #808080;
+  box-sizing: border-box;
+}
+
+.annex-window .share-password-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.annex-window .share-password-btn {
+  min-width: 70px;
+  padding: 4px 12px;
+  font-family: 'W95FA', sans-serif;
+  font-size: 11px;
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #fff #808080 #808080 #fff;
+  cursor: pointer;
+  color: #000;
+}
+
+.annex-window .share-password-btn:hover {
+  background: #d4d0c8;
+}
+
+.annex-window .share-password-btn:active {
+  border-color: #808080 #fff #fff #808080;
+  padding: 5px 11px 3px 13px;
+}
+
+/* Mobile/tablet: hide file browser column, full-width content only. Share viewer stacks image above details. */
+@media (max-width: 900px) {
+  .annex-window .share-tree-pane {
+    display: none !important;
+  }
+
+  .annex-window .share-right-pane {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .annex-window .share-panes {
+    min-width: 0;
+  }
+
+  .annex-window .share-gallery-view {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* Share viewer: image full width, info moved below; no horizontal scroll except thumbs */
+  .annex-window .share-gallery-view .share-viewer-content {
+    padding-left: 0;
+    padding-right: 0;
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
+  .annex-window .share-gallery-view .share-viewer-main-row {
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    max-width: 100%;
+    max-height: none;
+    align-items: stretch;
+  }
+
+  .annex-window .share-gallery-view .share-viewer-image-wrap {
+    width: 100%;
+    max-width: 100%;
+    flex: 0 0 auto;
+    height: fit-content;
+    max-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    background: #c0c0c0;
+  }
+
+  .annex-window .share-gallery-view .share-viewer-image {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border: 2px solid;
+    border-color: #808080 #fff #fff #808080;
+    box-sizing: border-box;
+  }
+
+  .annex-window .share-gallery-view .share-viewer-details-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 100%;
+    flex-shrink: 0;
+  }
+
+  .annex-window .share-gallery-view .share-viewer-details {
+    flex: 1;
+    min-width: 0;
+    max-width: 100%;
+    padding: 6px 12px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+  }
+
+  .annex-window .share-gallery-view .share-viewer-details-title {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .annex-window .share-gallery-view .share-viewer-detail-row {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: baseline;
+    margin-bottom: 0;
+    gap: 0.25rem;
+  }
+
+  .annex-window .share-gallery-view .share-viewer-detail-row:not(:last-of-type)::after {
+    content: " · ";
+    margin-left: 0.25rem;
+    color: #404040;
+  }
+
+  .annex-window .share-gallery-view .share-viewer-thumbs {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  /* Touch targets in Share viewer */
+  .annex-window .share-gallery-view .share-viewer-prev,
+  .annex-window .share-gallery-view .share-viewer-next {
+    min-width: 44px;
+    min-height: 44px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .annex-window .share-gallery-view .share-viewer-download {
+    min-height: 44px;
+    padding: 10px 14px;
+  }
+
+  .annex-window .share-gallery-view .share-gallery-bar .share-viewer-download {
+    min-height: 22px;
+    padding: 2px 8px;
+  }
+
+  .annex-window .share-gallery-view .share-viewer-thumbs-nav {
+    min-height: 48px;
+  }
+
+  .annex-window .share-gallery-view .share-viewer-thumbs-strip {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .annex-window .share-gallery-view .share-thumb {
+    min-width: 56px;
+    min-height: 56px;
+    width: 56px;
+    height: 56px;
+  }
+
+  .annex-window .share-list .share-row {
+    padding: 12px 0.75rem;
+    min-height: 44px;
+  }
+}
+
+.annex-window .share-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #808080;
+  font-size: 13px;
+  cursor: pointer;
+  background: transparent;
+  border-left: 2px solid transparent;
+  min-width: 0;
+}
+
+.annex-window .share-row:hover {
+  background: #000080;
+  color: #fff;
+  border-left-color: #000080;
+}
+
+.annex-window .share-row:hover .share-download-btn {
+  background: #c0c0c0;
+  color: #000;
+  border-color: #fff #808080 #808080 #fff;
+}
+
+.annex-window .share-row-icon {
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+
+.annex-window .share-row-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.annex-window .share-row-info {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: #404040;
+}
+
+.annex-window .share-row:hover .share-row-info {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.annex-window .share-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 26px;
+  padding: 2px 8px;
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #fff #808080 #808080 #fff;
+  font-family: 'W95FA', sans-serif;
+  font-size: 11px;
+  color: #000;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.annex-window .share-download-btn:hover {
+  background: #d4d0c8;
+}
+
+.annex-window .share-download-btn .win98-icon {
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+}
+
+.annex-window .share-error {
+  padding: 1rem;
+  color: #808080;
+  font-size: 12px;
+}
+
+/* Share gallery view (inline in right pane, Finder-style) */
+.annex-window .share-gallery-view {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #808080 #fff #fff #808080;
+  box-shadow: inset 2px 2px 0 #404040;
+}
+
+.annex-window .share-gallery-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: #c0c0c0;
+  border-bottom: 1px solid #808080;
+  font-size: 11px;
+  font-family: 'W95FA', sans-serif;
+  flex-shrink: 0;
+}
+
+.annex-window .share-gallery-bar-icon {
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+}
+
+.annex-window .share-gallery-bar-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.annex-window .share-gallery-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  min-height: 22px;
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #fff #808080 #808080 #fff;
+  font-family: 'W95FA', sans-serif;
+  font-size: 11px;
+  color: #000;
+  cursor: pointer;
+}
+
+.annex-window .share-gallery-back:hover {
+  background: #d4d0c8;
+}
+
+.annex-window #share-viewer-download-all .share-viewer-download-all-text {
+  text-decoration: underline;
+}
+
+.annex-window .share-gallery-bar .share-viewer-download {
+  min-height: 22px;
+  padding: 2px 8px;
+}
+
+.annex-window .share-gallery-view .share-viewer-content {
+  flex: 1;
+  min-height: 0;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: auto;
+  min-width: 0;
+}
+
+.annex-window .share-viewer-main-row {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  max-height: 55vh;
+  gap: 12px;
+}
+
+.annex-window .share-viewer-details-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.annex-window .share-viewer-image-wrap {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  width: min(100%, 80vw);
+  height: 100%;
+  max-width: min(100%, 80vw);
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #c0c0c0;
+}
+
+.annex-window .share-viewer-image {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  border: 2px solid;
+  border-color: #808080 #fff #fff #808080;
+  box-sizing: border-box;
+}
+
+/* Details panel (Win98) */
+.annex-window .share-viewer-details {
+  width: 160px;
+  flex-shrink: 0;
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #808080 #fff #fff #808080;
+  padding: 10px;
+  font-family: 'W95FA', sans-serif;
+  font-size: 11px;
+}
+
+.annex-window .share-viewer-details-title {
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #808080;
+  display: flex;
+  align-items: center;
+}
+
+.annex-window .share-viewer-details-title-icon {
+  width: 16px;
+  height: 16px;
+  display: block;
+  object-fit: contain;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.annex-window .share-viewer-detail-row {
+  margin-bottom: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.annex-window .share-viewer-detail-label {
+  color: #404040;
+  font-size: 10px;
+}
+
+.annex-window .share-viewer-detail-value {
+  color: #000;
+  word-break: break-all;
+}
+
+/* Thumbnail strip (Win98) */
+.annex-window .share-viewer-thumbs {
+  flex-shrink: 0;
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #808080 #fff #fff #808080;
+  padding: 8px 12px;
+  font-family: 'W95FA', sans-serif;
+  font-size: 11px;
+}
+
+.annex-window .share-viewer-thumbs-status {
+  margin-top: 6px;
+  color: #000;
+  text-align: center;
+}
+
+.annex-window .share-viewer-download-all-row {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 8px;
+  flex-shrink: 0;
+}
+
+.annex-window .share-viewer-thumbs-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.annex-window .share-viewer-thumbs-strip {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  flex: 1;
+  min-width: 0;
+  padding: 2px 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.annex-window .share-viewer-thumbs-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.annex-window .share-thumb {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  padding: 2px;
+  border: 2px solid;
+  border-color: #fff #808080 #808080 #fff;
+  background: #c0c0c0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.annex-window .share-thumb:hover {
+  border-color: #000080;
+  background: #d4d0c8;
+}
+
+.annex-window .share-thumb.share-thumb-selected {
+  border-color: #000080;
+  border-width: 3px;
+  background: #d4d0c8;
+}
+
+.annex-window .share-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.annex-window .share-viewer-prev,
+.annex-window .share-viewer-next {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #fff #808080 #808080 #fff;
+  font-family: 'W95FA', sans-serif;
+  font-size: 16px;
+  line-height: 1;
+  color: #000;
+  cursor: pointer;
+}
+
+.annex-window .share-viewer-prev:hover,
+.annex-window .share-viewer-next:hover {
+  background: #d4d0c8;
+}
+
+.annex-window .share-viewer-prev:active,
+.annex-window .share-viewer-next:active {
+  border-color: #808080 #fff #fff #808080;
+}
+
+.annex-window .share-viewer-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 28px;
+  padding: 4px 10px;
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #fff #808080 #808080 #fff;
+  box-shadow: 1px 1px 0 #dfdfdf;
+  font-family: 'W95FA', sans-serif;
+  font-size: 11px;
+  color: #000;
+  cursor: pointer;
+}
+
+.annex-window .share-viewer-download:hover {
+  background: #d4d0c8;
+}
+
+.annex-window .share-viewer-download .win98-icon {
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+}
 
 /* Keep title bar icons in loaded sections small (e.g. library.exe) */
 .annex-window .annex-detail-content .project-card .title-bar-text img {
@@ -816,26 +2033,136 @@ body.annex-page footer a:hover {
     flex-direction: column;
   }
 
-  /* Left panel (mobile only): icon left of title, subtitle below; full width */
+  /* Left panel (mobile only): icon left of title, subtitle below; full width; compact */
   .annex-window .annex-left-panel {
     width: 100%;
     max-width: none;
     min-width: 0;
     flex-shrink: 0;
-    padding: 0.5rem 0.75rem;
+    padding: 0.25rem 0.5rem;
     border-right: none;
     border-bottom: 1px solid #808080;
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-template-rows: auto auto auto;
-    gap: 0 0.5rem;
+    grid-template-rows: auto auto auto auto;
+    gap: 0 0.35rem;
     align-items: center;
     text-align: left;
   }
 
+  .annex-window .annex-left-panel.annex-left-panel-collapsed {
+    display: none;
+  }
+
+  .annex-window .annex-left-panel-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    width: 100%;
+    flex-shrink: 0;
+    gap: 4px;
+    min-height: 18px;
+    padding: 2px 6px;
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #fff #808080 #808080 #fff;
+    box-shadow: 1px 1px 0 #dfdfdf;
+    font-family: 'W95FA', sans-serif;
+    font-size: 10px;
+    color: #000;
+    cursor: pointer;
+  }
+
+  .annex-window .annex-left-panel-toggle .annex-left-panel-toggle-label {
+    flex-shrink: 0;
+  }
+
+  /* Panel hidden: down (▼). Panel showing: up (▲). */
+  .annex-window .annex-left-panel-toggle .annex-left-panel-toggle-arrow {
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid #505050;
+    border-bottom: none;
+    margin-left: 2px;
+    flex-shrink: 0;
+    transition: border-color 0.15s ease;
+  }
+
+  .annex-window .annex-left-panel-toggle:hover {
+    background: #d4d0c8;
+  }
+
+  .annex-window .annex-left-panel-toggle:hover .annex-left-panel-toggle-arrow {
+    border-bottom-color: #303030;
+    border-top-color: #303030;
+  }
+
+  .annex-window .annex-left-panel-toggle:active {
+    border-color: #808080 #fff #fff #808080;
+    box-shadow: inset 1px 1px 0 #808080;
+  }
+
+  /* Panel showing: up arrow (▲) */
+  .annex-window .annex-left-panel-toggle.annex-left-panel-toggle-open .annex-left-panel-toggle-arrow {
+    border-top: none;
+    border-bottom: 5px solid #505050;
+  }
+
+  .annex-window .annex-left-panel-toggle.annex-left-panel-toggle-open:hover .annex-left-panel-toggle-arrow {
+    border-bottom-color: #303030;
+  }
+
+  /* Option B: wrapper and pop-down slot (mobile only) */
+  .annex-window .annex-info-trigger-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    align-self: stretch;
+    width: 100%;
+    flex-shrink: 0;
+  }
+
+  .annex-window .annex-left-panel-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 260px;
+    max-width: min(100vw - 1rem, 320px);
+    max-height: 70vh;
+    overflow: auto;
+    margin-top: 2px;
+    background: #fff;
+    border: 1px solid #808080;
+    border-color: #fff #808080 #808080 #fff;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+  }
+
+  .annex-window .annex-left-panel-dropdown.annex-left-panel-dropdown-open {
+    display: block;
+  }
+
+  .annex-window .annex-left-panel-dropdown .annex-left-panel {
+    border-bottom: none;
+    width: 100%;
+    max-width: none;
+  }
+
+  .annex-window .annex-left-panel-extra {
+    grid-column: 1 / -1;
+    grid-row: 4;
+    justify-content: flex-start;
+    margin-top: 0.25rem;
+  }
+
   .annex-window .annex-left-panel .annex-left-icon {
-    width: 36px;
-    height: 36px;
+    width: 28px;
+    height: 28px;
     margin-bottom: 0;
     grid-column: 1;
     grid-row: 1;
@@ -843,7 +2170,7 @@ body.annex-page footer a:hover {
 
   .annex-window .annex-left-panel .annex-left-title {
     margin: 0;
-    font-size: 14px;
+    font-size: 12px;
     grid-column: 2;
     grid-row: 1;
     align-self: center;
@@ -851,14 +2178,15 @@ body.annex-page footer a:hover {
   }
 
   .annex-window .annex-left-panel .annex-left-separator {
-    margin: 0.25rem 0 0 0;
+    margin: 0.15rem 0 0 0;
     grid-column: 1 / -1;
     grid-row: 2;
   }
 
   .annex-window .annex-left-panel .annex-left-desc {
-    font-size: 11px;
-    padding: 0 0.25rem;
+    font-size: 10px;
+    line-height: 1.25;
+    padding: 0 0.15rem;
     text-align: left;
     justify-self: start;
     grid-column: 1 / -1;
@@ -1133,4 +2461,281 @@ body.annex-page footer a:hover {
 /* Exit dialog: primary button emphasis */
 .annex-exit-dialog .dialog-button-primary {
   font-weight: bold;
+}
+
+/* Cars section: game selection screen + database */
+.cars-entries {
+  padding: 6px;
+  background: #c0c0c0;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.cars-db-layout {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  gap: 4px;
+}
+
+.cars-db-sidebar {
+  flex-shrink: 0;
+  width: 180px;
+  min-width: 160px;
+}
+
+.cars-db-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cars-db-panel {
+  background: #fff;
+  border: 1px solid #808080;
+  border-color: #404040 #e0e0e0 #e0e0e0 #404040;
+  box-shadow: 1px 1px 0 #fff inset, -1px -1px 0 #808080 inset;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+}
+
+.cars-db-sidebar .cars-db-panel {
+  height: 100%;
+}
+
+.cars-db-panel-title {
+  background: #c0c0c0;
+  border-bottom: 1px solid #808080;
+  padding: 3px 6px;
+  font-size: 11px;
+  font-weight: bold;
+  flex-shrink: 0;
+  border-color: #fff #808080 #808080 #fff;
+  box-shadow: 1px 0 0 #e0e0e0, 0 1px 0 #808080;
+}
+
+.cars-db-panel-body {
+  padding: 6px;
+  overflow: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Left: car list (game select) */
+.cars-select-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cars-select-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 4px 6px;
+  text-align: left;
+  font-size: 11px;
+  background: #fff;
+  border: 1px solid #808080;
+  border-color: #404040 #e0e0e0 #e0e0e0 #404040;
+  cursor: pointer;
+  color: #000;
+}
+
+.cars-select-item:hover {
+  background: #e8e8e8;
+}
+
+.cars-select-item.selected {
+  background: #000080;
+  color: #fff;
+  border-color: #000080;
+}
+
+.cars-select-thumb {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #c0c0c0;
+  border: 1px solid #808080;
+}
+
+.cars-select-thumb-canvas {
+  width: 40px;
+  height: 40px;
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  flex-shrink: 0;
+}
+
+.cars-select-thumb-img {
+  width: 10px;
+  height: 10px;
+  min-width: 10px;
+  min-height: 10px;
+  max-width: 10px;
+  max-height: 10px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  transform: scale(4);
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.cars-select-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Right: detail panel */
+.cars-detail-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cars-detail-hero-wrap {
+  flex-shrink: 0;
+}
+
+@keyframes cars-hero-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.03); }
+}
+
+.cars-hero {
+  width: 160px;
+  height: 160px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #c0c0c0;
+  border: 1px solid #808080;
+  animation: cars-hero-pulse 2.5s ease-in-out infinite;
+}
+
+.cars-hero-canvas {
+  width: 160px;
+  height: 160px;
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  flex-shrink: 0;
+}
+
+.cars-hero-img {
+  width: 24px;
+  height: 24px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  transform: scale(6.67);
+  flex-shrink: 0;
+}
+
+.cars-detail-specs-wrap {
+  flex-shrink: 0;
+}
+
+.cars-specs-grid {
+  border-collapse: collapse;
+  font-size: 11px;
+  background: #fff;
+  border: 1px solid #808080;
+  border-color: #404040 #e0e0e0 #e0e0e0 #404040;
+}
+
+.cars-specs-grid td {
+  border: 1px solid #808080;
+  padding: 3px 8px;
+  text-align: left;
+}
+
+.cars-spec-label {
+  background: #e8e8e8;
+  font-weight: bold;
+  width: 90px;
+}
+
+.cars-spec-value {
+  min-width: 80px;
+}
+
+.cars-detail-description-wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #808080;
+  border-color: #404040 #e0e0e0 #e0e0e0 #404040;
+  background: #fff;
+}
+
+.cars-detail-description-label {
+  flex-shrink: 0;
+  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: bold;
+  background: #c0c0c0;
+  border-bottom: 1px solid #808080;
+}
+
+.cars-detail-description {
+  flex: 1;
+  overflow-y: auto;
+  padding: 6px 8px;
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.cars-detail-actions {
+  flex-shrink: 0;
+}
+
+.cars-thoughts-link {
+  color: #0000ff;
+  text-decoration: underline;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.cars-thoughts-link:hover {
+  color: #00f;
+}
+
+.cars-thoughts-link:visited {
+  color: #0000ff;
+}
+
+/* Cars thoughts modal: scrollable body */
+.cars-thoughts-dialog .dialog-content {
+  display: block;
+  padding: 12px 16px;
+}
+
+.cars-thoughts-body {
+  max-height: 50vh;
+  overflow-y: auto;
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
 }

@@ -3,6 +3,8 @@
   const detailEl = document.getElementById('annex-detail');
   const detailContentEl = document.getElementById('annex-detail-content');
   const rightPaneEl = document.getElementById('annex-right-pane');
+  const contentAreaEl = document.querySelector('.annex-content-area');
+  const leftPanelExtraEl = document.getElementById('annex-left-panel-extra');
   const loadingEl = document.getElementById('annex-loading');
   const errorEl = document.getElementById('annex-error');
   const addressValueEl = document.getElementById('annex-address-value');
@@ -16,14 +18,21 @@
   const forwardBtn = document.getElementById('annex-forward-btn');
   const aboutBtn = document.getElementById('annex-about-btn');
   const backLink = document.getElementById('annex-back-link');
+  const leftPanelEl = document.getElementById('annex-left-panel');
+  const leftPanelToggleEl = document.getElementById('annex-left-panel-toggle');
 
   const ICONS_BASE = '../assets/img/icons/';
+
+  const MOBILE_LEFT_PANEL_AUTOHIDE_MS = 4000;
+  var mobileLeftPanelAutohideTimer = null;
 
   let applets = [];
   let currentSectionLabel = null;
   let historyStack = [];
   let sectionWindowHtmlCache = null;
   var libraryScriptLoaded = false;
+  var carsScriptLoaded = false;
+  var shareScriptLoaded = false;
 
   function getSlug(applet) {
     var f = applet.contentFile;
@@ -59,6 +68,7 @@
   }
 
   function showDetail(html, applet) {
+    if (leftPanelExtraEl) leftPanelExtraEl.innerHTML = '';
     var programWindowTitle = applet ? applet.programWindowTitle : null;
     gridEl.style.display = 'none';
     detailContentEl.innerHTML = html;
@@ -110,6 +120,48 @@
           runLibraryInit();
         };
         document.head.appendChild(script);
+      }
+    }
+
+    if (applet && getSlug(applet) === 'cars') {
+      function runCarsInit() {
+        if (window.AnnexCarsInit) window.AnnexCarsInit(detailContentEl);
+      }
+      if (carsScriptLoaded) {
+        runCarsInit();
+      } else {
+        var script = document.createElement('script');
+        script.src = 'sections/cars/cars.js';
+        script.onload = function() {
+          carsScriptLoaded = true;
+          runCarsInit();
+        };
+        document.head.appendChild(script);
+      }
+    }
+
+    if (applet && getSlug(applet) === 'share') {
+      function runShareInit() {
+        if (window.AnnexShareInit) window.AnnexShareInit(detailContentEl);
+      }
+      function loadShareScript() {
+        var script = document.createElement('script');
+        script.src = 'sections/share/share.js';
+        script.onload = function() {
+          shareScriptLoaded = true;
+          runShareInit();
+        };
+        document.head.appendChild(script);
+      }
+      if (shareScriptLoaded) {
+        runShareInit();
+      } else if (window.JSZip) {
+        loadShareScript();
+      } else {
+        var jszip = document.createElement('script');
+        jszip.src = 'https://cdn.jsdelivr.net/npm/jszip@3/dist/jszip.min.js';
+        jszip.onload = loadShareScript;
+        document.head.appendChild(jszip);
       }
     }
   }
@@ -357,10 +409,13 @@
         if (slot) slot.innerHTML = contentHtml;
         showDetail(wrapDiv.innerHTML, applet);
         var slug = getSlug(applet);
+        var hashPart = (location.hash && location.hash.indexOf('/') !== -1 && slug === 'share')
+          ? location.hash.slice(1)
+          : (slug || '');
         if (history.replaceState) {
-          history.replaceState(null, '', location.pathname + location.search + (slug ? '#' + slug : ''));
+          history.replaceState(null, '', location.pathname + location.search + (hashPart ? '#' + hashPart : ''));
         } else {
-          location.hash = slug || '';
+          location.hash = hashPart || '';
         }
       })
       .catch(function(err) {
@@ -396,7 +451,8 @@
 
   function openSectionFromHash() {
     var hash = location.hash ? location.hash.slice(1) : '';
-    var applet = getAppletBySlug(hash);
+    var slug = hash.split('/')[0] || '';
+    var applet = getAppletBySlug(slug);
     if (applet) openSection(applet);
   }
 
@@ -411,24 +467,35 @@
     goBack();
   });
 
-  detailContentEl.addEventListener('click', function(e) {
-    if (e.target.closest('.annex-back-link')) {
-      e.preventDefault();
-      goBack();
+  function doForward() {
+    if (historyStack.length > 0) {
+      var programWindowTitle = historyStack.pop();
+      var applet = applets.find(function(a) { return a.programWindowTitle === programWindowTitle; });
+      if (applet) openSection(applet);
     }
+  }
+
+  if (contentAreaEl) {
+    contentAreaEl.addEventListener('click', function(e) {
+      if (e.target.closest('.annex-back-link')) {
+        e.preventDefault();
+        goBack();
+      }
+      if (e.target.closest('.annex-forward-btn')) {
+        e.preventDefault();
+        doForward();
+      }
+    });
+  }
+
+  detailContentEl.addEventListener('click', function(e) {
     if (e.target.closest('.annex-section-close')) {
       e.preventDefault();
       goBack();
     }
   });
 
-  forwardBtn.addEventListener('click', function() {
-    if (historyStack.length > 0) {
-      var programWindowTitle = historyStack.pop();
-      var applet = applets.find(function(a) { return a.programWindowTitle === programWindowTitle; });
-      if (applet) openSection(applet);
-    }
-  });
+  forwardBtn.addEventListener('click', doForward);
 
   document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', function(e) {
@@ -453,6 +520,78 @@
     if (exitDialog) exitDialog.addEventListener('click', function(e) {
       if (e.target === exitDialog) hideAnnexExitDialog();
     });
+
+    function clearMobileLeftPanelAutohide() {
+      if (mobileLeftPanelAutohideTimer !== null) {
+        clearTimeout(mobileLeftPanelAutohideTimer);
+        mobileLeftPanelAutohideTimer = null;
+      }
+    }
+
+    function startMobileLeftPanelAutohide() {
+      clearMobileLeftPanelAutohide();
+      if (!leftPanelEl || !window.matchMedia('(max-width: 768px)').matches) return;
+      mobileLeftPanelAutohideTimer = setTimeout(function() {
+        leftPanelEl.classList.add('annex-left-panel-collapsed');
+        mobileLeftPanelAutohideTimer = null;
+        if (leftPanelToggleEl) {
+          leftPanelToggleEl.classList.remove('annex-left-panel-toggle-open');
+          leftPanelToggleEl.setAttribute('aria-expanded', 'false');
+        }
+      }, MOBILE_LEFT_PANEL_AUTOHIDE_MS);
+    }
+
+    function setMobileLeftPanelLabel(collapsed) {
+      if (!leftPanelToggleEl) return;
+      var labelEl = leftPanelToggleEl.querySelector('.annex-left-panel-toggle-label');
+      var text = collapsed ? 'Show Info' : 'Hide Info';
+      if (labelEl) labelEl.textContent = text;
+      leftPanelToggleEl.setAttribute('aria-label', text);
+      leftPanelToggleEl.setAttribute('title', text);
+    }
+
+    function setMobileLeftPanelCollapsed(collapsed) {
+      if (!leftPanelEl) return;
+      if (collapsed) {
+        clearMobileLeftPanelAutohide();
+        leftPanelEl.classList.add('annex-left-panel-collapsed');
+      } else {
+        leftPanelEl.classList.remove('annex-left-panel-collapsed');
+      }
+      if (leftPanelToggleEl) {
+        leftPanelToggleEl.classList.toggle('annex-left-panel-toggle-open', !collapsed);
+        leftPanelToggleEl.setAttribute('aria-expanded', !collapsed);
+        setMobileLeftPanelLabel(collapsed);
+      }
+    }
+
+    if (leftPanelToggleEl && leftPanelEl) {
+      leftPanelToggleEl.addEventListener('click', function() {
+        if (!window.matchMedia('(max-width: 768px)').matches) return;
+        var isCollapsed = leftPanelEl.classList.contains('annex-left-panel-collapsed');
+        setMobileLeftPanelCollapsed(!isCollapsed);
+      });
+
+      window.matchMedia('(max-width: 768px)').addEventListener('change', function(mq) {
+        if (!mq.matches) {
+          clearMobileLeftPanelAutohide();
+          leftPanelEl.classList.remove('annex-left-panel-collapsed');
+          if (leftPanelToggleEl) {
+            leftPanelToggleEl.classList.remove('annex-left-panel-toggle-open');
+            leftPanelToggleEl.setAttribute('aria-expanded', 'false');
+            setMobileLeftPanelLabel(true);
+          }
+        }
+      });
+
+      /* On mobile the info panel stays visible (no auto-hide). Sync initial toggle state. */
+      if (window.matchMedia('(max-width: 768px)').matches && leftPanelEl && !leftPanelEl.classList.contains('annex-left-panel-collapsed')) {
+        leftPanelToggleEl.classList.add('annex-left-panel-toggle-open');
+        leftPanelToggleEl.setAttribute('aria-expanded', 'true');
+        setMobileLeftPanelLabel(false);
+      }
+    }
+
     fetch('index.json')
       .then(function(res) {
         if (!res.ok) throw new Error('Failed to load index.json');
@@ -479,10 +618,11 @@
       showGrid();
       return;
     }
-    var applet = getAppletBySlug(hash);
+    var slug = hash.split('/')[0] || '';
+    var applet = getAppletBySlug(slug);
     if (!applet) return;
     var currentApplet = currentSectionLabel ? applets.find(function(a) { return a.programWindowTitle === currentSectionLabel; }) : null;
-    if (currentApplet && getSlug(currentApplet) === hash) return;
+    if (currentApplet && getSlug(currentApplet) === slug) return;
     openSection(applet);
   });
 
