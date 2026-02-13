@@ -10,6 +10,16 @@
     "sectionHeaderDesc": "Some of the books I've read, or am reading. Please support the authors if you can!"
   },
   {
+    "contentFile": "cars/content.html",
+    "programWindowTitle": "Garage",
+    "programWindowIcon": "cars.png",
+    "gridLabel": "Garage",
+    "gridIcon": "cars.png",
+    "infoPanelTitle": "Garage",
+    "infoPanelDesc": "Cars I've owned",
+    "sectionHeaderDesc": "Cars I've owned"
+  },
+  {
     "contentFile": "share/content.html",
     "programWindowTitle": "ShareNet",
     "programWindowIcon": "sharenet16.png",

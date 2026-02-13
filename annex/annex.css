@@ -2465,25 +2465,60 @@ body.annex-page footer a:hover {
   font-weight: bold;
 }
 
-/* Cars section: game selection screen + database */
+/* Cars section: retro anachronism (Win9x chrome + cyan/magenta accents) */
 .cars-entries {
-  padding: 6px;
+  padding: 8px;
   background: #c0c0c0;
   height: 100%;
   box-sizing: border-box;
+  color: #000;
+  font-family: "W95FA", "MS Sans Serif", "Microsoft Sans Serif", Tahoma, sans-serif;
+}
+
+.cars-overhaul {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.cars-banner {
+  flex-shrink: 0;
+  padding: 10px 20px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+  background: #c0c0c0;
+  color: #008080;
+  border: 1px solid #808080;
+  border-color: #fff #808080 #808080 #fff;
+  box-shadow: inset 1px 1px 0 #e0e0e0;
+  margin-bottom: 2px;
+}
+
+.cars-loading,
+.cars-error {
+  padding: 12px 16px;
+  font-size: 11px;
+  background: #fff;
+  border: 1px solid #808080;
+  border-color: #404040 #e0e0e0 #e0e0e0 #404040;
+  color: #000;
 }
 
 .cars-db-layout {
   display: flex;
-  height: 100%;
+  flex: 1;
   min-height: 0;
-  gap: 4px;
+  gap: 0;
 }
 
 .cars-db-sidebar {
   flex-shrink: 0;
-  width: 180px;
-  min-width: 160px;
+  width: 200px;
+  min-width: 180px;
 }
 
 .cars-db-main {
@@ -2493,11 +2528,17 @@ body.annex-page footer a:hover {
   flex-direction: column;
 }
 
+.cars-db-main .cars-db-panel {
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+}
+
 .cars-db-panel {
   background: #fff;
   border: 1px solid #808080;
   border-color: #404040 #e0e0e0 #e0e0e0 #404040;
-  box-shadow: 1px 1px 0 #fff inset, -1px -1px 0 #808080 inset;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #808080;
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -2506,27 +2547,116 @@ body.annex-page footer a:hover {
 
 .cars-db-sidebar .cars-db-panel {
   height: 100%;
+  border-left: none;
+  border-top: none;
+  border-bottom: none;
 }
 
-.cars-db-panel-title {
-  background: #c0c0c0;
-  border-bottom: 1px solid #808080;
-  padding: 3px 6px;
-  font-size: 11px;
-  font-weight: bold;
+.cars-left-info {
   flex-shrink: 0;
-  border-color: #fff #808080 #808080 #fff;
-  box-shadow: 1px 0 0 #e0e0e0, 0 1px 0 #808080;
+  padding: 10px 10px 12px;
+  border-bottom: 1px solid #808080;
+  background: #e8e8e8;
+}
+
+.cars-car-name {
+  font-size: 13px;
+  font-weight: bold;
+  color: #008080;
+  margin-bottom: 6px;
+  letter-spacing: 0.02em;
+}
+
+.cars-car-tagline {
+  font-size: 10px;
+  color: #404040;
+  font-style: italic;
+  margin-bottom: 8px;
+  line-height: 1.35;
+}
+
+.cars-car-count {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: #606060;
 }
 
 .cars-db-panel-body {
-  padding: 6px;
+  padding: 10px 12px;
   overflow: auto;
   flex: 1;
   min-height: 0;
 }
 
-/* Left: car list (game select) */
+.cars-key-prompts {
+  flex-shrink: 0;
+  margin-top: 14px;
+  padding: 12px 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: #c0c0c0;
+  border-top: 1px solid #808080;
+}
+
+.cars-prompt-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: #c0c0c0;
+  color: #000;
+  border: 2px solid;
+  border-color: #fff #808080 #808080 #fff;
+  box-shadow: inset 1px 1px 0 #e0e0e0, inset -1px -1px 0 #808080;
+}
+
+.cars-prompt-btn:hover {
+  background: #d4d0c8;
+}
+
+.cars-prompt-btn:active {
+  border-color: #808080 #fff #fff #808080;
+  box-shadow: inset 1px 1px 0 #808080;
+}
+
+.cars-prompt-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: bold;
+  border: 1px solid #808080;
+}
+
+.cars-prompt-back .cars-prompt-key {
+  background: #c03060;
+  color: #fff;
+  border-color: #804060;
+}
+
+.cars-prompt-notes .cars-prompt-key {
+  background: #c0a030;
+  color: #000;
+  border-color: #806020;
+}
+
+.cars-prompt-view .cars-prompt-key {
+  background: #008080;
+  color: #fff;
+  border-color: #006060;
+}
+
+/* Left: car list */
 .cars-select-list {
   display: flex;
   flex-direction: column;
@@ -2538,7 +2668,7 @@ body.annex-page footer a:hover {
   align-items: center;
   gap: 6px;
   width: 100%;
-  padding: 4px 6px;
+  padding: 6px 8px;
   text-align: left;
   font-size: 11px;
   background: #fff;
@@ -2556,6 +2686,12 @@ body.annex-page footer a:hover {
   background: #000080;
   color: #fff;
   border-color: #000080;
+  border-left: 3px solid #008080;
+}
+
+.cars-select-item.selected::before {
+  content: '\25B6 ';
+  margin-right: 2px;
 }
 
 .cars-select-thumb {
@@ -2607,34 +2743,69 @@ body.annex-page footer a:hover {
 .cars-detail-body {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
+}
+
+.cars-band-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  min-height: 180px;
+  flex-shrink: 0;
 }
 
 .cars-detail-hero-wrap {
-  flex-shrink: 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.cars-hero-platform {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #c0c0c0;
+  border: 2px solid #808080;
+  border-color: #fff #404040 #404040 #fff;
+  box-shadow: inset 1px 1px 0 #e0e0e0, inset -1px -1px 0 #808080;
+}
+
+.cars-detail-hero-wrap .cars-hero {
+  box-shadow: none;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: none;
 }
 
 @keyframes cars-hero-pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.7; transform: scale(1.03); }
+  50% { opacity: 0.85; transform: scale(1.02); }
 }
 
 .cars-hero {
-  width: 160px;
-  height: 160px;
+  min-width: 180px;
+  min-height: 180px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #c0c0c0;
-  border: 1px solid #808080;
   animation: cars-hero-pulse 2.5s ease-in-out infinite;
 }
 
 .cars-hero-canvas {
-  width: 160px;
-  height: 160px;
+  width: 180px;
+  height: 180px;
   display: block;
+  object-fit: cover;
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
@@ -2642,17 +2813,75 @@ body.annex-page footer a:hover {
 }
 
 .cars-hero-img {
-  width: 24px;
-  height: 24px;
+  width: 180px;
+  height: 180px;
+  min-width: 180px;
+  min-height: 180px;
+  object-fit: cover;
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
-  transform: scale(6.67);
   flex-shrink: 0;
 }
 
 .cars-detail-specs-wrap {
   flex-shrink: 0;
+  min-width: 220px;
+}
+
+.cars-specs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cars-spec-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.cars-spec-row .cars-spec-label {
+  flex-shrink: 0;
+  width: 82px;
+  font-weight: bold;
+  color: #008080;
+}
+
+.cars-spec-row .cars-spec-value {
+  flex-shrink: 0;
+  min-width: 60px;
+  color: #000;
+}
+
+.cars-specs-header {
+  flex-shrink: 0;
+  margin-bottom: 6px;
+}
+
+.cars-specs-icon {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.cars-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+}
+
+.cars-star-icon {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+.cars-star-icon.cars-star-empty {
+  filter: grayscale(1);
+  opacity: 0.5;
 }
 
 .cars-specs-grid {
@@ -2667,16 +2896,19 @@ body.annex-page footer a:hover {
   border: 1px solid #808080;
   padding: 3px 8px;
   text-align: left;
+  color: #000;
 }
 
 .cars-spec-label {
   background: #e8e8e8;
   font-weight: bold;
   width: 90px;
+  color: #008080;
 }
 
 .cars-spec-value {
   min-width: 80px;
+  color: #000;
 }
 
 .cars-detail-description-wrap {
@@ -2691,25 +2923,31 @@ body.annex-page footer a:hover {
 
 .cars-detail-description-label {
   flex-shrink: 0;
-  padding: 2px 6px;
+  padding: 5px 10px;
   font-size: 11px;
   font-weight: bold;
   background: #c0c0c0;
   border-bottom: 1px solid #808080;
+  border-color: #fff #808080 #808080 #fff;
+  color: #000;
 }
 
 .cars-detail-description {
   flex: 1;
+  min-height: 0;
+  max-height: 4.5em;
   overflow-y: auto;
-  padding: 6px 8px;
+  padding: 10px 12px;
   font-size: 11px;
   line-height: 1.5;
   white-space: pre-wrap;
   word-break: break-word;
+  color: #000;
 }
 
 .cars-detail-actions {
   flex-shrink: 0;
+  margin-top: 4px;
 }
 
 .cars-thoughts-link {
@@ -2724,7 +2962,7 @@ body.annex-page footer a:hover {
 }
 
 .cars-thoughts-link:visited {
-  color: #0000ff;
+  color: #551a8b;
 }
 
 /* Cars thoughts modal: scrollable body */
